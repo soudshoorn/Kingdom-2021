@@ -13,6 +13,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
+import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
@@ -84,6 +85,17 @@ public class PlayerListeners implements Listener {
 			
 			Kingdom.getLunarClientAPI().getInstance().removeWaypoint(player, waypoint);
 			KingdomHandler.getWaypointsMap().remove(player.getUniqueId());
+		}
+	}
+	
+	@EventHandler
+	public void onDrop(PlayerDropItemEvent event) {
+		Player player = event.getPlayer();
+		
+		KingdomPlayer kingdomPlayer = KingdomHandler.getKingdomPlayer(player);
+		
+		if(kingdomPlayer == null && !player.isOp()) {
+			event.setCancelled(true);
 		}
 	}
 	

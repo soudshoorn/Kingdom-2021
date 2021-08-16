@@ -2,9 +2,12 @@ package me.niko.kingdom.staffmode;
 
 import java.util.Collection;
 
+import javax.swing.plaf.basic.BasicInternalFrameTitlePane.IconifyAction;
+
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -31,6 +34,8 @@ import me.niko.kingdom.utils.ConfigUtils;
 import me.niko.kingdom.utils.ItemStackUtils;
 
 public class StaffModeListener implements Listener {
+	
+	private Location lastDamageLocation;
 	
 	@EventHandler
 	public void onInteract(PlayerInteractEvent event) {
@@ -61,6 +66,13 @@ public class StaffModeListener implements Listener {
 				player.sendMessage(ChatColor.GREEN + "Random teleported to " + randomPlayer.getName());
 			} else if(ItemStackUtils.isSimiliar(stack, StaffModeHandler.ONLINE_STAFF)) {
 				new OnlineStaffMenu().openMenu(player);
+			} else if(ItemStackUtils.isSimiliar(stack, StaffModeHandler.LAST_PVP)) {
+				if (lastDamageLocation == null) {
+					player.sendMessage(ChatColor.RED + "No last pvp found.");
+					return;
+				}
+				
+				player.teleport(lastDamageLocation);
 			}
 		}
 	}
@@ -189,6 +201,8 @@ public class StaffModeListener implements Listener {
 		
 		Player player = (Player) event.getEntity();
 		Player damager = (Player) event.getDamager();
+		
+		lastDamageLocation = player.getLocation();
 		
 		if(FreezeHandler.isFrozen(damager)) {
 			//damager.sendMessage(ChatColor.RED + "Je kunt niet aanvallen als je bevroren bent.");

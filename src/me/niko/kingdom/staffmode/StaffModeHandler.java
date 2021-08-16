@@ -23,6 +23,7 @@ public class StaffModeHandler {
 	public static ItemStack ONLINE_STAFF = new ItemMaker(Material.SKULL_ITEM, 1, (short) 3).setName("&cOnline Staff").setHeadOwner("foodar").build();
 	public static ItemStack FREEZE = new ItemMaker(Material.PACKED_ICE).setName("&cAim Freeze").build();
 	public static ItemStack INSPECTOR = new ItemMaker(Material.BOOK).setName("&cInspect Inventory").build();
+	public static ItemStack LAST_PVP = new ItemMaker(Material.DIAMOND_SWORD).setName("&cTeleport to Last PvP").build();
 
 	public static String ONLINE_STAFF_TITLE = ChatColor.RED + "Online Staff Members";
 	
@@ -53,6 +54,7 @@ public class StaffModeHandler {
 			
 			player.getInventory().setItem(0, RANDOM_TELEPORT);
 			player.getInventory().setItem(1, INSPECTOR);
+			player.getInventory().setItem(2, LAST_PVP);
 			player.getInventory().setItem(4, ONLINE_STAFF);
 			player.getInventory().setItem(7, FREEZE);
 			player.getInventory().setItem(8, VANISH_OFF);
