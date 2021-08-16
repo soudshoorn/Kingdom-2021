@@ -185,7 +185,7 @@ public class NametagBoard {
     /**
      * Update Health and Nametag slots.
      */
-    public void update() {
+    public void update() {    	
         Scoreboard scoreboard = this.getScoreboard();
         Player player = Bukkit.getPlayer(getUuid());
 

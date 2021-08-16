@@ -38,11 +38,11 @@ public class InfluenceCommand implements CommandExecutor {
 					return true;
 				}
 				
-				Player target = Bukkit.getPlayer(args[0]);
-				int amount = Integer.parseInt(args[1]);
+				Player target = Bukkit.getPlayer(args[1]);
+				int amount = Integer.parseInt(args[2]);
 				
 				if(target == null) {
-					sender.sendMessage(ChatColor.RED + "Player named '" + args[0] + "' not found.");
+					sender.sendMessage(ChatColor.RED + "Player named '" + args[1] + "' not found.");
 					return true;
 				}
 				
@@ -62,11 +62,11 @@ public class InfluenceCommand implements CommandExecutor {
 					return true;
 				}
 				
-				Player target = Bukkit.getPlayer(args[0]);
-				int amount = Integer.parseInt(args[1]);
+				Player target = Bukkit.getPlayer(args[1]);
+				int amount = Integer.parseInt(args[2]);
 				
 				if(target == null) {
-					sender.sendMessage(ChatColor.RED + "Player named '" + args[0] + "' not found.");
+					sender.sendMessage(ChatColor.RED + "Player named '" + args[1] + "' not found.");
 					return true;
 				}
 				
@@ -88,11 +88,11 @@ public class InfluenceCommand implements CommandExecutor {
 					return true;
 				}
 				
-				Player target = Bukkit.getPlayer(args[0]);
-				int amount = Integer.parseInt(args[1]);
+				Player target = Bukkit.getPlayer(args[1]);
+				int amount = Integer.parseInt(args[2]);
 				
 				if(target == null) {
-					sender.sendMessage(ChatColor.RED + "Player named '" + args[0] + "' not found.");
+					sender.sendMessage(ChatColor.RED + "Player named '" + args[1] + "' not found.");
 					return true;
 				}
 				
@@ -114,16 +114,15 @@ public class InfluenceCommand implements CommandExecutor {
 			}
 			
 			case "check": {
-				if(args.length < 3) {
-					sender.sendMessage(ChatColor.RED + "/" + label + " set <playerName> <amount>");
+				if(args.length < 2) {
+					sender.sendMessage(ChatColor.RED + "/" + label + " " + args[0] + " <playerName>");
 					return true;
 				}
 				
-				Player target = Bukkit.getPlayer(args[0]);
-				int amount = Integer.parseInt(args[1]);
+				Player target = Bukkit.getPlayer(args[1]);
 				
 				if(target == null) {
-					sender.sendMessage(ChatColor.RED + "Player named '" + args[0] + "' not found.");
+					sender.sendMessage(ChatColor.RED + "Player named '" + args[1] + "' not found.");
 					return true;
 				}
 				

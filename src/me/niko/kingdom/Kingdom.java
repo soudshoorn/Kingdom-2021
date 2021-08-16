@@ -156,6 +156,7 @@ public class Kingdom extends JavaPlugin {
 		eventConstants.stopAll();
 		
 		assemble.cleanup();
+		nametags.cleanup();
 		
 		HorseHandler.saveAndRemove();
 		
