@@ -457,8 +457,15 @@ public class KingdomCommand implements CommandExecutor {
 				
 				if(isAboutToAcceptAlly) { //Accepting Ally
 					player.sendMessage(ConfigUtils.getFormattedValue("messages.kingdom.ally.accepted_ally"));
+					
+					kingdomTarget.broadcast(true, ConfigUtils.getFormattedValue("messages.kingdom.ally.broadcast.ally_accepted")
+							.replaceAll("%kingdom%", kingdomTarget.getDisplayName()));
 				} else {
-					player.sendMessage(ConfigUtils.getFormattedValue("messages.kingdom.ally.ally_requested"));
+					player.sendMessage(ConfigUtils.getFormattedValue("messages.kingdom.ally.ally_requested")
+							.replaceAll("%kingdom%", kingdomTarget.getDisplayName()));
+					
+					kingdomTarget.broadcast(true, ConfigUtils.getFormattedValue("messages.kingdom.ally.broadcast.requested_ally")
+							.replaceAll("%kingdom%", kingdomTarget.getDisplayName()));
 				}
 				
 				playerKingdom.getAllies().add(kingdomTarget);
