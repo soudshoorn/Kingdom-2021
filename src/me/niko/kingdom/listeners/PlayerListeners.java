@@ -42,6 +42,8 @@ import me.niko.kingdom.utils.TitleAPI;
 
 public class PlayerListeners implements Listener {
 	
+	private ItemStack SELECTOR = new ItemMaker(Material.NETHER_STAR).setName("&eKingdom Selector").build();
+	
 	@EventHandler
 	public void onJoin(PlayerJoinEvent event) {
 		event.setJoinMessage(null);
@@ -54,17 +56,12 @@ public class PlayerListeners implements Listener {
 		Kingdom.getInstance().getPlayersMap().put(player.getUniqueId(), kingdomPlayer);
 		
 		if(!player.hasPlayedBefore() || kingdomPlayer.getKingdom() == null) {
-			
 			player.sendMessage(ConfigUtils.getFormattedValue("messages.kingdom.select_kingdom_before_continue"));
 			
-			new BukkitRunnable() {
-				
-				@Override
-				public void run() {
-					new SelectorMenu().openMenu(player);
-				}
-			}.runTaskLaterAsynchronously(Kingdom.getInstance(), 5L);
+			player.getInventory().setItem(4, SELECTOR);
 		}
+		
+		Kingdom.getInstance().getNametags().updateNametagsManually(player);
 	}
 	
 	@EventHandler
@@ -85,6 +82,22 @@ public class PlayerListeners implements Listener {
 			
 			Kingdom.getLunarClientAPI().getInstance().removeWaypoint(player, waypoint);
 			KingdomHandler.getWaypointsMap().remove(player.getUniqueId());
+		}
+	}
+	
+	@EventHandler
+	public void onInteract(PlayerInteractEvent event) {
+		Player player = event.getPlayer();
+		
+		if((event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK) && ItemStackUtils.isSimiliar(player.getItemInHand(), SELECTOR)) {
+			
+			KingdomPlayer kingdomPlayer = KingdomHandler.getKingdomPlayer(player);
+			
+			if(kingdomPlayer == null) {
+				new SelectorMenu().openMenu(player);
+			} else {
+				player.setItemInHand(null);
+			}
 		}
 	}
 	

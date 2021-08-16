@@ -42,4 +42,7 @@ public class EventConstants {
 		}
 	}
 	
+	public boolean isEventsRunning() {
+		return activeBountyHunters.size() != 0 || activeBTCs.size() != 0 || activeConquests.size() != 0 || activeKoths.size() != 0;
+	}
 }

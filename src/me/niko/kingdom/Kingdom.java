@@ -43,6 +43,8 @@ import me.niko.kingdom.listeners.HorseMountListener;
 import me.niko.kingdom.listeners.PlayerListeners;
 import me.niko.kingdom.listeners.PortalListener;
 import me.niko.kingdom.mount.HorseHandler;
+import me.niko.kingdom.nametags.NametagHandler;
+import me.niko.kingdom.nametags.Nametags;
 import me.niko.kingdom.scoreboard.Assemble;
 import me.niko.kingdom.scoreboard.ScoreboardAdapter;
 import me.niko.kingdom.staffmode.StaffModeHandler;
@@ -57,7 +59,8 @@ public class Kingdom extends JavaPlugin {
 	@Getter public static WorldEditPlugin worldEdit;
 	@Getter public static CombatTagPlus combatTagPlus;
 	@Getter public static Assemble assemble;
-	
+	@Getter public static NametagHandler nametags;
+
 	@Getter public static EventConstants eventConstants;
 	@Getter public static HellHandler hell;
 	@Getter public static ChatHandler chat;
@@ -74,6 +77,9 @@ public class Kingdom extends JavaPlugin {
 		saveDefaultConfig();
 		
 		assemble = new Assemble(this, new ScoreboardAdapter());
+		nametags = new NametagHandler(this, new Nametags());
+		
+		nametags.setTicks(20 * 30);
 		
 		eventConstants = new EventConstants();
 		
