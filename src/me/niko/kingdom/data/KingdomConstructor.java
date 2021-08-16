@@ -9,12 +9,14 @@ import javax.swing.plaf.basic.BasicInternalFrameTitlePane.IconifyAction;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Player;
 
 import com.sk89q.worldedit.history.changeset.ArrayListHistory;
 
 import lombok.Getter;
 import lombok.Setter;
 import me.niko.kingdom.Kingdom;
+import me.niko.kingdom.data.players.KingdomPlayer;
 import me.niko.kingdom.utils.LocationUtils;
 
 public class KingdomConstructor {
@@ -94,6 +96,24 @@ public class KingdomConstructor {
 	
 	public boolean doesExists() {
 		return this.exists;
+	}
+	
+	
+	//
+	public void broadcast(boolean toKing, String message) {
+		ArrayList<Player> players = KingdomHandler.getOnlinePlayersMap().getOrDefault(this == null ? "null" : this.getName(), new ArrayList<Player>());
+		
+		for (Player player : players) {
+			KingdomPlayer kingdomPlayer = KingdomHandler.getKingdomPlayer(player);
+			
+			if(toKing) {
+				if(kingdomPlayer.isKing()) {
+					player.sendMessage(message);
+				}
+			} else {
+				player.sendMessage(message);
+			}
+		}
 	}
 
 }
