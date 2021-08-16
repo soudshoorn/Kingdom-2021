@@ -75,6 +75,11 @@ public class KingdomPlayer {
 		yamlConfiguration.set("kingdom", this.kingdom == null ? "null" : this.kingdom.getName());
 		yamlConfiguration.set("guild", this.guild == null ? "null" : this.guild.getName());
 		yamlConfiguration.set("rank", this.kingdomRank);
+		
+		if(this.influence < 0) {
+			this.influence = 0;
+		}
+		
 		yamlConfiguration.set("influence", this.influence);
 		yamlConfiguration.set("kills", this.kills);
 		yamlConfiguration.set("deaths", this.deaths);
