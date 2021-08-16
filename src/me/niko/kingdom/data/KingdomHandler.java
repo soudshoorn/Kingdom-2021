@@ -169,7 +169,7 @@ public class KingdomHandler {
 		if(!players.contains(player)) {
 			players.add(player);
 			
-			onlinePlayersMap.putIfAbsent(kingdomConstructor == null ? "null" : kingdomConstructor.getName(), players);
+			onlinePlayersMap.put(kingdomConstructor == null ? "null" : kingdomConstructor.getName(), players);
 		}		
 	}
 	
@@ -179,7 +179,7 @@ public class KingdomHandler {
 		if(players.contains(player)) {
 			players.remove(player);
 			
-			onlinePlayersMap.putIfAbsent(kingdomConstructor == null ? "null" : kingdomConstructor.getName(), players);
+			onlinePlayersMap.put(kingdomConstructor == null ? "null" : kingdomConstructor.getName(), players);
 		}
 	}
 	
