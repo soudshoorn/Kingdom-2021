@@ -43,6 +43,7 @@ public class KingdomCommand implements CommandExecutor {
 				sender.sendMessage(ChatColor.RED + "/" + label + " promote <playerName>");
 				sender.sendMessage(ChatColor.RED + "/" + label + " demote <playermName>");
 				sender.sendMessage(ChatColor.RED + "/" + label + " ally <kingdomName>");
+				sender.sendMessage(ChatColor.RED + "/" + label + " unally <kingdomName>");
 			}
 			
 			sender.sendMessage(ChatColor.RED + "/" + label + " top");
@@ -456,7 +457,8 @@ public class KingdomCommand implements CommandExecutor {
 				}
 				
 				if(isAboutToAcceptAlly) { //Accepting Ally
-					player.sendMessage(ConfigUtils.getFormattedValue("messages.kingdom.ally.accepted_ally"));
+					player.sendMessage(ConfigUtils.getFormattedValue("messages.kingdom.ally.accepted_ally")
+							.replaceAll("%kingdom%", kingdomTarget.getDisplayName()));
 					
 					kingdomTarget.broadcast(true, ConfigUtils.getFormattedValue("messages.kingdom.ally.broadcast.ally_accepted")
 							.replaceAll("%kingdom%", kingdomTarget.getDisplayName()));
@@ -470,6 +472,63 @@ public class KingdomCommand implements CommandExecutor {
 				
 				playerKingdom.getAllies().add(kingdomTarget);
 				
+				playerKingdom.save();
+				
+				break;
+			}
+			
+			case "unally": {
+				if(!(sender instanceof Player)) {
+					return true;
+				}
+				
+				if(!sender.isOp()) {
+					sender.sendMessage(ChatColor.RED + "No permission.");
+					return true;
+				}
+				
+				if(args.length < 2) {
+					sender.sendMessage(ChatColor.RED + "Usage: /" + label + " " + args[0] + " <kingdom>");
+					return true;
+				}
+				
+				Player player = (Player) sender;
+				String name = args[1];
+
+				KingdomConstructor kingdomTarget = new KingdomConstructor(name);
+				
+				if(!kingdomTarget.doesExists()) {
+					sender.sendMessage(ChatColor.RED + "Kingdom named '" + name + "' does not exists.");
+					return true;
+				}
+				
+				KingdomPlayer kingdomPlayer = KingdomHandler.getKingdomPlayer(player);
+				KingdomConstructor playerKingdom = kingdomPlayer.getKingdom();
+				
+				boolean isAlly = KingdomHandler.isAllyWithKingdom(playerKingdom, kingdomTarget);
+				boolean isAllyRequested = (playerKingdom.getAllies().stream().filter(k -> KingdomHandler.isSimiliarKingdom(k, kingdomTarget)).findFirst().orElse(null)) != null;
+				
+				if(isAllyRequested && !isAlly) {
+					playerKingdom.getAllies().remove(kingdomTarget);
+					playerKingdom.save();
+					
+					player.sendMessage(ConfigUtils.getFormattedValue("messages.kingdom.unally.remove_request")
+							.replaceAll("%kingdom%", kingdomTarget.getDisplayName()));
+					return true;
+				}
+
+				if(!isAlly) {
+					player.sendMessage(ConfigUtils.getFormattedValue("messages.kingdom.unally.not_ally")
+							.replaceAll("%kingdom%", kingdomTarget.getDisplayName()));
+					return true;
+				}
+				
+				kingdomTarget.broadcast(false, ConfigUtils.getFormattedValue("messages.kingdom.unally.broadcast.ally_removed")
+						.replaceAll("%kingdom%", playerKingdom.getDisplayName()));
+				playerKingdom.broadcast(false, ConfigUtils.getFormattedValue("messages.kingdom.unally.broadcast.ally_removed")
+						.replaceAll("%kingdom%", kingdomTarget.getDisplayName()));
+
+				playerKingdom.getAllies().remove(kingdomTarget);
 				playerKingdom.save();
 				
 				break;
