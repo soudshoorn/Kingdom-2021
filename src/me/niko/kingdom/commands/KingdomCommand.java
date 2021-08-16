@@ -42,6 +42,7 @@ public class KingdomCommand implements CommandExecutor {
 				sender.sendMessage(ChatColor.RED + "/" + label + " setdisplayname <kingdomName> <displayName>");
 				sender.sendMessage(ChatColor.RED + "/" + label + " promote <playerName>");
 				sender.sendMessage(ChatColor.RED + "/" + label + " demote <playermName>");
+				sender.sendMessage(ChatColor.RED + "/" + label + " ally <kingdomName>");
 			}
 			
 			sender.sendMessage(ChatColor.RED + "/" + label + " top");
@@ -409,6 +410,61 @@ public class KingdomCommand implements CommandExecutor {
 				
 				kingdomPlayer.save();
 								
+				break;
+			}
+			
+			case "ally": {
+				if(!(sender instanceof Player)) {
+					return true;
+				}
+				
+				if(!sender.isOp()) {
+					sender.sendMessage(ChatColor.RED + "No permission.");
+					return true;
+				}
+				
+				if(args.length < 2) {
+					sender.sendMessage(ChatColor.RED + "Usage: /" + label + " " + args[0] + " <kingdom>");
+					return true;
+				}
+				
+				Player player = (Player) sender;
+				String name = args[1];
+
+				KingdomConstructor kingdomTarget = new KingdomConstructor(name);
+				
+				if(!kingdomTarget.doesExists()) {
+					sender.sendMessage(ChatColor.RED + "Kingdom named '" + name + "' does not exists.");
+					return true;
+				}
+				
+				KingdomPlayer kingdomPlayer = KingdomHandler.getKingdomPlayer(player);
+				KingdomConstructor playerKingdom = kingdomPlayer.getKingdom();
+				
+				boolean isAlly = KingdomHandler.isAllyWithKingdom(playerKingdom, kingdomTarget);
+				boolean isAllyRequested = (playerKingdom.getAllies().stream().filter(k -> KingdomHandler.isSimiliarKingdom(k, playerKingdom)).findFirst().orElse(null)) != null;
+				boolean isAboutToAcceptAlly = (kingdomTarget.getAllies().stream().filter(k -> KingdomHandler.isSimiliarKingdom(k, playerKingdom)).findFirst().orElse(null)) != null;
+
+				if(isAllyRequested && !isAlly) {
+					player.sendMessage(ConfigUtils.getFormattedValue("messages.kingdom.ally.already_requested"));
+					return true;
+				}
+
+				if(isAlly) {
+					player.sendMessage(ConfigUtils.getFormattedValue("messages.kingdom.ally.already_ally"));
+					return true;
+				}
+				
+				if(isAboutToAcceptAlly) { //Accepting Ally
+					player.sendMessage(ConfigUtils.getFormattedValue("messages.kingdom.ally.accepted_ally"));
+				} else {
+					player.sendMessage(ConfigUtils.getFormattedValue("messages.kingdom.ally.ally_requested"));
+				}
+				
+				playerKingdom.getAllies().add(kingdomTarget);
+				
+				playerKingdom.save();
+				
 				break;
 			}
 			

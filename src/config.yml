@@ -99,6 +99,14 @@ messages:
       others_chat: "&7[&3Others&7] &7[%kingdom_name%&7] %prefix%%player%%suffix%&7: &f%message%"
       kingdom_chat: "&7[%kingdom_name%&7] &f%kingdom_rank% %prefix%%player%%suffix%&7: &f%message%"
   kingdom:
+    ally:
+      already_requested: "&cYou have already requested to this kingdom."
+      already_ally: "&cAlready ally with that kingdom!"
+      accepted_ally: "&bAlly with %kingdom% has been accepted!"   
+      ally_requested: "&bYou have requested %kingdom% to be allies!"
+      broadcast:
+        requested_ally: "&b%kingdom% has requested you to be allies do /kingdom ally %kingdom% to accept!"
+        ally_accepted: "&bAlly with %kingdom% has been accepted. Do /kingdom unally %kingdom% if you want to remove them."
     victim_teammate: "&2%player% &ais your teammate!"
     victim_ally: "&3%player% &bis an ally from &3%kingdom%"
     select_kingdom_before_continue: "&cPlease select an kingdom to continue playing with other players."
