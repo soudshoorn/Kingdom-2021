@@ -20,6 +20,7 @@ import me.niko.kingdom.commands.ChatCommand;
 import me.niko.kingdom.commands.ConquestCommand;
 import me.niko.kingdom.commands.FreezeCommand;
 import me.niko.kingdom.commands.GuildCommand;
+import me.niko.kingdom.commands.InfluenceCommand;
 import me.niko.kingdom.commands.KingdomCommand;
 import me.niko.kingdom.commands.KothCommand;
 import me.niko.kingdom.commands.ListCommand;
@@ -108,6 +109,7 @@ public class Kingdom extends JavaPlugin {
 		getCommand("guild").setExecutor(new GuildCommand());
 		getCommand("list").setExecutor(new ListCommand());
 		getCommand("telllocation").setExecutor(new TellLocationCommand());
+		getCommand("influence").setExecutor(new InfluenceCommand());
 
 		getServer().getPluginManager().registerEvents(new PortalListener(), this);
 		getServer().getPluginManager().registerEvents(new ArrowCleanerListener(), this);
