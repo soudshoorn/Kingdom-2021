@@ -1,0 +1,25 @@
+name: Kingdom
+author: nik4o
+main: me.niko.kingdom.Kingdom
+version: 1.0.0
+commands:
+  kingdom:
+    aliases: [k]
+  bountyhunters:
+  btc:
+  conquest:
+  koth:
+  freeze:
+    aliases: [ss, screenshare]
+  staffmode:
+    aliases: [mod, hackermode, staff]
+  chat:
+  portal:
+  mount:
+  stats:
+  guild:
+    aliases: [guilds]
+  list:
+    aliases: [onlineplayers]
+  telllocation:
+    aliases: [tl]

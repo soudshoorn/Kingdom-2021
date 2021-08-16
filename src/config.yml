@@ -1,0 +1,269 @@
+influence_settings:
+  place_cost: 50
+  break_cost: 30
+  use_cost: 10
+
+guild_settings:
+  max_members: 5
+  storage: 1000
+
+settings:
+  kingdom_ranks:
+    ridder1:
+      name: "Ridder 1"
+      prefix: '&7[&fRidder &6I&7]'
+    ridder2:
+      name: "Ridder 2"
+      prefix: '&7[&fRidder &6II&7]'
+    ridder3:
+      name: "Ridder 3"
+      prefix: '&7[&fRidder &6III&7]'
+    hertog:
+      name: "Hertog"
+      prefix: '&7[&2Hertog&7]'
+    koning:
+      name: "King"
+      prefix: '&7[&6Koning&7]'
+  home_timer: 10 # in seconds
+  beta_mode: false
+  use_materials:
+    - "ANVIL"
+
+donkey:
+  speed: 0.3
+  jump: 0.5
+  health: 18
+  countdown: 5
+  enemyRadiusCheck: 60.0
+
+title:
+  top: "&7Kingdom"
+  subtitle: "&f%kingdom%"
+
+messages:
+  tordisti:
+    player_leave: "&cLeave the Tordisti before you die from the Wither."
+    time_to_leave: "&cYou have %time% minutes left to leave Tordisti."
+    teleported_to_overworld: "&cYou have been teleported to the normal world since Tordisti is disabled now."
+    enabled:
+      - ""
+      - "&aTordisti has been enabled till 00:00 and will be disabled in 08:00"
+      - ""
+    disabled:
+      - ""
+      - "&cTordisti has been disabled till 08:00!"
+      - "&cAll the players in there have received Wither II"
+      - "&cand won't be removed till they leave."
+      - ""
+  staff: 
+    mode_enabled: "&6Staff Mode: &fEnabled"
+    mode_disabled: "&6Staff Mode: &fDisabled"
+    vanish_enabled: "&6Vanish: &fEnabled"
+    vanish_disabled: "&6Vanish: &fDisabled"
+  freeze:
+    logged_out: "&c&l[!!!!] &f%player% &clogged out while frozen!"
+    damager_frozen: "&cYou cannot attack while frozen."
+    victim_frozen: "&c%player% is frozen, you cannot attack him."
+    cannot_do_while_frozen: "&cYou cannot do this while frozen!"
+    message:
+      - ""
+      - "&cJe bent bevroren door een medewerker!"
+      - "&7Join onze &fwachtruimte&7 en wacht rustig totdat je gesleeptwordt!"
+      - "&f&lDiscord: &fdsc.gg/reforgedmc"
+      - ""
+      - "&7Je hebt 5 minuten. Uitloggen is een ban."
+  tell_location:
+    format: "Player %player% needs an assistance at [%x%, %y%, %z%]"
+    waypoint:
+      name: "%player%'s Location"
+      color:
+        r: 255
+        g: 0
+        b: 0
+  stats:
+    - "&6%player%"
+    - ""
+    - "&6Kills &f%kills%"
+    - "&6Deaths &f%deaths%"
+    - "&6Player KDR &f%kdr%"
+    - "&6Influence &f%influence%"
+    - "&6Kingdom &f%kingdom%"
+  chat:
+    muted: "&cThe chat is currently muted!"
+    no_guild: "&cYou don't have a guild to chat with!"
+    no_kingdom: "&cYou don't have a kingdom to chat, select one to have more features!"
+    formats:
+      guilds_chat: "&7[&3%guild_name%&7] &7[&f#%guild_tag%&7] %prefix%%player%%suffix%&7: &f%message%"
+      roleplay_chat: "&7[&4Roleplay&7] &7[%kingdom_name%&7] %prefix%%player%%suffix%&7: &f%message%"
+      trade_chat: "&7[&6Trade&7] &7[%kingdom_name%&7] %prefix%%player%%suffix%&7: &f%message%"
+      others_chat: "&7[&3Others&7] &7[%kingdom_name%&7] %prefix%%player%%suffix%&7: &f%message%"
+      kingdom_chat: "&7[%kingdom_name%&7] &f%kingdom_rank% %prefix%%player%%suffix%&7: &f%message%"
+  kingdom:
+    victim_teammate: "&2%player% &ais your teammate!"
+    victim_ally: "&3%player% &bis an ally from &3%kingdom%"
+    select_kingdom_before_continue: "&cPlease select an kingdom to continue playing with other players."
+    set:
+      target: "&eYour kingdom has been switched from %old_kingdom% to %new_kingdom%"
+      broadcast: "&e%player% has switched their kingdom to %new_kingdom%!"
+    top:
+      format: "&7%position%. %kingdom% &7- &f%points%"
+      message:
+        - "&7Kingdom Top"
+        - ""
+        - "%format%"
+    promote_target: "&aYou have been promoted from %oldrank% &ato %newrank%"
+    demote_target: "&cYou have been demoted from %oldrank% &ato %newrank%"
+  guild:
+    already_in_guild: "&cYou are already in a guild."
+    three_char: "&cYour tag needs to be exactly 3 characters."
+    tag_taken: "&cThis tag is already taken."
+    guild_taken: "&cGuild with that name already exists"
+    created: "&aYour guild named %guild_name% has been created [%tag%]"
+    created_broadcast: "&aGuild %guild_name% [%tag%] has been created by %player%."
+    no_guild: "&cYou are not in a guild."
+    only_leaders: "&cOnly the guild leader can do this."
+    no_same_kingdom: "This player is not in the same kingdom as others in the guild."
+    have_been_invited: "&aYou have been invited to join %guild_name% [%tag%]. Do /guild join %guild_name% to join."
+    expired_invite: "&cYour invite to %guild_name% [%tag%] has expired!"
+    already_invited: "&cThis player is already invited."
+    guild_not_found: "&cGuild with that name does not exists."
+    no_invite: "&cThis guild has not invited you."
+    not_invited: "&cThis player is not invited."
+    joined: "&aYou joined %guild_name% [%tag%]"
+    not_from_guild: "&aThis player is not from your guild."
+    cannot_kick_yourself: "&cYou cannot kick yourself."
+    kicked: "&cYou have been kicked from %guild_name% [%tag%] by %player%"
+    storage_full: "&cStorage is already full with influence you can't deposit right now."
+    dont_have_influence: "&cYou don't have that much influence to deposit."
+    deposit_filled: "&aYou only deposited %deposit% because the storage filled up!"
+    deposit_added: "&aYou deposited %deposit% to the guild bank. Bank amount: %bank%"
+    storage_empty: "&cStorage is empty theres nothing to withdraw."
+    withdraw_emptied: "&aYou only withdrawed %withdraw% because the storage does not have that much."
+    withdraw_added: "&aYou withdrawed %withdraw% from the guild bank. Bank amount: %bank%"
+    guild_leave: "&cYou left %guild_name% [%tag%]"
+    info:
+      - "&7&l&m-----------------------------------------------"
+      - ""
+      - "%guild_name% [%tag%] [%online%/%max%]"
+      - "&eLeader %leader%"
+      - ""
+      - "&eMembers %members%"
+      - "&eInfluence Bank %bank%"
+      - "&eKills %kills%"
+      - "&eDeaths %deaths%"
+      - "&eKDR %kdr%"
+      - "&eKingdom %kingdom%"
+      - "&7&l&m-----------------------------------------------"
+    disband: "&cYour guild has been disbanded"
+    guild_disbanded: "&cThe guild that you were in %guild_name% [%tag%] has been disbanded."
+    guild_broadcast:
+      player_joined: "&a%player% joined your guild."
+      player_invited: "&a%player% invited %invited% to the guild."
+      player_uninvited: "&a%uninvited% has been uninvited by %player%"
+      player_kicked: "&a%kicked% has been kicked from the guild by %player%"
+      player_deposited: "&a%player% deposited %deposit% influence to the bank. Bank amount: %bank%"
+      player_withdrawed: "&a%player% withdrawed %withdraw% influence from the bank. Bank amount: %bank%"
+      player_left: "&a%player% left the guild."
+
+selector_menu:
+  rows: 3
+  title: "&7Select a kingdom to begin"
+  fill:
+    enabled: true
+    material: STAINED_GLASS_PANE
+    data: 0
+    amount: 1
+    display_name: "&d"
+    lore:
+      - ""
+  items:
+    0:
+      material: PAPER
+      data: 0
+      amount: 1
+      display_name: "&eKingdom &6Eredon"
+      lore:
+        - ""
+      kingdom: "eredon"
+
+scoreboard_settings:
+  enabled: true
+  title: "&cZusiqs Kingdom"
+  store: "&7&ostore.zusiqs.nl"
+  always_lines: true # At the top and at the end will add a gray lines
+  always_store: true # Store before the last line
+  no_kingdom_lines:
+    - "&7You currently don't have"
+    - "&7a kingdom!"
+    - ""
+    - "&7Choose from the selector"
+    - ""
+  has_kingdom_lines:
+    - "&cKingdom"
+    - "%kingdom%"
+    - ""
+    - "&cInfluence"
+    - "%influence%"
+    - ""
+    - "&cLocatie"
+    - "%location_kingdom%"
+    - ""
+  staffmode_lines:
+    - "&cVanish"
+    - "%vanish%"
+    - ""
+    - "&cInfluence"
+    - "&%influence%"
+    - ""
+    - "&cOnline Spellers"
+    - "%online_players%"
+    - ""
+  bountyhunters_lines:
+    - "&c&lBounty Hunters"
+    - ""
+    - "1. %time_1% &7- %cappedBy_1%"
+    - "2. %time_2% &7- %cappedBy_2%"
+    - "3. %time_3% &7- %cappedBy_3%"
+    - "4. %time_4% &7- %cappedBy_4%"
+    - "5. %time_5% &7- %cappedBy_5%"
+    - "6. %time_6% &7- %cappedBy_6%"
+  conquest_lines:
+    - "&c&lConquest"
+    - "  &c&l1. %kingdom_1%&7: &f%points_1%"
+    - "  &c&l2. %kingdom_2%&7: &f%points_2%"
+    - "  &c&l3. %kingdom_3%&7: &f%points_3%"
+    - ""
+    - " &a%team_green% &7| &e%team_yellow%"
+    - " &c%team_red% &7| &9%team_blue%"
+    - ""
+    - "&cInfluence"
+    - "%influence%"
+    - ""
+  koth_lines:
+    - "&cKoth"
+    - "%koth_name%"
+    - ""
+    - "&cCoords"
+    - "%koth_coords%"
+    - ""
+    - "&cCapping"
+    - "%koth_capping%"
+    - ""
+    - "&cTime"
+    - "%koth_time%"
+    - ""
+  btc_lines:
+    - "&c&lBreak The Core"
+    - ""
+    - "  &c&l1. %kingdom_1%&7: &f%breaks_1%"
+    - "  &c&l2. %kingdom_2%&7: &f%breaks_2%"
+    - "  &c&l3. %kingdom_3%&7: &f%breaks_3%"
+  war_lines:
+    - "&c&lWar"
+    - ""
+    - "  &c&l1. %kingdom_1%&7: &f%kills_1%"
+    - "  &c&l2. %kingdom_2%&7: &f%kills_2%"
+    - "  &c&l3. %kingdom_3%&7: &f%kills_3%"
+    - ""
+    - "&cTotal Deaths: &f%total_deaths%"
+    - "&4&lEnds in &4%time%"
