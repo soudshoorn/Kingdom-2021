@@ -12,6 +12,7 @@ import me.niko.kingdom.Kingdom;
 import me.niko.kingdom.data.KingdomHandler;
 import me.niko.kingdom.data.players.KingdomPlayer;
 import me.niko.kingdom.mount.HorseHandler;
+import me.niko.kingdom.utils.ConfigUtils;
 import net.minelink.ctplus.TagManager;
 
 public class MountCommand implements CommandExecutor {
@@ -33,7 +34,7 @@ public class MountCommand implements CommandExecutor {
 		KingdomPlayer kingdomPlayer = KingdomHandler.getKingdomPlayer(player);
 
 		if (kingdomPlayer.getKingdom() == null) {
-			player.sendMessage(ChatColor.RED + "You need to have a kingdom in order to spawn a horse.");
+			player.sendMessage(ConfigUtils.getFormattedValue("messages.mount.no_kingdom"));
 			return true;
 		}
 
@@ -41,7 +42,7 @@ public class MountCommand implements CommandExecutor {
 			Horse entity = (Horse) player.getVehicle();
 			if (HorseHandler.getHorseSpawned().containsValue(entity)) {
 				entity.remove();
-				player.sendMessage(ChatColor.GRAY + "You unmounted!");
+				player.sendMessage(ConfigUtils.getFormattedValue("messages.mount.unmounted"));
 
 				if (HorseHandler.getHorseSpawned().containsKey(player)) {
 					HorseHandler.getHorseSpawned().remove(player);
@@ -57,7 +58,7 @@ public class MountCommand implements CommandExecutor {
 			boolean isTagged = tagManager.isTagged(player.getUniqueId());
 			
 			if (isTagged) {
-				player.sendMessage(ChatColor.GRAY + "You can't mount up in combat!");
+				player.sendMessage(ConfigUtils.getFormattedValue("messages.mount.in_combat"));
 				player.playSound(player.getLocation(), Sound.VILLAGER_NO, 5.0F, 1.3F);
 				
 				return false;
@@ -67,7 +68,7 @@ public class MountCommand implements CommandExecutor {
 		HorseHandler horseHandler = new HorseHandler();
 		
 		if (horseHandler.isEnemiesNearby(player)) {
-			player.sendMessage(ChatColor.GRAY + "You can't mount while enemy players are nearby!");
+			player.sendMessage(ConfigUtils.getFormattedValue("messages.mount.players_nearby"));
 			player.playSound(player.getLocation(), Sound.VILLAGER_NO, 5.0F, 1.3F);
 			
 			return true;

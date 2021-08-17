@@ -31,6 +31,7 @@ import lombok.Getter;
 import me.niko.kingdom.Kingdom;
 import me.niko.kingdom.data.KingdomHandler;
 import me.niko.kingdom.data.players.KingdomPlayer;
+import me.niko.kingdom.utils.ConfigUtils;
 import me.niko.kingdom.utils.TitleAPI;
 import net.minecraft.server.v1_8_R3.AttributeInstance;
 import net.minecraft.server.v1_8_R3.EntityInsentient;
@@ -39,13 +40,11 @@ import net.minecraft.server.v1_8_R3.GenericAttributes;
 public class HorseHandler {
 
 	public static HashMap<UUID, String> donkeyIv = new HashMap();
-	@Getter
-	public static HashMap<Player, Horse> horseSpawned = new HashMap<>();
-	@Getter
-	public static HashMap<Player, Integer> mountingTimer = new HashMap();
+	@Getter public static HashMap<Player, Horse> horseSpawned = new HashMap<>();
+	@Getter public static HashMap<Player, Integer> mountingTimer = new HashMap();
 
 	public void WriteDonkeyIvFile() {
-		File file = new File(Kingdom.getInstance().getDataFolder(), "donkeyIv.yml");
+		File file = new File(Kingdom.getInstance().getDataFolder(), "horses.yml");
 		FileConfiguration fileConfig = YamlConfiguration.loadConfiguration(file);
 
 		if (!file.exists()) {
@@ -58,13 +57,13 @@ public class HorseHandler {
 	}
 
 	public FileConfiguration getDonkeyFile() {
-		File file = new File(Kingdom.getInstance().getDataFolder(), "donkeyIv.yml");
+		File file = new File(Kingdom.getInstance().getDataFolder(), "horses.yml");
 
 		return YamlConfiguration.loadConfiguration(file);
 	}
 
 	public void saveInventory() {
-		File sourceFile = new File(Kingdom.getInstance().getDataFolder(), "donkeyIv.yml");
+		File sourceFile = new File(Kingdom.getInstance().getDataFolder(), "horses.yml");
 		FileConfiguration donkeyC = this.getDonkeyFile();
 
 		for (Entry<UUID, String> entry : donkeyIv.entrySet()) {
@@ -79,7 +78,7 @@ public class HorseHandler {
 	}
 
 	public void saveInventory(Player p) {
-		File sourceFile = new File(Kingdom.getInstance().getDataFolder(), "donkeyIv.yml");
+		File sourceFile = new File(Kingdom.getInstance().getDataFolder(), "horses.yml");
 		FileConfiguration donkeyC = this.getDonkeyFile();
 
 		donkeyC.set(p.getUniqueId().toString(), donkeyIv.get(p.getUniqueId()));
@@ -171,7 +170,7 @@ public class HorseHandler {
 					}
 
 					if (player.isOnline()) {
-						player.sendMessage(ChatColor.GRAY + "Mounten onderbroken!");
+						player.sendMessage(ConfigUtils.getFormattedValue("messages.mount.on_cooldown"));
 						// ef.playDenySound(p);
 						player.playSound(player.getLocation(), Sound.VILLAGER_NO, 5.0F, 1.3F);
 					}
@@ -243,7 +242,7 @@ public class HorseHandler {
 
 		// ef.mountUp(player);
 		player.playSound(player.getLocation(), Sound.ANVIL_USE, 5.0F, 1.0F);
-		player.sendMessage(ChatColor.GRAY + "Je hebt succesvol je horse gemount!");
+		player.sendMessage(ConfigUtils.getFormattedValue("messages.mount.mounted"));
 	}
 
 	public static String itemStackArrayToBase64(ItemStack[] items) throws IllegalStateException {

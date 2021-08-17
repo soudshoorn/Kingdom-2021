@@ -27,6 +27,7 @@ import me.niko.kingdom.data.KingdomConstructor;
 import me.niko.kingdom.data.KingdomHandler;
 import me.niko.kingdom.data.players.KingdomPlayer;
 import me.niko.kingdom.mount.HorseHandler;
+import me.niko.kingdom.utils.ConfigUtils;
 
 public class HorseMountListener implements Listener {
 
@@ -43,7 +44,7 @@ public class HorseMountListener implements Listener {
 		if (HorseHandler.getHorseSpawned().containsValue(horse)) {
 			if (!HorseHandler.getHorseSpawned().containsKey(player)) {
 				event.setCancelled(true);
-				player.sendMessage(ChatColor.RED + "This is not your horse!");
+				player.sendMessage(ConfigUtils.getFormattedValue("messages.mount.not_your_horse"));
 
 				return;
 			}
@@ -52,7 +53,7 @@ public class HorseMountListener implements Listener {
 
 			if (!horse2.equals(horse)) {
 				event.setCancelled(true);
-				player.sendMessage(ChatColor.RED + "This is not your horse!");
+				player.sendMessage(ConfigUtils.getFormattedValue("messages.mount.not_your_horse"));
 
 				return;
 			}
@@ -163,7 +164,7 @@ public class HorseMountListener implements Listener {
 					&& HorseHandler.getHorseSpawned().containsValue(horse)
 					&& ((Horse) HorseHandler.getHorseSpawned().get(damager)).equals(horse)) {
 				event.setCancelled(true);
-				damager.sendMessage(ChatColor.GRAY + "You can't deal damage while mounted!");
+				damager.sendMessage(ConfigUtils.getFormattedValue("messages.mount.cant_damage_mounted"));
 				damager.playSound(damager.getLocation(), Sound.VILLAGER_NO, 5.0F, 1.3F);
 
 				return;
@@ -176,7 +177,7 @@ public class HorseMountListener implements Listener {
 					&& HorseHandler.getHorseSpawned().containsValue(horse)
 					&& ((Horse) HorseHandler.getHorseSpawned().get(damager)).equals(horse)) {
 				event.setCancelled(true);
-				damager.sendMessage(ChatColor.GRAY + "You can't damage your own horse!");
+				damager.sendMessage(ConfigUtils.getFormattedValue("messages.mount.cant_damage_your_horse"));
 				damager.playSound(damager.getLocation(), Sound.VILLAGER_NO, 5.0F, 1.3F);
 
 				return;
@@ -196,7 +197,7 @@ public class HorseMountListener implements Listener {
 						: null;
 
 				if (KingdomHandler.isSimiliarKingdom(kingdomPlayer.getKingdom(), kingdomConstructor)) {
-					damager.sendMessage(ChatColor.GRAY + "You can't damage horses from your own kingdom!");
+					damager.sendMessage(ConfigUtils.getFormattedValue("messages.mount.cant_damage_your_kingdom"));
 					event.setCancelled(true);
 					damager.playSound(damager.getLocation(), Sound.VILLAGER_NO, 5.0F, 1.3F);
 
@@ -205,7 +206,7 @@ public class HorseMountListener implements Listener {
 
 				if (horse.getPassenger() != null && horse.getPassenger() instanceof Player) {
 					Player target = (Player) horse.getPassenger();
-					target.sendMessage(ChatColor.GRAY + "You got unmounted!");
+					target.sendMessage(ConfigUtils.getFormattedValue("messages.mount.got_unmounted"));
 
 					target.playSound(target.getLocation(), Sound.DIG_GRASS, 5.0F, 1.0F);
 				}

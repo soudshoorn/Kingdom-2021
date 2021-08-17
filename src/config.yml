@@ -61,6 +61,18 @@ title:
 
 messages:
   death_message: "&7[%player_kingdom%&7] &7%player_kingdom_rank%&7&7%player% is verwond door &7[%killer_kingdom%&7]&7%killer_kingdom_rank%&7&7%killer%"
+  mount:
+    no_kingdom: "&cYou cannot spawn a horse without a kingdom"
+    unmounted: "&cYou unmounted."
+    in_combat: "&cYou can't mount up in combat!"
+    players_nearby: "&cYou can't mount while enemy players are nearby!"
+    mounted: "&7Je hebt succesvol je horse gemount!"
+    on_cooldown: "&7Mounten onderbroken!"
+    not_your_horse: "&cThis is not your horse!"
+    cant_damage_mounted: "&7You can't deal damage while mounted!"
+    cant_damage_your_horse: "&7You can't damage your own horse!"
+    cant_damage_your_kingdom: "&7You can't damage horses from your own kingdom!"
+    got_umounted: "&cYou got unmounted!"
   regions:
     place: "&cYou can only place water buckets and cobweb here."
   events:
@@ -137,6 +149,8 @@ messages:
     vanish_enabled: "&6Vanish: &fEnabled"
     vanish_disabled: "&6Vanish: &fDisabled"
   freeze:
+    player_frozen: "Speler '%player%' is niet meer bevroren."
+    player_unfrozen: ""
     logged_out: "&c&l[!!!!] &f%player% &clogged out while frozen!"
     damager_frozen: "&cYou cannot attack while frozen."
     victim_frozen: "&c%player% is frozen, you cannot attack him."
