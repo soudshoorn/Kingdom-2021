@@ -20,8 +20,6 @@ import me.niko.kingdom.utils.menu.menu.Button;
 import me.niko.kingdom.utils.menu.menu.Menu;
 
 public class SelectorMenu extends Menu {
-
-	private ItemStack SELECTOR = new ItemMaker(Material.NETHER_STAR).setName("&eKingdom Selector").build();
 	
 	@Override
 	public String getTitle(Player player) {
@@ -39,7 +37,7 @@ public class SelectorMenu extends Menu {
 		
 		//if(ItemStackUtils.isSimiliar(player.getItemInHand(), SELECTOR)) {
 		try {
-			player.getInventory().removeItem(SELECTOR); 
+			player.getInventory().removeItem(ItemStackUtils.SELECTOR); 
 		} catch (Exception e) { }
 		//}
 	}

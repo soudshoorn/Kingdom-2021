@@ -27,6 +27,7 @@ import me.niko.kingdom.data.players.KingdomPlayer;
 import me.niko.kingdom.data.players.rank.KingdomRank;
 import me.niko.kingdom.data.sort.KingdomPointsSort;
 import me.niko.kingdom.utils.ConfigUtils;
+import me.niko.kingdom.utils.ItemStackUtils;
 
 public class KingdomCommand implements CommandExecutor {
 
@@ -127,7 +128,8 @@ public class KingdomCommand implements CommandExecutor {
 				
 				if (kingdom == null) {
 					kingdomPlayer.setKingdom(null);
-					
+					target.getInventory().setItem(4, ItemStackUtils.SELECTOR);
+
 					Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "spawn " + target.getName());
 					
 					kingdomPlayer.save();

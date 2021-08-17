@@ -12,6 +12,8 @@ import org.bukkit.inventory.ItemStack;
 
 public class ItemStackUtils {
 	
+	public static ItemStack SELECTOR = new ItemMaker(Material.NETHER_STAR).setName("&eKingdom Selector").build();
+	
 	public static boolean isSimiliar(ItemStack toCompare, ItemStack stack2) {
 		return toCompare != null 
 				&& toCompare.getType() == stack2.getType() 
