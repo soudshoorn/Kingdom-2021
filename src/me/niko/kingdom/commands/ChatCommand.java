@@ -62,11 +62,11 @@ public class ChatCommand implements CommandExecutor {
 				
 				Player player = (Player) sender;
 				
-				if(Kingdom.getInstance().getChat().getChatSpy().contains(player)) {
-					Kingdom.getInstance().getChat().getChatSpy().remove(player);
+				if(Kingdom.getInstance().getChat().getChatSpy().contains(player.getUniqueId())) {
+					Kingdom.getInstance().getChat().getChatSpy().remove(player.getUniqueId());
 					player.sendMessage(ChatColor.RED + "You are no longer spying the chats.");
 				} else {
-					Kingdom.getInstance().getChat().getChatSpy().add(player);
+					Kingdom.getInstance().getChat().getChatSpy().add(player.getUniqueId());
 					player.sendMessage(ChatColor.GREEN + "You are now spying the chats.");
 				}
 				

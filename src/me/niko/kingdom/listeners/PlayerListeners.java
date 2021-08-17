@@ -81,6 +81,10 @@ public class PlayerListeners implements Listener {
 			Kingdom.getLunarClientAPI().getInstance().removeWaypoint(player, waypoint);
 			KingdomHandler.getWaypointsMap().remove(player.getUniqueId());
 		}
+		
+		if(Kingdom.getInstance().getChat().getChatSpy().contains(player.getUniqueId())) {
+			Kingdom.getInstance().getChat().getChatSpy().remove(player.getUniqueId());
+		}
 	}
 	
 	@EventHandler
