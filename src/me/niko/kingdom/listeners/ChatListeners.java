@@ -131,7 +131,7 @@ public class ChatListeners implements Listener {
 				if(kingdomPlayer.getGuild() == null) {
 					player.sendMessage(ConfigUtils.getFormattedValue("messages.chat.no_guild"));
 					
-					continue;
+					return;
 				}
 				
 				Guild guild = kingdomPlayer.getGuild();
