@@ -120,12 +120,6 @@ public class ChatListeners implements Listener {
 			return;
 		}
 		
-		if(Kingdom.getInstance().getChat().isMuted()) {
-			player.sendMessage(ConfigUtils.getFormattedValue("messages.chat.muted"));
-			
-			return;
-		}
-		
 		String consoleOutput = "";
 		
 		for(Player target : event.getRecipients()) {
@@ -144,7 +138,7 @@ public class ChatListeners implements Listener {
 				
 				Guild guild = kingdomPlayer.getGuild();
 				
-				if (GuildHandler.isSimiliarGuild(guild, kingdomTarget.getGuild())) {
+				if (GuildHandler.isSimiliarGuild(guild, kingdomTarget.getGuild()) || Kingdom.getInstance().getChat().getChatSpy().contains(target)) {
 					message(player, target, event.getMessage().substring(1).trim(), "guilds", kingdomPlayer);
 					consoleOutput = "[Guilds Chat] [" +  guild.getName() + "] [" + guild.getTag() + "] " + player.getName() + ": " + event.getMessage().substring(1).trim();
 					
@@ -155,6 +149,12 @@ public class ChatListeners implements Listener {
 			}
 			
 			if(event.getMessage().startsWith("!")) { // Roleplay Chat
+				if (Kingdom.getInstance().getChat().isMuted()) {
+					player.sendMessage(ConfigUtils.getFormattedValue("messages.chat.muted"));
+					
+					return;
+				}
+				
 				message(player, target, event.getMessage().substring(1).trim(), "roleplay", kingdomPlayer);
 				consoleOutput = "[Roleplay Chat] " + player.getName() + ": " + event.getMessage().substring(1).trim();
 				
@@ -162,6 +162,12 @@ public class ChatListeners implements Listener {
 			}
 			
 			if(event.getMessage().startsWith("$")) { // Trade Chat
+				if (Kingdom.getInstance().getChat().isMuted()) {
+					player.sendMessage(ConfigUtils.getFormattedValue("messages.chat.muted"));
+					
+					return;
+				}
+				
 				message(player, target, event.getMessage().substring(1).trim(), "trade", kingdomPlayer);
 				consoleOutput = "[Trade Chat] " + player.getName() + ": " + event.getMessage().substring(1).trim();
 
@@ -169,6 +175,12 @@ public class ChatListeners implements Listener {
 			}
 			
 			if(event.getMessage().startsWith("%")) {
+				if (Kingdom.getInstance().getChat().isMuted()) {
+					player.sendMessage(ConfigUtils.getFormattedValue("messages.chat.muted"));
+					
+					return;
+				}
+				
 				if(target.hasPermission("kingdom.globalchat") || Kingdom.getInstance().getChat().getChatSpy().contains(target)) {
 					message(player, target, event.getMessage().substring(1).trim(), "others", kingdomPlayer);
 					consoleOutput = "[Restricted Chat] " + player.getName() + ": " + event.getMessage().substring(1).trim();
@@ -183,6 +195,12 @@ public class ChatListeners implements Listener {
 			
 			if(KingdomHandler.isSimiliarKingdom(kingdomPlayer.getKingdom(), kingdomTarget.getKingdom())
 					|| Kingdom.getInstance().getChat().getChatSpy().contains(target)) { //By default they will chat in their Kingdom chat
+				if (Kingdom.getInstance().getChat().isMuted()) {
+					player.sendMessage(ConfigUtils.getFormattedValue("messages.chat.muted"));
+					
+					return;
+				}
+				
 				message(player, target, event.getMessage(), "kingdom", kingdomPlayer);
 				consoleOutput = "[Kingdom Chat] [" + kingdomConstructor.getName() + "] " + player.getName() + ": " + event.getMessage().substring(1).trim();
 
