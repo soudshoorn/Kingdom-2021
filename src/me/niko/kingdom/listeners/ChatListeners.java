@@ -236,7 +236,7 @@ public class ChatListeners implements Listener {
 		
 		String format = ChatColor.translateAlternateColorCodes('&', ConfigUtils.getFormattedValue("messages.chat.formats." + type.toLowerCase() + "_chat")
 				.replaceAll("%player%", sender.getName())
-				.replaceAll("%prefix%", prefix)
+				.replaceAll("refix%", prefix)
 				.replaceAll("%suffix%", suffix)
 				.replaceAll("%guild_name%", playerGuild == null ? "None" : playerGuild.getName())
 				.replaceAll("%guild_tag%", playerGuild == null ? "None" : playerGuild.getTag())

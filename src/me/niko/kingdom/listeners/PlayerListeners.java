@@ -95,10 +95,14 @@ public class PlayerListeners implements Listener {
 			
 			KingdomPlayer kingdomPlayer = KingdomHandler.getKingdomPlayer(player);
 			
-			if(kingdomPlayer == null) {
+			if(kingdomPlayer.getKingdom() == null) {
 				new SelectorMenu().openMenu(player);
+				
+				return;
 			} else {
 				player.setItemInHand(null);
+				
+				return;
 			}
 		}
 	}

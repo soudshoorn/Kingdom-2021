@@ -4,18 +4,25 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import me.niko.kingdom.Kingdom;
 import me.niko.kingdom.data.KingdomHandler;
 import me.niko.kingdom.data.players.KingdomPlayer;
+import me.niko.kingdom.listeners.PlayerListeners;
 import me.niko.kingdom.utils.ConfigUtils;
+import me.niko.kingdom.utils.ItemMaker;
+import me.niko.kingdom.utils.ItemStackUtils;
 import me.niko.kingdom.utils.menu.menu.Button;
 import me.niko.kingdom.utils.menu.menu.Menu;
 
 public class SelectorMenu extends Menu {
 
+	private ItemStack SELECTOR = new ItemMaker(Material.NETHER_STAR).setName("&eKingdom Selector").build();
+	
 	@Override
 	public String getTitle(Player player) {
 		return ConfigUtils.getFormattedValue("selector_menu.title");
@@ -30,17 +37,11 @@ public class SelectorMenu extends Menu {
 	public void onClose(Player player) {
 		KingdomPlayer kingdomPlayer = KingdomHandler.getKingdomPlayer(player);
 		
-		if (kingdomPlayer.getKingdom() == null) {
-			new BukkitRunnable() {
-				
-				@Override
-				public void run() {
-					new SelectorMenu().openMenu(player);
-					
-					player.sendMessage(ConfigUtils.getFormattedValue("messages.kingdom.select_kingdom_before_continue"));
-				}
-			}.runTaskLaterAsynchronously(Kingdom.getInstance(), 5L);
-		}
+		//if(ItemStackUtils.isSimiliar(player.getItemInHand(), SELECTOR)) {
+		try {
+			player.getInventory().removeItem(SELECTOR); 
+		} catch (Exception e) { }
+		//}
 	}
 	
 	@Override

@@ -2,6 +2,9 @@ package me.niko.kingdom;
 
 import java.util.HashMap;
 import java.util.Map.Entry;
+
+import javax.swing.plaf.basic.BasicInternalFrameTitlePane.IconifyAction;
+
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
@@ -142,7 +145,7 @@ public class Kingdom extends JavaPlugin {
 
         getServer().getPluginManager().registerEvents(new ButtonListener(), this);
 		        
-		long saveInterval = ((20 * 60) * 20); // 20 Minutes?
+		long saveInterval = ((10 * 60) * 10); // 20 Minutes?
 		
 		new BukkitRunnable() {
 			
@@ -152,6 +155,16 @@ public class Kingdom extends JavaPlugin {
 					long started = System.currentTimeMillis();
 					
 					System.out.println("Saving all the kingdoms data...");
+					
+					int influence = players.getValue().getInfluence();
+					
+					int set = influence + 10;
+					
+					if ((set) > 1000) {
+						set = 1000; 
+					}
+					
+					players.getValue().setInfluence(set);
 					
 					players.getValue().save();
 					

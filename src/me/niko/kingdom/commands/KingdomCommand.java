@@ -17,6 +17,7 @@ import org.bukkit.craftbukkit.v1_8_R3.command.ServerCommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import com.avaje.ebeaninternal.server.el.ElSetValue;
 import com.sk89q.worldguard.blacklist.target.Target;
 
 import me.niko.kingdom.Kingdom;
@@ -113,12 +114,37 @@ public class KingdomCommand implements CommandExecutor {
 				
 				KingdomConstructor kingdom = new KingdomConstructor(kingdomName);
 				
-				if(!kingdom.doesExists()) {
-					sender.sendMessage(ChatColor.RED + "Kingdom named '" + kingdomName + "' does not exists.");
-					return true;
+				if(kingdomName.equals("null")) {
+					kingdom = null;
+				} else {
+					if(!kingdom.doesExists()) {
+						sender.sendMessage(ChatColor.RED + "Kingdom named '" + kingdomName + "' does not exists.");
+						return true;
+					}
 				}
 				
 				KingdomConstructor oldKingom = kingdomPlayer.getKingdom();
+				
+				if (kingdom == null) {
+					kingdomPlayer.setKingdom(null);
+					
+					Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "spawn " + target.getName());
+					
+					kingdomPlayer.save();
+					
+					target.sendMessage(ConfigUtils.getFormattedValue("messages.kingdom.set.target")
+							.replaceAll("%old_kingdom%", oldKingom == null ? "None" : oldKingom.getDisplayName())
+							.replaceAll("%new_kingdom%", kingdom == null ? "None" : kingdom.getDisplayName()));
+					
+					Bukkit.broadcastMessage(ConfigUtils.getFormattedValue("messages.kingdom.set.broadcast")
+							.replaceAll("%player%", target.getName())
+							.replaceAll("%old_kingdom%", oldKingom == null ? "None" : oldKingom.getDisplayName())
+							.replaceAll("%new_kingdom%", kingdom == null ? "None" : kingdom.getDisplayName()));
+					
+					KingdomHandler.addOnlinePlayer(target, kingdomPlayer.getKingdom());
+
+					return true;
+				}
 				
 				kingdomPlayer.setKingdom(kingdom);
 				
@@ -138,7 +164,7 @@ public class KingdomCommand implements CommandExecutor {
 						.replaceAll("%new_kingdom%", kingdom == null ? "None" : kingdom.getDisplayName()));
 				
 				KingdomHandler.addOnlinePlayer(target, kingdomPlayer.getKingdom());
-				
+
 				break;
 			}
 			
