@@ -21,8 +21,6 @@ import me.niko.kingdom.data.players.KingdomPlayer;
 import me.niko.kingdom.guilds.Guild;
 import me.niko.kingdom.guilds.GuildHandler;
 import me.niko.kingdom.utils.ConfigUtils;
-import ru.tehkode.permissions.PermissionUser;
-import ru.tehkode.permissions.bukkit.PermissionsEx;
 
 public class ChatListeners implements Listener {
 	
@@ -221,18 +219,11 @@ public class ChatListeners implements Listener {
 		
 		//prefix = ChatColor.GRAY + "[" + type.toUpperCase().charAt(0) + type.substring(1).trim() + "] ";
 		
-		/*
-		 * TODO: PEX SUPPORT
-		 * 
-		 */
-		
-		if(Kingdom.getInstance().getServer().getPluginManager().isPluginEnabled("PermissionsEx")) {
-			PermissionUser user = PermissionsEx.getUser(sender);
+		if(Kingdom.getInstance().getServer().getPluginManager().isPluginEnabled("Vault")) {			
+			prefix = Kingdom.getVaultChat().getPlayerPrefix(sender);
 			
-			prefix = user.getPrefix();
-			
-			if(!user.getSuffix().isEmpty()) {
-				suffix = user.getSuffix();
+			if(!Kingdom.getVaultChat().getPlayerSuffix(sender).isEmpty()) {
+				suffix = Kingdom.getVaultChat().getPlayerSuffix(sender);
 			}
 		}
 		

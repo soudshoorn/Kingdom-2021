@@ -6,10 +6,10 @@ import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import com.google.common.annotations.Beta;
 import com.lunarclient.bukkitapi.LunarClientAPI;
 import com.sk89q.worldedit.bukkit.WorldEditPlugin;
 
@@ -52,6 +52,7 @@ import me.niko.kingdom.scoreboard.ScoreboardAdapter;
 import me.niko.kingdom.staffmode.StaffModeHandler;
 import me.niko.kingdom.staffmode.StaffModeListener;
 import me.niko.kingdom.utils.menu.menu.ButtonListener;
+import net.milkbowl.vault.chat.Chat;
 import net.minelink.ctplus.CombatTagPlus;
 
 public class Kingdom extends JavaPlugin {
@@ -71,7 +72,8 @@ public class Kingdom extends JavaPlugin {
 	@Getter public static LunarClientAPI lunarClientAPI;
 
 	@Getter public static boolean beta;
-	
+    @Getter private static Chat vaultChat = null;
+
 	public void onEnable() {
 		instance = this;
 
@@ -89,6 +91,8 @@ public class Kingdom extends JavaPlugin {
 		
 		combatTagPlus = (CombatTagPlus) Bukkit.getPluginManager().getPlugin("CombatTagPlus");
 		worldEdit = (WorldEditPlugin) Bukkit.getPluginManager().getPlugin("WorldEdit");
+		
+		setupChat();
 		
 		hell = new HellHandler();
 		chat = new ChatHandler();
@@ -177,4 +181,10 @@ public class Kingdom extends JavaPlugin {
 		
 		instance = null;
 	}
+	
+	private boolean setupChat() {
+        RegisteredServiceProvider<Chat> rsp = getServer().getServicesManager().getRegistration(Chat.class);
+        vaultChat = rsp.getProvider();
+        return vaultChat != null;
+    }
 }
