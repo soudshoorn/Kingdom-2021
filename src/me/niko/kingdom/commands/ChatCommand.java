@@ -1,7 +1,5 @@
 package me.niko.kingdom.commands;
 
-import javax.swing.plaf.basic.BasicInternalFrameTitlePane.IconifyAction;
-
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -10,6 +8,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import me.niko.kingdom.Kingdom;
+import me.niko.kingdom.utils.ConfigUtils;
 
 public class ChatCommand implements CommandExecutor {
 	
@@ -35,7 +34,8 @@ public class ChatCommand implements CommandExecutor {
 				String type = Kingdom.getInstance().getChat().isMuted() ? "unmuted" : "muted";
 				Kingdom.getInstance().getChat().setMuted(!Kingdom.getInstance().getChat().isMuted());
 
-				Bukkit.broadcastMessage(ChatColor.RED + "The chat has been " + type + " by " + sender.getName());
+				Bukkit.broadcastMessage(ConfigUtils.getFormattedValue("message.chat.has_been_" + type)
+						.replaceAll("%player%", sender.getName()));
 				
 				break;
 			case "clear":
@@ -43,7 +43,7 @@ public class ChatCommand implements CommandExecutor {
 				for(Player target : Bukkit.getOnlinePlayers()) {
 					
 					if(target.hasPermission("kingdom.clear.bypass")) {
-						target.sendMessage(ChatColor.GREEN + "You bypassed the chat clear because you've got a specific permission.");
+						target.sendMessage(ConfigUtils.getFormattedValue("message.chat.bypass_clear"));
 						
 						continue;
 					}
@@ -51,7 +51,8 @@ public class ChatCommand implements CommandExecutor {
 					target.sendMessage(new String[101]);
 				}
 				
-				Bukkit.broadcastMessage(ChatColor.RED + "The chat has been cleared by " + sender.getName());
+				Bukkit.broadcastMessage(ConfigUtils.getFormattedValue("message.chat.chat_clear")
+						.replaceAll("%player%", sender.getName()));
 				
 				break;
 			case "spy":

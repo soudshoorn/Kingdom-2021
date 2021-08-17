@@ -165,6 +165,10 @@ messages:
     - "&6Influence &f%influence%"
     - "&6Kingdom &f%kingdom%"
   chat:
+    has_been_muted: "&cThe chat has been muted by %player%"
+    has_been_unmuted: "&cThe chat has been unmuted by %player%"
+    chat_clear: "&cThe chat has been cleared by %player%"
+    bypass_clear: "&aYou bypassed the chat clear because you've got a specific permission."
     muted: "&cThe chat is currently muted!"
     no_guild: "&cYou don't have a guild to chat with!"
     no_kingdom: "&cYou don't have a kingdom to chat, select one to have more features!"
