@@ -120,7 +120,7 @@ public class HorseHandler {
 				continue;
 			}
 
-			if (KingdomHandler.isSimiliarKingdom(kingdomPlayer.getKingdom(), kingdomTarget.getKingdom())) {
+			if (!KingdomHandler.isSimiliarKingdom(kingdomPlayer.getKingdom(), kingdomTarget.getKingdom())) {
 				isNearby = true;
 				break;
 			}
