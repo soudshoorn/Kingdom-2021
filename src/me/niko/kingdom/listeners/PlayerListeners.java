@@ -241,13 +241,13 @@ public class PlayerListeners implements Listener {
 	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
 	public void onCraft(PrepareItemCraftEvent event) {
 		if(event.getInventory().getType() == InventoryType.CRAFTING || event.getInventory().getType() == InventoryType.WORKBENCH) {
+			
 			if(event.getRecipe().getResult().getType() == Material.REDSTONE) {
 				event.getInventory().setResult(new ItemStack(Material.COOKED_BEEF, 64));
 			} else if(event.getRecipe().getResult().getType() == Material.BEACON) {
 				event.getInventory().setResult(new ItemStack(Material.AIR, 64));
 			}
 		}
-
 	}
 
 }
