@@ -10,6 +10,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.inventory.InventoryType;
+import org.bukkit.event.inventory.PrepareItemCraftEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -234,6 +236,18 @@ public class PlayerListeners implements Listener {
 				return;
 			}
 		}
+	}
+	
+	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+	public void onCraft(PrepareItemCraftEvent event) {
+		if(event.getInventory().getType() == InventoryType.CRAFTING || event.getInventory().getType() == InventoryType.WORKBENCH) {
+			if(event.getRecipe().getResult().getType() == Material.REDSTONE) {
+				event.getInventory().setResult(new ItemStack(Material.COOKED_BEEF, 64));
+			} else if(event.getRecipe().getResult().getType() == Material.BEACON) {
+				event.getInventory().setResult(new ItemStack(Material.AIR, 64));
+			}
+		}
+
 	}
 
 }
