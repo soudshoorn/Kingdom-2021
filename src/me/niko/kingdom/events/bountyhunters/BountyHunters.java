@@ -27,6 +27,7 @@ import me.niko.kingdom.data.KingdomConstructor;
 import me.niko.kingdom.data.KingdomHandler;
 import me.niko.kingdom.data.players.KingdomPlayer;
 import me.niko.kingdom.events.EventConstants;
+import me.niko.kingdom.utils.ConfigUtils;
 
 public class BountyHunters {
 	@Getter private String name;
@@ -85,7 +86,8 @@ public class BountyHunters {
 							if(getTime(zone) <= 0) {
 								setTime(defaultCapTime, zone);
 								
-								player.sendMessage(ChatColor.GREEN + "You have captured " + zone.toUpperCase() + " capture zone go to another one.");
+								player.sendMessage(ConfigUtils.getFormattedValue("messages.events.bounty_hunters.capped")
+										.replaceAll("%zone%", zone.toUpperCase()));
 								
 								cappedZone.put(zone, kingdom);
 								
@@ -119,7 +121,8 @@ public class BountyHunters {
 						
 						if(onCapPlayers.size() != 0) {
 							setCapper(onCapPlayers.get(0).getName(), zone);
-							onCapPlayers.get(0).sendMessage(ChatColor.GREEN + "You are capping " + zone.toUpperCase());
+							onCapPlayers.get(0).sendMessage(ConfigUtils.getFormattedValue("messages.events.bounty_hunters.capping")
+									.replaceAll("%zone%", zone.toUpperCase()));
 							setTime(defaultCapTime, zone);
 						}
 					}
@@ -127,7 +130,11 @@ public class BountyHunters {
 			}
 		}.runTaskTimer(Kingdom.getInstance(), 20L, 20L);
 		
-		Bukkit.broadcastMessage(ChatColor.GREEN + "BountyHunters event has been started.");
+		//Bukkit.broadcastMessage(ChatColor.GREEN + "BountyHunters event has been started.");
+		
+		ConfigUtils.getFormattedValueList("messages.events.bounty_hunters.started_broadcast")
+				.forEach(m -> Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', m)));
+		
 		//KingdomPlugin.r.attackManager = false;
 		Kingdom.getInstance().getEventConstants().getActiveBountyHunters().add(this);
 	}
@@ -150,22 +157,27 @@ public class BountyHunters {
 	}
 	
 	public void handleWinner(Player player) {
-		Bukkit.broadcastMessage(ChatColor.GRAY.toString() + ChatColor.STRIKETHROUGH + "------------------------------------");
-		Bukkit.broadcastMessage(ChatColor.GREEN + "BountyHunters END");
-		Bukkit.broadcastMessage("");
-		Bukkit.broadcastMessage(ChatColor.GREEN + "     Winners");
-		Bukkit.broadcastMessage("");
-		
 		int position = 1;
-		for(Entry<String, KingdomConstructor> entry : cappedZone.entrySet()) {
-			String zone = entry.getKey();
-			KingdomConstructor kingdom = entry.getValue();
+
+		for(String line : ConfigUtils.getFormattedValueList("messages.events.bounty_hunters.ended_broadcast")) {
+			if(line.contains("%format%")) {
+				for(Entry<String, KingdomConstructor> entry : cappedZone.entrySet()) {
+					position++;
+					String zone = entry.getKey();
+					KingdomConstructor kingdom = entry.getValue();
+					
+					//Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', "&c&l" + (position++) + ". " + kingdom.getDisplayName()));//KingdomPlugin.r.getPlayerKingdomWithColor(kingdom)));
+					
+					Bukkit.broadcastMessage(ConfigUtils.getFormattedValue("messages.events.bounty_hunters.winners_format")
+							.replaceAll("%position%", position + "")
+							.replaceAll("%kingdom%", kingdom.getDisplayName()));
+				}
+				
+				continue;
+			}
 			
-			Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', "&c&l" + (position++) + ". " + kingdom.getDisplayName()));//KingdomPlugin.r.getPlayerKingdomWithColor(kingdom)));
+			Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', line));
 		}
-		
-		Bukkit.broadcastMessage("");
-		Bukkit.broadcastMessage(ChatColor.GRAY.toString() + ChatColor.STRIKETHROUGH + "------------------------------------");
 		
 		stop();
 	}

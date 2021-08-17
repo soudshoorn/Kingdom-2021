@@ -27,7 +27,26 @@ settings:
   home_timer: 10 # in seconds
   beta_mode: false
   use_materials:
-    - "ANVIL"
+    - "CHEST"
+    - "LAVA_BUCKET"
+    - "TRAP_DOOR"
+    - "IRON_TRAPDOOR"
+    - "STATIONARY_LAVA"
+    - "LAVA"
+    - "IRON_DOOR"
+    - "TRAPPED_CHEST"
+    - "SPRUCE_DOOR"
+    - "DARK_OAK_DOOR"
+    - "ACACIA_DOOR"
+    - "JUNGLE_DOOR"
+    - "BIRCH_DOOR"
+    - "WOODEN_DOOR"
+    - "WOOD_PLATE"
+    - "STONE_PLATE"
+    - "GOLD_PLATE"
+    - "IRON_PLATE"
+    - "WOOD_BUTTON"
+    - "STONE_BUTTON"
 
 donkey:
   speed: 0.3
@@ -41,6 +60,63 @@ title:
   subtitle: "&f%kingdom%"
 
 messages:
+  death_message: "&7[%player_kingdom%&7] &7%player_kingdom_rank%&7&7%player% is verwond door &7[%killer_kingdom%&7]&7%killer_kingdom_rank%&7&7%killer%"
+  regions:
+    place: "&cYou can only place water buckets and cobweb here."
+  events:
+    bounty_hunters:
+      capping: "&cYou are capping %zone%."
+      capped: "&cYou have capped %zone% move to another one to continue."
+      started_broadcast:
+        - "&aEvent has started"
+        - "  &7- &fBounty Hunters"
+      winners_format: "&f%position%&7. &f%kingdom%"
+      ended_broadcast:
+        - "&cEvent has ended!"
+        - "  - Winners"
+        - "%format%"
+    conquest:
+      capping: "&cYou are capping %zone%."
+      capped: "&cYou have capped %zone% and got a point move to another for another point."
+      started_broadcast:
+        - "&aEvent has started"
+        - "  &7- &fConquest"
+      ended_broadcast:
+        - "&cEvent has ended!"
+        - "  - Winners: %kingdom%"
+        - "  - Last cap by %player%"
+    break_the_core:
+      started_broadcast:
+        - "&aEvent has started"
+        - "  &7- &fBreak the Core"
+      ended_broadcast:
+        - "&cEvent has ended!"
+        - "  - Winners: %kingdom%"
+        - "  - Last Break was by %player%"
+    koth:
+      capping: "&cYou are capping koth %koth%"
+      started_broadcast:
+        - "&aEvent has started"
+        - "  &7- &fKoth %koth%"
+      ended_broadcast:
+        - "&cEvent has ended!"
+        - "  - Winners: %kingdom%"
+        - "  - Last Break was by %player%"
+    war:
+      started_broadcast:
+        - "&aEvent has started"
+        - "  &7- &fWar"
+      winners_format: "&7%position%. &f%kingdom% &7- &f%kills% &7Kills"
+      ended_broadcast:
+        - "&cEvent has ended!"
+        - "  - Winners: %kingdom%"
+        - ""
+        - "%format%"
+  influence:
+    type:
+      breaking: "&cThis action costed you %influence%. New balance %new_influence%"
+      interacting: "&cThis action costed you %influence%. New balance %new_influence%"
+      placing: "&cThis action costed you %influence%. New balance %new_influence%"
   tordisti:
     player_leave: "&cLeave the Tordisti before you die from the Wither."
     time_to_leave: "&cYou have %time% minutes left to leave Tordisti."

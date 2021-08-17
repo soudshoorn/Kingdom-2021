@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
@@ -30,7 +31,7 @@ public class GuildMenu extends Menu {
 	
 	@Override
 	public String getTitle(Player player) {
-		return "&8Guild Menu";
+		return ChatColor.DARK_GRAY + "Guild Menu";
 	}
 	
 	@Override

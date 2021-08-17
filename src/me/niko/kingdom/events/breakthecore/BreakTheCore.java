@@ -15,6 +15,7 @@ import lombok.Setter;
 import me.niko.kingdom.Kingdom;
 import me.niko.kingdom.data.KingdomConstructor;
 import me.niko.kingdom.data.KingdomHandler;
+import me.niko.kingdom.utils.ConfigUtils;
 import me.niko.kingdom.utils.LocationUtils;
 
 public class BreakTheCore {
@@ -72,6 +73,9 @@ public class BreakTheCore {
 			breaks.put(kingdom, this.health);
 		}
 		
+		ConfigUtils.getFormattedValueList("messages.events.break_the_core.ended_broadcast")
+				.forEach(m -> Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', m)));
+		
 		Kingdom.getInstance().getEventConstants().getActiveBTCs().add(this);
 	}
 	
@@ -97,13 +101,10 @@ public class BreakTheCore {
 	}
 
 	public void handleWinner(Player player, KingdomConstructor kingdom) {
-		Bukkit.broadcastMessage(ChatColor.GRAY.toString() + ChatColor.STRIKETHROUGH + "------------------------------------");
-		Bukkit.broadcastMessage(ChatColor.GREEN + "BTC END.");
-		Bukkit.broadcastMessage("");
-		Bukkit.broadcastMessage(ChatColor.GREEN + "Kingdom Winner: " + kingdom.getDisplayName());
-		Bukkit.broadcastMessage(ChatColor.YELLOW + "Player who broke the last block: " + player.getName());
-		Bukkit.broadcastMessage("");
-		Bukkit.broadcastMessage(ChatColor.GRAY.toString() + ChatColor.STRIKETHROUGH + "------------------------------------");
+		ConfigUtils.getFormattedValueList("messages.events.break_the_core.started_broadcast")
+				.forEach(m -> Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', m
+						.replaceAll("%kingdom%", kingdom.getDisplayName())
+						.replaceAll("%player%", player.getName()))));
 		
 		this.winnerKingdom = kingdom;
 		this.winnerPlayer = player.getName();

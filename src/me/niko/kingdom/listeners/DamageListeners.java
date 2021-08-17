@@ -1,7 +1,5 @@
 package me.niko.kingdom.listeners;
 
-import javax.swing.plaf.basic.BasicInternalFrameTitlePane.IconifyAction;
-
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
@@ -11,9 +9,11 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 
+import me.niko.kingdom.Kingdom;
 import me.niko.kingdom.data.KingdomConstructor;
 import me.niko.kingdom.data.KingdomHandler;
 import me.niko.kingdom.data.players.KingdomPlayer;
+import me.niko.kingdom.data.players.rank.KingdomRank;
 import me.niko.kingdom.events.war.WarHandler;
 import me.niko.kingdom.utils.ConfigUtils;
 
@@ -43,12 +43,21 @@ public class DamageListeners implements Listener {
 		kingdomPlayer.setDeaths(kingdomPlayer.getDeaths() - 1);
 		KingdomConstructor kingdomConstructor2 = kingdomPlayer.getKingdom();
 		
+		/*
+		 * Only losing a point when died to player. moved in the if statement
+		 * 
 		if(kingdomConstructor2 != null) {
 			kingdomConstructor2.setPoints(kingdomConstructor2.getPoints() - 1);
-		}
+		}*/
 		
 		kingdomPlayer.save();
 		kingdomConstructor2.save();
+		
+		if(Kingdom.getInstance().isBeta()) {
+			player.getInventory().clear();
+			event.getDrops().clear();
+			event.setDroppedExp(0);
+		}
 		
 		if(player.getKiller() != null) {
 			
@@ -61,10 +70,22 @@ public class DamageListeners implements Listener {
 			
 			kingdomKiller.setKills(kingdomKiller.getKills() + 1);
 			
+			event.setDeathMessage(ConfigUtils.getFormattedValue("messages.death_message")
+					.replaceAll("%player_kingdom%", kingdomPlayer.getKingdom().getDisplayName())
+					.replaceAll("%player_kills%", kingdomPlayer.getKills() + "")
+					.replaceAll("%player_kingdom_rank%", KingdomHandler.getRanks().get(kingdomPlayer.getKingdomRank()).getPrefix())
+					.replaceAll("%killer_kingdom%", kingdomKiller.getKingdom().getDisplayName())
+					.replaceAll("%killer_kills%", kingdomKiller.getKills() + "")
+					.replaceAll("%killer_kingdom_rank%", KingdomHandler.getRanks().get(kingdomKiller.getKingdomRank()).getPrefix()));					
+						
 			KingdomConstructor kingdomConstructor = kingdomKiller.getKingdom();
 			
 			if(kingdomConstructor != null) {
 				kingdomConstructor.setPoints(kingdomConstructor.getPoints() + 1);
+			}
+			
+			if(kingdomConstructor2 != null) {
+				kingdomConstructor2.setPoints(kingdomConstructor2.getPoints() - 1);
 			}
 			
 			kingdomKiller.save();

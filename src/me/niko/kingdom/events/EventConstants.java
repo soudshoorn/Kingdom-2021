@@ -7,6 +7,7 @@ import me.niko.kingdom.events.bountyhunters.BountyHunters;
 import me.niko.kingdom.events.breakthecore.BreakTheCore;
 import me.niko.kingdom.events.conquest.Conquest;
 import me.niko.kingdom.events.koth.Koth;
+import me.niko.kingdom.events.war.WarHandler;
 
 
 public class EventConstants {
@@ -39,6 +40,10 @@ public class EventConstants {
 		
 		for(Koth koth : this.activeKoths) {
 			koth.stop();
+		}
+		
+		if(WarHandler.isEnabled()) {
+			WarHandler.stop();
 		}
 	}
 	

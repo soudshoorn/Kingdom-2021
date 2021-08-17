@@ -170,11 +170,11 @@ public class ScoreboardAdapter implements AssembleAdapter {
 			for(String line : Kingdom.getInstance().getConfig().getStringList("scoreboard_settings.war_lines")) {
 				int totalDeaths = 0;
 				
-				for(int deaths : WarHandler.getKills().values()) {
+				for(int deaths : WarHandler.getWarKills().values()) {
 					totalDeaths += deaths;
 				}
 				
-				Set<Entry<String, Integer>> set = WarHandler.getKills().entrySet();
+				Set<Entry<String, Integer>> set = WarHandler.getWarKills().entrySet();
 		        List<Entry<String, Integer>> list = new ArrayList<>(set);
 		        
 		        Collections.sort(list, new Comparator<Map.Entry<String, Integer>>() {

@@ -22,6 +22,7 @@ import me.niko.kingdom.Kingdom;
 import me.niko.kingdom.data.KingdomConstructor;
 import me.niko.kingdom.data.KingdomHandler;
 import me.niko.kingdom.data.players.KingdomPlayer;
+import me.niko.kingdom.utils.ConfigUtils;
 
 public class Koth {
 	@Getter private String name;
@@ -102,7 +103,7 @@ public class Koth {
 						Player capper = onCapPlayers.get(0);
 						
 						setCapper(capper.getName());
-						capper.sendMessage(ChatColor.GREEN + "You are capping " + name.toUpperCase());
+						capper.sendMessage(ConfigUtils.getFormattedValue("messages.events.koth.capping").replaceAll("%koth%", name.toUpperCase()));
 						
 						setTime(defaultCapTime);
 					}
@@ -110,7 +111,10 @@ public class Koth {
 			}
 		}.runTaskTimer(Kingdom.getInstance(), 20L, 20L);
 		
-		Bukkit.broadcastMessage(ChatColor.GREEN + "Koth started.");
+		ConfigUtils.getFormattedValueList("messages.events.koth.started_broadcast")
+			.forEach(m -> Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', m.replaceAll("%koth%", this.name.toUpperCase()))));
+		
+		
 		Kingdom.getInstance().getEventConstants().getActiveKoths().add(this);
 	}
 	
@@ -124,13 +128,10 @@ public class Koth {
 	}
 	
 	public void handleWinner(Player player, KingdomConstructor kingdom) {
-		Bukkit.broadcastMessage(ChatColor.GRAY.toString() + ChatColor.STRIKETHROUGH + "------------------------------------");
-		Bukkit.broadcastMessage(ChatColor.GREEN + "Koth END");
-		Bukkit.broadcastMessage("");
-		Bukkit.broadcastMessage(ChatColor.GREEN + "Kingdom Winner: " + kingdom.getDisplayName());
-		Bukkit.broadcastMessage(ChatColor.YELLOW + "Player who capped " + player.getName());
-		Bukkit.broadcastMessage("");
-		Bukkit.broadcastMessage(ChatColor.GRAY.toString() + ChatColor.STRIKETHROUGH + "------------------------------------");
+		ConfigUtils.getFormattedValueList("messages.events.koth.ended_broadcast")
+				.forEach(m -> Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', m
+						.replaceAll("%kingdom%", kingdom.getDisplayName())
+						.replaceAll("%player%", player.getName()))));
 		
 		stop();
 	}

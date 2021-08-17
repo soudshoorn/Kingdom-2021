@@ -26,6 +26,7 @@ import me.niko.kingdom.data.KingdomConstructor;
 import me.niko.kingdom.data.KingdomHandler;
 import me.niko.kingdom.data.players.KingdomPlayer;
 import me.niko.kingdom.events.EventConstants;
+import me.niko.kingdom.utils.ConfigUtils;
 
 public class Conquest {
 
@@ -172,8 +173,8 @@ public class Conquest {
 								
 								addPoints(player, zone, 1);
 								
-								player.sendMessage(ChatColor.GREEN + "You have captured an point on cap " + zone.toUpperCase() + " go to another one to get another point.");
-								player.sendMessage(ChatColor.RED + "You can't capture one cap twice in a row.");
+								player.sendMessage(ConfigUtils.getFormattedValue("messages.events.conquest.capped")
+										.replaceAll("%zone%", zone.toUpperCase()));
 								
 								//resetBlocks(zone);
 								
@@ -203,7 +204,8 @@ public class Conquest {
 						
 						if(onCapPlayers.size() != 0) {
 							setCapper(onCapPlayers.get(0).getName(), zone);
-							onCapPlayers.get(0).sendMessage(ChatColor.GREEN + "You are capping " + zone.toUpperCase());
+							onCapPlayers.get(0).sendMessage(ConfigUtils.getFormattedValue("messages.events.conquest.capping")
+									.replaceAll("%zone%", zone.toUpperCase()));
 							setTime(defaultCapTime, zone);
 						}
 					}
@@ -268,7 +270,8 @@ public class Conquest {
 			}
 		}.runTaskTimer(Kingdom.getInstance(), 20L, 20L);
 		
-		Bukkit.broadcastMessage(ChatColor.GREEN + "Conquest started.");
+		ConfigUtils.getFormattedValueList("messages.events.conquest.started_broadcast")
+			.forEach(m -> Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', m)));
 		Kingdom.getInstance().getEventConstants().getActiveConquests().add(this);
 	}
 	
@@ -309,13 +312,10 @@ public class Conquest {
 	}
 	
 	public void handleWinner(Player player, KingdomConstructor kingdom) {
-		Bukkit.broadcastMessage(ChatColor.GRAY.toString() + ChatColor.STRIKETHROUGH + "------------------------------------");
-		Bukkit.broadcastMessage(ChatColor.GREEN + "Conquest END");
-		Bukkit.broadcastMessage("");
-		Bukkit.broadcastMessage(ChatColor.GREEN + "Kingdom Winner: " + kingdom.getDisplayName()); //KingdomPlugin.r.getPlayerKingdomWithColor(kingdom));
-		Bukkit.broadcastMessage(ChatColor.YELLOW + "Player who capped the last point " + player.getName());
-		Bukkit.broadcastMessage("");
-		Bukkit.broadcastMessage(ChatColor.GRAY.toString() + ChatColor.STRIKETHROUGH + "------------------------------------");
+		ConfigUtils.getFormattedValueList("messages.events.conquest.ended_broadcast")
+				.forEach(m -> Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', m
+						.replaceAll("%kingdom%", kingdom.getDisplayName())
+						.replaceAll("%player%", player.getName()))));
 		
 		stop();
 	}

@@ -22,6 +22,7 @@ import lombok.Getter;
 import me.niko.kingdom.Kingdom;
 import me.niko.kingdom.data.players.KingdomPlayer;
 import me.niko.kingdom.data.players.rank.KingdomRank;
+import me.niko.kingdom.utils.ConfigUtils;
 
 public class KingdomHandler {
 	
@@ -213,6 +214,10 @@ public class KingdomHandler {
         		kingdomPlayer.save();
         		
         		String type = build == 0 ? "building" : build == 1 ? "breaking" : "interacting";
+        		
+        		player.sendMessage(ConfigUtils.getFormattedValue("messages.influence.types." + type + "")
+        				.replaceAll("%influence%", price + "")
+        				.replaceAll("%new_influence%", kingdomPlayer.getInfluence() + ""));
         		
         		player.sendMessage(ChatColor.RED + "" + price + " has been taken from your account for " + type + ". New influence " + kingdomPlayer.getInfluence());
         	}

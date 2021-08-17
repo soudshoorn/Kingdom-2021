@@ -1,7 +1,5 @@
 package me.niko.kingdom.listeners;
 
-import javax.swing.plaf.basic.BasicInternalFrameTitlePane.IconifyAction;
-
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Color;
@@ -22,8 +20,6 @@ import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import com.avaje.ebeaninternal.server.cluster.mcast.Message;
-import com.avaje.ebeaninternal.server.el.ElSetValue;
 import com.lunarclient.bukkitapi.object.LCWaypoint;
 
 import me.niko.kingdom.Kingdom;
@@ -152,6 +148,17 @@ public class PlayerListeners implements Listener {
 		KingdomPlayer kingdomPlayer = KingdomHandler.getKingdomPlayer(player);
 		
 		if(kingdomPlayer.getKingdom() != null) {
+			
+			if(Kingdom.getInstance().isBeta()) {
+				new BukkitRunnable() {
+	
+					@Override
+					public void run() {
+						Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "kit beta " + player.getName());
+					}
+	        	}.runTaskLater(Kingdom.getInstance(), 20);
+			}
+			
 			KingdomConstructor kingdoms = kingdomPlayer.getKingdom();
 			
 			if(kingdoms.doesExists()) {
@@ -200,7 +207,7 @@ public class PlayerListeners implements Listener {
 				Kingdom.getLunarClientAPI().getInstance().sendWaypoint(player, waypoint);
 				KingdomHandler.getWaypointsMap().put(player.getUniqueId(), waypoint);
 				
-				new BukkitRunnable() {
+				/*new BukkitRunnable() {
 					final LCWaypoint mainWaypoint = waypoint;
 					@Override
 					public void run() {
@@ -219,7 +226,7 @@ public class PlayerListeners implements Listener {
 							cancel();
 						}
 					}
-				}.runTaskLater(Kingdom.getInstance(), 20 * 60); // 1 Minute and clear it!
+				}.runTaskLater(Kingdom.getInstance(), 20 * 60); // 1 Minute and clear it!*/
 				
 			} else {
 				player.sendMessage(ChatColor.RED + "That player is no longer online!");

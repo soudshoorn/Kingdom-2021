@@ -5,13 +5,12 @@ import java.util.List;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.DyeColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
+import me.niko.kingdom.data.KingdomColor;
 import me.niko.kingdom.data.KingdomHandler;
 import me.niko.kingdom.data.players.KingdomPlayer;
-import me.niko.kingdom.utils.BlockColor;
 
 public class Nametags implements NametagAdapter {
 	
@@ -23,18 +22,14 @@ public class Nametags implements NametagAdapter {
 		for (Player target : Bukkit.getOnlinePlayers()) {
 			
 			KingdomPlayer kingdomTarget = KingdomHandler.getKingdomPlayer(target);
-			ChatColor color = ChatColor.WHITE;
+			String color = ChatColor.WHITE.toString();
 			boolean friendly = KingdomHandler.isSimiliarKingdom(kingdomPlayer.getKingdom(), kingdomTarget.getKingdom());
 			
 			if(kingdomTarget.getKingdom() != null) {
-				color = BlockColor.getChatColor(Material.WOOL, kingdomTarget.getKingdom().getWoolData());
-				
-				if(color == ChatColor.BLACK) {
-					color = ChatColor.WHITE;
-				}
+				color = KingdomColor.fromWoolToChatColor(kingdomTarget.getKingdom().getWoolData());
 			}
 			
-			nametags.add(new BufferedNametag(target.getName(), color.toString(), "", friendly, target));
+			nametags.add(new BufferedNametag(target.getName(), color, "", friendly, target));
 		}
 		
 		return nametags;

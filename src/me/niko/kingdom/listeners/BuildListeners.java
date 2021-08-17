@@ -21,6 +21,7 @@ import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import me.niko.kingdom.Kingdom;
 import me.niko.kingdom.data.KingdomHandler;
 import me.niko.kingdom.data.players.KingdomPlayer;
+import me.niko.kingdom.utils.ConfigUtils;
 
 public class BuildListeners implements Listener {
 	
@@ -45,7 +46,7 @@ public class BuildListeners implements Listener {
 					}
 						
 					default: {
-						player.sendMessage(ChatColor.RED + "You can only place water buckets and cobweb here.");
+						player.sendMessage(ConfigUtils.getFormattedValue("messages.regions.place"));
 						event.setCancelled(true);
 						
 						break;
@@ -56,9 +57,7 @@ public class BuildListeners implements Listener {
 		}
 		
 		
-		if(KingdomHandler.influenceCheck(player, 0, player.getLocation(), event.getBlock())) {
-			player.sendMessage(ChatColor.RED + "You don't have enough influence to build here.");
-			
+		if(KingdomHandler.influenceCheck(player, 0, player.getLocation(), event.getBlock())) {			
 			event.setCancelled(true);
 		}
 		
@@ -84,9 +83,7 @@ public class BuildListeners implements Listener {
         	}
         }
 		
-		if(KingdomHandler.influenceCheck(player, 1, player.getLocation(), event.getBlock())) {
-			player.sendMessage(ChatColor.RED + "You don't have enough influence to build here.");
-			
+		if(KingdomHandler.influenceCheck(player, 1, player.getLocation(), event.getBlock())) {			
 			event.setCancelled(true);
 		}
 		
@@ -133,7 +130,7 @@ public class BuildListeners implements Listener {
 
 		if (event.getAction() == Action.RIGHT_CLICK_BLOCK && allowed.contains(event.getClickedBlock().getType())
 				&& KingdomHandler.influenceCheck(player, 2, player.getLocation(), event.getClickedBlock())) {
-			player.sendMessage(ChatColor.RED + "Je hebt te weinig influence hiervoor.");
+			//player.sendMessage(ChatColor.RED + "Je hebt te weinig influence hiervoor.");
 			event.setCancelled(true);
 		}
 	}

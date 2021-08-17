@@ -9,6 +9,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import com.google.common.annotations.Beta;
 import com.lunarclient.bukkitapi.LunarClientAPI;
 import com.sk89q.worldedit.bukkit.WorldEditPlugin;
 
@@ -42,6 +43,7 @@ import me.niko.kingdom.listeners.DamageListeners;
 import me.niko.kingdom.listeners.HorseMountListener;
 import me.niko.kingdom.listeners.PlayerListeners;
 import me.niko.kingdom.listeners.PortalListener;
+import me.niko.kingdom.listeners.WorldListener;
 import me.niko.kingdom.mount.HorseHandler;
 import me.niko.kingdom.nametags.NametagHandler;
 import me.niko.kingdom.nametags.Nametags;
@@ -68,6 +70,8 @@ public class Kingdom extends JavaPlugin {
 	@Getter public static HashMap<UUID, KingdomPlayer> playersMap;
 	@Getter public static LunarClientAPI lunarClientAPI;
 
+	@Getter public static boolean beta;
+	
 	public void onEnable() {
 		instance = this;
 
@@ -90,6 +94,8 @@ public class Kingdom extends JavaPlugin {
 		chat = new ChatHandler();
 			
 		playersMap = new HashMap<>();
+		
+		beta = getConfig().getBoolean("settings.beta_mode");
 		
 		//Let's not fuck the whole plugin if theres a /reload ^_^
 		for(Player player : Bukkit.getOnlinePlayers()) {
@@ -128,7 +134,8 @@ public class Kingdom extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(new EventsListener(), this);
 		getServer().getPluginManager().registerEvents(new HorseMountListener(), this);
 		getServer().getPluginManager().registerEvents(new CombatLoggerListener(), this);
-		
+		getServer().getPluginManager().registerEvents(new WorldListener(), this);
+
         getServer().getPluginManager().registerEvents(new ButtonListener(), this);
 		        
 		long saveInterval = ((20 * 60) * 20); // 20 Minutes?
