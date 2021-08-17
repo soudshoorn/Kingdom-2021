@@ -15,7 +15,7 @@ public class FreezeHandler {
 		if(!toggle && target.hasMetadata("frozen_ss")) {
 			target.removeMetadata("frozen_ss", Kingdom.getInstance());
 			
-			target.sendMessage(ChatColor.RED + "You are no longer frozen.");
+			//target.sendMessage(ChatColor.RED + "You are no longer frozen.");
 		} else {
 			message(target);
 			

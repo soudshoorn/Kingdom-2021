@@ -219,7 +219,7 @@ public class KingdomHandler {
         				.replaceAll("%influence%", price + "")
         				.replaceAll("%new_influence%", kingdomPlayer.getInfluence() + ""));
         		
-        		player.sendMessage(ChatColor.RED + "" + price + " has been taken from your account for " + type + ". New influence " + kingdomPlayer.getInfluence());
+        		//player.sendMessage(ChatColor.RED + "" + price + " has been taken from your account for " + type + ". New influence " + kingdomPlayer.getInfluence());
         	}
         	
         	return true;

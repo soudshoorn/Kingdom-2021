@@ -10,6 +10,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import me.niko.kingdom.staffmode.FreezeHandler;
+import me.niko.kingdom.utils.ConfigUtils;
 
 public class FreezeCommand implements CommandExecutor {
 	
@@ -35,7 +36,7 @@ public class FreezeCommand implements CommandExecutor {
 		}
 		
 		if(target.isOp() && !sender.isOp()) {
-			sender.sendMessage(ChatColor.RED + "Je kunt deze speler niet bevriezen");
+			sender.sendMessage(ConfigUtils.getFormattedValue("messages.freeze.player_bypass_freeze"));
 			
 			return true;
 		}
@@ -43,13 +44,16 @@ public class FreezeCommand implements CommandExecutor {
 		if(FreezeHandler.isFrozen(target)) {
 			FreezeHandler.freeze(target, false);
 			
-			sender.sendMessage(ChatColor.RED + "&cSpeler '" + args[0] + "' is niet meer bevroren.");
+			sender.sendMessage(ConfigUtils.getFormattedValue("messages.freeze.player_unfrozen")
+					.replaceAll("%player%", target.getName()));
 		} else {
 			FreezeHandler.freeze(target, true);
 			
 			SimpleDateFormat date = new SimpleDateFormat("HH:mm:ss");
 			
-			sender.sendMessage(ChatColor.RED + "Speler '" + args[0] + "' is bevroren on " + date.format(new Date()));
+			sender.sendMessage(ConfigUtils.getFormattedValue("messages.freeze.player_frozen")
+					.replaceAll("%player%", target.getName())
+					.replaceAll("%date%", date.format(new Date())));
 		}
 		return false;
 	}

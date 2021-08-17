@@ -149,8 +149,9 @@ messages:
     vanish_enabled: "&6Vanish: &fEnabled"
     vanish_disabled: "&6Vanish: &fDisabled"
   freeze:
-    player_frozen: "Speler '%player%' is niet meer bevroren."
-    player_unfrozen: ""
+    player_frozen: "&aSpeler '%player%' is bevroren on %date%"
+    player_unfrozen: "&cSpeler '%player%' is niet meer bevroren."
+    player_bypass_freeze: "&cJe kunt deze speler niet bevriezen"
     logged_out: "&c&l[!!!!] &f%player% &clogged out while frozen!"
     damager_frozen: "&cYou cannot attack while frozen."
     victim_frozen: "&c%player% is frozen, you cannot attack him."
