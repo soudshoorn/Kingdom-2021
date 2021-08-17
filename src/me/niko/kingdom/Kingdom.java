@@ -150,7 +150,7 @@ public class Kingdom extends JavaPlugin {
 
         getServer().getPluginManager().registerEvents(new ButtonListener(), this);
 		        
-		long saveInterval = ((10 * 60) * 10); // 20 Minutes?
+		long saveInterval = ((10 * 60) * 20); // 20 Minutes?
 		
 		new BukkitRunnable() {
 			
@@ -176,7 +176,7 @@ public class Kingdom extends JavaPlugin {
 					System.out.println("Data saved! Took " + (System.currentTimeMillis() - started) + "ms");
 				}
 			}
-		}.runTaskTimerAsynchronously(this, 0L, saveInterval);
+		}.runTaskTimerAsynchronously(this, saveInterval, saveInterval);
 		
 	}
 	

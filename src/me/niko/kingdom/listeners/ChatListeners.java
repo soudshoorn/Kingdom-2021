@@ -238,11 +238,15 @@ public class ChatListeners implements Listener {
 				.replaceAll("%player%", sender.getName())
 				.replaceAll("refix%", prefix)
 				.replaceAll("%suffix%", suffix)
-				.replaceAll("%guild_name%", playerGuild == null ? "None" : playerGuild.getName())
-				.replaceAll("%guild_tag%", playerGuild == null ? "None" : playerGuild.getTag())
+				.replaceAll("%guild_name%", playerGuild == null ? "" : " &7[&9" + playerGuild.getName() + "&7] ")
+				.replaceAll("%guild_tag%", playerGuild == null ? "" : " &7[&9" + playerGuild.getTag() + "&7] ")
 				.replaceAll("%kingdom_name%", kingdomPlayer.getKingdom().getDisplayName())
-				.replaceAll("%kingdom_rank%", KingdomHandler.getRanks().get(kingdomPlayer.getKingdomRank()).getPrefix())
+				.replaceAll("%kingdom_rank%", kingdomPlayer.getKingdomRank() == 0 ? "" : KingdomHandler.getRanks().get(kingdomPlayer.getKingdomRank()).getPrefix())
 				.replaceAll("%message%", (sender.isOp() ? ChatColor.translateAlternateColorCodes('&', message) : ChatColor.WHITE + message)));
+		
+		if(format.startsWith(" ")) { //Quick fix for better looking
+			format = format.replace(" ", "");
+		}
 		
 		viewer.sendMessage(format);
 		

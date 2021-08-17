@@ -193,7 +193,7 @@ messages:
     no_guild: "&cYou don't have a guild to chat with!"
     no_kingdom: "&cYou don't have a kingdom to chat, select one to have more features!"
     formats:
-      guilds_chat: "&7[&3%guild_name%&7] &7[&f#%guild_tag%&7] %prefix%%player%%suffix%&7: &f%message%"
+      guilds_chat: "%guild_name%%guild_tag% %prefix%%player%%suffix%&7: &f%message%"
       roleplay_chat: "&7[&4Roleplay&7] &7[%kingdom_name%&7] %prefix%%player%%suffix%&7: &f%message%"
       trade_chat: "&7[&6Trade&7] &7[%kingdom_name%&7] %prefix%%player%%suffix%&7: &f%message%"
       others_chat: "&7[&3Others&7] &7[%kingdom_name%&7] %prefix%%player%%suffix%&7: &f%message%"

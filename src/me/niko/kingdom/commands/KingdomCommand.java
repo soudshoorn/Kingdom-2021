@@ -390,7 +390,8 @@ public class KingdomCommand implements CommandExecutor {
 				
 				if(kingdomPlayer.isKing()) {
 					for(String line : ConfigUtils.getFormattedValueList("settings.hertog_perms")) {
-						Kingdom.getInstance().getPerms().playerRemove(target.getPlayer(), line);
+						if (Kingdom.getInstance().getPerms().has(target.getPlayer(), line))
+							Kingdom.getInstance().getPerms().playerRemove(target.getPlayer(), line);
 					}
 					
 					for(String line : ConfigUtils.getFormattedValueList("settings.king_perms")) {
@@ -455,7 +456,8 @@ public class KingdomCommand implements CommandExecutor {
 				
 				if(kingdomPlayer.isHertog()) {
 					for(String line : ConfigUtils.getFormattedValueList("settings.king_perms")) {
-						Kingdom.getInstance().getPerms().playerRemove(target.getPlayer(), line);
+						if (Kingdom.getInstance().getPerms().has(target.getPlayer(), line))
+							Kingdom.getInstance().getPerms().playerRemove(target.getPlayer(), line);
 					}
 					
 					for(String line : ConfigUtils.getFormattedValueList("settings.hertog_perms")) {
@@ -465,7 +467,8 @@ public class KingdomCommand implements CommandExecutor {
 				
 				if(!(kingdomPlayer.isHertog() && kingdomPlayer.isKing())) {
 					for(String line : ConfigUtils.getFormattedValueList("settings.hertog_perms")) {
-						Kingdom.getInstance().getPerms().playerRemove(target.getPlayer(), line);
+						if (Kingdom.getInstance().getPerms().has(target.getPlayer(), line))
+							Kingdom.getInstance().getPerms().playerRemove(target.getPlayer(), line);
 					}
 				}
 								
