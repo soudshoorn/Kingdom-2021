@@ -149,7 +149,7 @@ public class ChatListeners implements Listener {
 			}
 			
 			if(event.getMessage().startsWith("!")) { // Roleplay Chat
-				if (Kingdom.getInstance().getChat().isMuted()) {
+				if (Kingdom.getInstance().getChat().isMuted() && !player.hasPermission("kingdom.mutechat.bypass")) {
 					player.sendMessage(ConfigUtils.getFormattedValue("messages.chat.muted"));
 					
 					return;
@@ -162,7 +162,7 @@ public class ChatListeners implements Listener {
 			}
 			
 			if(event.getMessage().startsWith("$")) { // Trade Chat
-				if (Kingdom.getInstance().getChat().isMuted()) {
+				if (Kingdom.getInstance().getChat().isMuted() && !player.hasPermission("kingdom.mutechat.bypass")) {
 					player.sendMessage(ConfigUtils.getFormattedValue("messages.chat.muted"));
 					
 					return;
@@ -175,7 +175,7 @@ public class ChatListeners implements Listener {
 			}
 			
 			if(event.getMessage().startsWith("%")) {
-				if (Kingdom.getInstance().getChat().isMuted()) {
+				if (Kingdom.getInstance().getChat().isMuted() && !player.hasPermission("kingdom.mutechat.bypass")) {
 					player.sendMessage(ConfigUtils.getFormattedValue("messages.chat.muted"));
 					
 					return;
