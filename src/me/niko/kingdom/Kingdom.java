@@ -2,9 +2,6 @@ package me.niko.kingdom;
 
 import java.util.HashMap;
 import java.util.Map.Entry;
-
-import javax.swing.plaf.basic.BasicInternalFrameTitlePane.IconifyAction;
-
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
@@ -56,6 +53,7 @@ import me.niko.kingdom.staffmode.StaffModeHandler;
 import me.niko.kingdom.staffmode.StaffModeListener;
 import me.niko.kingdom.utils.menu.menu.ButtonListener;
 import net.milkbowl.vault.chat.Chat;
+import net.milkbowl.vault.permission.Permission;
 import net.minelink.ctplus.CombatTagPlus;
 
 public class Kingdom extends JavaPlugin {
@@ -76,6 +74,7 @@ public class Kingdom extends JavaPlugin {
 
 	@Getter public static boolean beta;
     @Getter private static Chat vaultChat = null;
+    @Getter private static Permission perms = null;
 
 	public void onEnable() {
 		instance = this;
@@ -84,6 +83,12 @@ public class Kingdom extends JavaPlugin {
 		
 		getConfig().options().copyDefaults(true);
 		saveDefaultConfig();
+		
+		if (getServer().getPluginManager().getPlugin("Vault") == null) {
+			Bukkit.getLogger().warning("NO VAULT IS INSTALLED. KINGDOM PLUGIN NEEDS IT!");
+			getServer().getPluginManager().disablePlugin(this);
+            return;
+        }
 		
 		assemble = new Assemble(this, new ScoreboardAdapter());
 		nametags = new NametagHandler(this, new Nametags());
@@ -194,6 +199,12 @@ public class Kingdom extends JavaPlugin {
 		
 		instance = null;
 	}
+	
+	private boolean setupPermissions() {
+        RegisteredServiceProvider<Permission> rsp = getServer().getServicesManager().getRegistration(Permission.class);
+        perms = rsp.getProvider();
+        return perms != null;
+    }
 	
 	private boolean setupChat() {
         RegisteredServiceProvider<Chat> rsp = getServer().getServicesManager().getRegistration(Chat.class);

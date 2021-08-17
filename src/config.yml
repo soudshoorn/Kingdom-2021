@@ -24,6 +24,10 @@ settings:
     koning:
       name: "King"
       prefix: '&7[&6Koning&7]'
+  hertog_perms:
+    - ""
+  king_perms:
+    - ""
   home_timer: 10 # in seconds
   beta_mode: false
   use_materials:

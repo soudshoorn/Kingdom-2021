@@ -387,6 +387,20 @@ public class KingdomCommand implements CommandExecutor {
 				sender.sendMessage(ChatColor.RED + target.getName() + " has been promoted from " + oldRank.getPrefix() + " to " + newRank.getPrefix());
 				
 				kingdomPlayer.save();
+				
+				if(kingdomPlayer.isKing()) {
+					for(String line : ConfigUtils.getFormattedValueList("settings.hertog_perms")) {
+						Kingdom.getInstance().getPerms().playerRemove(target.getPlayer(), line);
+					}
+					
+					for(String line : ConfigUtils.getFormattedValueList("settings.king_perms")) {
+						Kingdom.getInstance().getPerms().playerAdd(target.getPlayer(), line);
+					}
+				} else if(kingdomPlayer.isHertog()) {
+					for(String line : ConfigUtils.getFormattedValueList("settings.hertog_perms")) {
+						Kingdom.getInstance().getPerms().playerAdd(target.getPlayer(), line);
+					}
+				}
 								
 				break;
 			}
@@ -438,6 +452,22 @@ public class KingdomCommand implements CommandExecutor {
 				sender.sendMessage(ChatColor.RED + target.getName() + " has been demoted from " + ChatColor.stripColor(oldRank.getPrefix()) + " to " + ChatColor.stripColor(newRank.getPrefix()));
 				
 				kingdomPlayer.save();
+				
+				if(kingdomPlayer.isHertog()) {
+					for(String line : ConfigUtils.getFormattedValueList("settings.king_perms")) {
+						Kingdom.getInstance().getPerms().playerRemove(target.getPlayer(), line);
+					}
+					
+					for(String line : ConfigUtils.getFormattedValueList("settings.hertog_perms")) {
+						Kingdom.getInstance().getPerms().playerAdd(target.getPlayer(), line);
+					}
+				}
+				
+				if(!(kingdomPlayer.isHertog() && kingdomPlayer.isKing())) {
+					for(String line : ConfigUtils.getFormattedValueList("settings.hertog_perms")) {
+						Kingdom.getInstance().getPerms().playerRemove(target.getPlayer(), line);
+					}
+				}
 								
 				break;
 			}
