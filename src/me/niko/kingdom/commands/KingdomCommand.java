@@ -384,7 +384,7 @@ public class KingdomCommand implements CommandExecutor {
 							.replaceAll("%newrank%", newRank.getPrefix()));
 				}
 				
-				sender.sendMessage(ChatColor.RED + target.getName() + " has been promoted from " + oldRank.getPrefix() + " to " + newRank.getPrefix());
+				sender.sendMessage(ChatColor.RED + target.getName() + " has been promoted from " + oldRank.getName() + " to " + newRank.getName());
 				
 				kingdomPlayer.save();
 				
@@ -450,7 +450,7 @@ public class KingdomCommand implements CommandExecutor {
 							.replaceAll("%newrank%", ChatColor.stripColor(newRank.getPrefix())));
 				}
 				
-				sender.sendMessage(ChatColor.RED + target.getName() + " has been demoted from " + ChatColor.stripColor(oldRank.getPrefix()) + " to " + ChatColor.stripColor(newRank.getPrefix()));
+				sender.sendMessage(ChatColor.RED + target.getName() + " has been demoted from " + oldRank.getName() + " to " + newRank.getName());
 				
 				kingdomPlayer.save();
 				

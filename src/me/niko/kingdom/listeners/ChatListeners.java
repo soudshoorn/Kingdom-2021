@@ -245,7 +245,7 @@ public class ChatListeners implements Listener {
 				.replaceAll("%message%", (sender.isOp() ? ChatColor.translateAlternateColorCodes('&', message) : ChatColor.WHITE + message)));
 		
 		if(format.startsWith(" ")) { //Quick fix for better looking
-			format = format.replace(" ", "");
+			format = format.replaceFirst(" ", "");
 		}
 		
 		viewer.sendMessage(format);
