@@ -77,7 +77,7 @@ public class BuildListeners implements Listener {
                   	event.setCancelled(true);
             	}
         	} else if(region.getId().contains("spawn_")) {
-        		if(!kingdomPlayer.isKing()) {
+        		if(!(!kingdomPlayer.isKing() || !kingdomPlayer.isHertog())) {
         			event.setCancelled(true);
         		}
         	}
@@ -117,7 +117,7 @@ public class BuildListeners implements Listener {
 					&& !(event.getClickedBlock().getType() == Material.ENDER_CHEST
 					|| event.getClickedBlock().getType() == Material.ENCHANTMENT_TABLE
 					|| event.getClickedBlock().getType() == Material.ANVIL)
-					&& !kingdomPlayer.isKing()) {
+					&& !(!kingdomPlayer.isKing() || !kingdomPlayer.isHertog())) {
 				event.setCancelled(true);
 			}
 		}

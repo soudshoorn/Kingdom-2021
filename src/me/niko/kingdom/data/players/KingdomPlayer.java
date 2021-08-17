@@ -111,6 +111,10 @@ public class KingdomPlayer {
 		return df.format(kdr);
 	}
 	
+	public boolean isHertog() {
+		return this.kingdomRank != 0 && this.kingdomRank == (KingdomHandler.getRanks().size() - 2); //Always the -2 is the hertog ig
+	}
+	
 	public boolean isKing() {
 		return this.kingdomRank != 0 && this.kingdomRank == (KingdomHandler.getRanks().size() - 1); //Always the last one is the King
 	}
