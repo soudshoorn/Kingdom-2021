@@ -63,7 +63,8 @@ public class StaffModeListener implements Listener {
 				}
 				
 				player.teleport(randomPlayer);
-				player.sendMessage(ChatColor.GREEN + "Random teleported to " + randomPlayer.getName());
+				//player.sendMessage(ChatColor.GREEN + "Random teleported to " + randomPlayer.getName());
+				player.sendMessage(ConfigUtils.getFormattedValue("messages.staff.random_tp").replaceAll("%player%", randomPlayer.getName()));
 			} else if(ItemStackUtils.isSimiliar(stack, StaffModeHandler.ONLINE_STAFF)) {
 				new OnlineStaffMenu().openMenu(player);
 			} else if(ItemStackUtils.isSimiliar(stack, StaffModeHandler.LAST_PVP)) {

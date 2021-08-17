@@ -148,6 +148,7 @@ messages:
     mode_disabled: "&6Staff Mode: &fDisabled"
     vanish_enabled: "&6Vanish: &fEnabled"
     vanish_disabled: "&6Vanish: &fDisabled"
+    random_tp: "&aRandom teleported to %player%"
   freeze:
     player_frozen: "&aSpeler '%player%' is bevroren on %date%"
     player_unfrozen: "&cSpeler '%player%' is niet meer bevroren."
