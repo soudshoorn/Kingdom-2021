@@ -34,7 +34,7 @@ public class ChatCommand implements CommandExecutor {
 				String type = Kingdom.getInstance().getChat().isMuted() ? "unmuted" : "muted";
 				Kingdom.getInstance().getChat().setMuted(!Kingdom.getInstance().getChat().isMuted());
 
-				Bukkit.broadcastMessage(ConfigUtils.getFormattedValue("message.chat.has_been_" + type)
+				Bukkit.broadcastMessage(ConfigUtils.getFormattedValue("messages.chat.has_been_" + type)
 						.replaceAll("%player%", sender.getName()));
 				
 				break;
@@ -43,7 +43,7 @@ public class ChatCommand implements CommandExecutor {
 				for(Player target : Bukkit.getOnlinePlayers()) {
 					
 					if(target.hasPermission("kingdom.clear.bypass")) {
-						target.sendMessage(ConfigUtils.getFormattedValue("message.chat.bypass_clear"));
+						target.sendMessage(ConfigUtils.getFormattedValue("messages.chat.bypass_clear"));
 						
 						continue;
 					}
@@ -51,7 +51,7 @@ public class ChatCommand implements CommandExecutor {
 					target.sendMessage(new String[101]);
 				}
 				
-				Bukkit.broadcastMessage(ConfigUtils.getFormattedValue("message.chat.chat_clear")
+				Bukkit.broadcastMessage(ConfigUtils.getFormattedValue("messages.chat.chat_clear")
 						.replaceAll("%player%", sender.getName()));
 				
 				break;

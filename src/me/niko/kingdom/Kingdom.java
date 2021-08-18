@@ -27,6 +27,7 @@ import me.niko.kingdom.commands.KothCommand;
 import me.niko.kingdom.commands.ListCommand;
 import me.niko.kingdom.commands.MountCommand;
 import me.niko.kingdom.commands.PortalCommand;
+import me.niko.kingdom.commands.SetEndExitCommand;
 import me.niko.kingdom.commands.StaffModeCommand;
 import me.niko.kingdom.commands.StatsCommand;
 import me.niko.kingdom.commands.TellLocationCommand;
@@ -40,6 +41,7 @@ import me.niko.kingdom.listeners.BuildListeners;
 import me.niko.kingdom.listeners.ChatListeners;
 import me.niko.kingdom.listeners.CombatLoggerListener;
 import me.niko.kingdom.listeners.DamageListeners;
+import me.niko.kingdom.listeners.EndExitListener;
 import me.niko.kingdom.listeners.HorseMountListener;
 import me.niko.kingdom.listeners.PlayerListeners;
 import me.niko.kingdom.listeners.PortalListener;
@@ -134,6 +136,7 @@ public class Kingdom extends JavaPlugin {
 		getCommand("list").setExecutor(new ListCommand());
 		getCommand("telllocation").setExecutor(new TellLocationCommand());
 		getCommand("influence").setExecutor(new InfluenceCommand());
+		getCommand("setendexit").setExecutor(new SetEndExitCommand());
 
 		getServer().getPluginManager().registerEvents(new PortalListener(), this);
 		getServer().getPluginManager().registerEvents(new ArrowCleanerListener(), this);
@@ -147,6 +150,7 @@ public class Kingdom extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(new HorseMountListener(), this);
 		getServer().getPluginManager().registerEvents(new CombatLoggerListener(), this);
 		getServer().getPluginManager().registerEvents(new WorldListener(), this);
+		getServer().getPluginManager().registerEvents(new EndExitListener(), this);
 
         getServer().getPluginManager().registerEvents(new ButtonListener(), this);
 		        

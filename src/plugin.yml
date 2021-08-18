@@ -24,3 +24,4 @@ commands:
   telllocation:
     aliases: [tl]
   influence:
+  setendexit:

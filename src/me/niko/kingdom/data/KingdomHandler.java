@@ -213,13 +213,14 @@ public class KingdomHandler {
         		kingdomPlayer.setInfluence(kingdomPlayer.getInfluence() - price);
         		kingdomPlayer.save();
         		
-        		String type = build == 0 ? "building" : build == 1 ? "breaking" : "interacting";
+        		String type = build == 0 ? "placing" : build == 1 ? "breaking" : "interacting";
         		
-        		player.sendMessage(ConfigUtils.getFormattedValue("messages.influence.types." + type + "")
+        		player.sendMessage(ConfigUtils.getFormattedValue("messages.influence.type." + type + "")
         				.replaceAll("%influence%", price + "")
         				.replaceAll("%new_influence%", kingdomPlayer.getInfluence() + ""));
         		
         		//player.sendMessage(ChatColor.RED + "" + price + " has been taken from your account for " + type + ". New influence " + kingdomPlayer.getInfluence());
+        		return false;
         	}
         	
         	return true;
