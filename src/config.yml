@@ -169,7 +169,7 @@ messages:
       - ""
       - "&7Je hebt 5 minuten. Uitloggen is een ban."
   tell_location:
-    format: "Player %player% needs an assistance at [%x%, %y%, %z%]"
+    format: "[%x%, %y%, %z%]"
     waypoint:
       name: "%player%'s Location"
       color:

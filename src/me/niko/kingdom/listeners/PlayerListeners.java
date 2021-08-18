@@ -89,7 +89,7 @@ public class PlayerListeners implements Listener {
 	public void onInteract(PlayerInteractEvent event) {
 		Player player = event.getPlayer();
 		
-		if((event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK) && ItemStackUtils.isSimiliar(player.getItemInHand(), ItemStackUtils.SELECTOR)) {
+		if((event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) && ItemStackUtils.isSimiliar(player.getItemInHand(), ItemStackUtils.SELECTOR)) {
 			
 			KingdomPlayer kingdomPlayer = KingdomHandler.getKingdomPlayer(player);
 			

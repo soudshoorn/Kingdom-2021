@@ -14,6 +14,8 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
+import com.sk89q.worldguard.blacklist.target.Target;
+
 import me.niko.kingdom.Kingdom;
 import me.niko.kingdom.data.KingdomConstructor;
 import me.niko.kingdom.data.KingdomHandler;
@@ -137,7 +139,8 @@ public class ChatListeners implements Listener {
 				Guild guild = kingdomPlayer.getGuild();
 				
 				if (GuildHandler.isSimiliarGuild(guild, kingdomTarget.getGuild()) || Kingdom.getInstance().getChat().getChatSpy().contains(target)) {
-					message(player, target, event.getMessage().substring(1).trim(), "guilds", kingdomPlayer);
+					//message(player, target, event.getMessage().substring(1).trim(), "guilds", kingdomPlayer);
+					target.sendMessage(message(player, target, event.getMessage().substring(1).trim(), "guilds", kingdomPlayer));
 					consoleOutput = "[Guilds Chat] [" +  guild.getName() + "] [" + guild.getTag() + "] " + player.getName() + ": " + event.getMessage().substring(1).trim();
 					
 					continue;
@@ -153,7 +156,8 @@ public class ChatListeners implements Listener {
 					return;
 				}
 				
-				message(player, target, event.getMessage().substring(1).trim(), "roleplay", kingdomPlayer);
+				//message(player, target, event.getMessage().substring(1).trim(), "roleplay", kingdomPlayer);
+				target.sendMessage(message(player, target, event.getMessage().substring(1).trim(), "roleplay", kingdomPlayer));
 				consoleOutput = "[Roleplay Chat] " + player.getName() + ": " + event.getMessage().substring(1).trim();
 				
 				continue;
@@ -166,7 +170,8 @@ public class ChatListeners implements Listener {
 					return;
 				}
 				
-				message(player, target, event.getMessage().substring(1).trim(), "trade", kingdomPlayer);
+				//message(player, target, event.getMessage().substring(1).trim(), "trade", kingdomPlayer);
+				target.sendMessage(message(player, target, event.getMessage().substring(1).trim(), "trade", kingdomPlayer));
 				consoleOutput = "[Trade Chat] " + player.getName() + ": " + event.getMessage().substring(1).trim();
 
 				continue;
@@ -180,7 +185,8 @@ public class ChatListeners implements Listener {
 				}
 				
 				if(target.hasPermission("kingdom.globalchat") || Kingdom.getInstance().getChat().getChatSpy().contains(target)) {
-					message(player, target, event.getMessage().substring(1).trim(), "others", kingdomPlayer);
+					//message(player, target, event.getMessage().substring(1).trim(), "others", kingdomPlayer);
+					target.sendMessage(message(player, target, event.getMessage().substring(1).trim(), "others", kingdomPlayer));
 					consoleOutput = "[Restricted Chat] " + player.getName() + ": " + event.getMessage().substring(1).trim();
 
 					continue;
@@ -199,7 +205,8 @@ public class ChatListeners implements Listener {
 					return;
 				}
 				
-				message(player, target, event.getMessage(), "kingdom", kingdomPlayer);
+				//message(player, target, event.getMessage(), "kingdom", kingdomPlayer);
+				target.sendMessage(message(player, target, event.getMessage(), "kingdom", kingdomPlayer));
 				consoleOutput = "[Kingdom Chat] [" + kingdomConstructor.getName() + "] " + player.getName() + ": " + event.getMessage().substring(1).trim();
 
 				continue;
@@ -248,7 +255,7 @@ public class ChatListeners implements Listener {
 			format = format.replaceFirst(" ", "");
 		}
 		
-		viewer.sendMessage(format);
+		//viewer.sendMessage(format);
 		
 		return format;
 	}
