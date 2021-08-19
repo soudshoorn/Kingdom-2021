@@ -36,9 +36,6 @@ public class SelectorMenu extends Menu {
 		KingdomPlayer kingdomPlayer = KingdomHandler.getKingdomPlayer(player);
 		
 		//if(ItemStackUtils.isSimiliar(player.getItemInHand(), SELECTOR)) {
-		try {
-			player.getInventory().removeItem(ItemStackUtils.SELECTOR); 
-		} catch (Exception e) { }
 		//}
 	}
 	

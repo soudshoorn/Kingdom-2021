@@ -14,6 +14,7 @@ import me.niko.kingdom.data.KingdomHandler;
 import me.niko.kingdom.data.players.KingdomPlayer;
 import me.niko.kingdom.utils.ConfigUtils;
 import me.niko.kingdom.utils.ItemMaker;
+import me.niko.kingdom.utils.ItemStackUtils;
 import me.niko.kingdom.utils.menu.menu.Button;
 
 public class SelectorButton extends Button {
@@ -76,6 +77,10 @@ public class SelectorButton extends Button {
 				.replaceAll("%player%", player.getName())
 				.replaceAll("%old_kingdom%", oldKingom == null ? "None" : oldKingom.getDisplayName())
 				.replaceAll("%new_kingdom%", kingdomConstructor == null ? "None" : kingdomConstructor.getDisplayName()));
+		
+		try {
+			player.getInventory().removeItem(ItemStackUtils.SELECTOR); 
+		} catch (Exception e) { }
 	}
 
 }
