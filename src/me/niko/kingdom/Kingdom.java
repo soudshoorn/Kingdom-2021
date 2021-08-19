@@ -31,6 +31,7 @@ import me.niko.kingdom.commands.SetEndExitCommand;
 import me.niko.kingdom.commands.StaffModeCommand;
 import me.niko.kingdom.commands.StatsCommand;
 import me.niko.kingdom.commands.TellLocationCommand;
+import me.niko.kingdom.commands.WarCommand;
 import me.niko.kingdom.data.KingdomHandler;
 import me.niko.kingdom.data.players.KingdomPlayer;
 import me.niko.kingdom.events.EventConstants;
@@ -130,6 +131,7 @@ public class Kingdom extends JavaPlugin {
 		getCommand("chat").setExecutor(new ChatCommand());
 		getCommand("portal").setExecutor(new PortalCommand());
 		getCommand("koth").setExecutor(new KothCommand());
+		getCommand("war").setExecutor(new WarCommand());
 		getCommand("mount").setExecutor(new MountCommand());
 		getCommand("stats").setExecutor(new StatsCommand());
 		getCommand("guild").setExecutor(new GuildCommand());

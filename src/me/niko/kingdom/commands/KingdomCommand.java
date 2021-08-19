@@ -36,7 +36,12 @@ public class KingdomCommand implements CommandExecutor {
 		if(args.length == 0) {
 			
 			if(sender.isOp()) {
-				sender.sendMessage(ChatColor.RED + "/" + label + " createkingdom <kingdomName> <WoolData> <displayName>");
+				
+				for(String line : ConfigUtils.getFormattedValueList("messages.kingdom.help_op")) {
+					sender.sendMessage(ChatColor.translateAlternateColorCodes('&', line));
+				}
+				
+				/*sender.sendMessage(ChatColor.RED + "/" + label + " createkingdom <kingdomName> <WoolData> <displayName>");
 				sender.sendMessage(ChatColor.RED + "/" + label + " setspawn <kingdomName>");
 				sender.sendMessage(ChatColor.RED + "/" + label + " spawn <kingdomName>");
 				sender.sendMessage(ChatColor.RED + "/" + label + " tphere <kingdomName>");
@@ -45,10 +50,14 @@ public class KingdomCommand implements CommandExecutor {
 				sender.sendMessage(ChatColor.RED + "/" + label + " promote <playerName>");
 				sender.sendMessage(ChatColor.RED + "/" + label + " demote <playermName>");
 				sender.sendMessage(ChatColor.RED + "/" + label + " ally <kingdomName>");
-				sender.sendMessage(ChatColor.RED + "/" + label + " unally <kingdomName>");
+				sender.sendMessage(ChatColor.RED + "/" + label + " unally <kingdomName>");*/
+			} else {
+				for(String line : ConfigUtils.getFormattedValueList("messages.kingdom.help_no_op")) {
+					sender.sendMessage(ChatColor.translateAlternateColorCodes('&', line));
+				}
 			}
 			
-			sender.sendMessage(ChatColor.RED + "/" + label + " top");
+			//sender.sendMessage(ChatColor.RED + "/" + label + " top");
 
 			return true;
 		}
@@ -597,7 +606,12 @@ public class KingdomCommand implements CommandExecutor {
 			
 			default: {
 				if(sender.isOp()) {
-					sender.sendMessage(ChatColor.RED + "/" + label + " createkingdom <kingdomName> <WoolData> <displayName>");
+					
+					for(String line : ConfigUtils.getFormattedValueList("messages.kingdom.help_op")) {
+						sender.sendMessage(ChatColor.translateAlternateColorCodes('&', line));
+					}
+					
+					/*sender.sendMessage(ChatColor.RED + "/" + label + " createkingdom <kingdomName> <WoolData> <displayName>");
 					sender.sendMessage(ChatColor.RED + "/" + label + " setspawn <kingdomName>");
 					sender.sendMessage(ChatColor.RED + "/" + label + " spawn <kingdomName>");
 					sender.sendMessage(ChatColor.RED + "/" + label + " tphere <kingdomName>");
@@ -605,9 +619,13 @@ public class KingdomCommand implements CommandExecutor {
 					sender.sendMessage(ChatColor.RED + "/" + label + " setdisplayname <kingdomName> <displayName>");
 					sender.sendMessage(ChatColor.RED + "/" + label + " promote <playerName>");
 					sender.sendMessage(ChatColor.RED + "/" + label + " demote <playermName>");
+					sender.sendMessage(ChatColor.RED + "/" + label + " ally <kingdomName>");
+					sender.sendMessage(ChatColor.RED + "/" + label + " unally <kingdomName>");*/
+				} else {
+					for(String line : ConfigUtils.getFormattedValueList("messages.kingdom.help_no_op")) {
+						sender.sendMessage(ChatColor.translateAlternateColorCodes('&', line));
+					}
 				}
-				
-				sender.sendMessage(ChatColor.RED + "/" + label + " top");
 
 				break;
 			}

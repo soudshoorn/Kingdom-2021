@@ -42,7 +42,11 @@ public class GuildCommand implements CommandExecutor {
 			KingdomPlayer kingdomPlayer = KingdomHandler.getKingdomPlayer(player);
 
 			if(kingdomPlayer.getGuild() == null) {
-				sender.sendMessage(ChatColor.GRAY + "You don't have a guild, heres some help about them!");
+				for(String line : ConfigUtils.getFormattedValueList("messages.guild.help")) {
+					sender.sendMessage(ChatColor.translateAlternateColorCodes('&', line));
+				}
+				
+				/*sender.sendMessage(ChatColor.GRAY + "You don't have a guild, heres some help about them!");
 				sender.sendMessage("");
 				sender.sendMessage(ChatColor.GRAY + "/" + label + " create <name> <TAG>");
 				sender.sendMessage(ChatColor.GRAY + "/" + label + " invite <playerName>");
@@ -55,7 +59,7 @@ public class GuildCommand implements CommandExecutor {
 				sender.sendMessage(ChatColor.GRAY + "/" + label + " info <playerName>");
 				sender.sendMessage(ChatColor.GRAY + "/" + label + " invites");
 
-				sender.sendMessage(ChatColor.GRAY + "/" + label + " disband");
+				sender.sendMessage(ChatColor.GRAY + "/" + label + " disband");*/
 			} else {
 				new GuildMenu(kingdomPlayer.getGuild()).openMenu(player);
 			}
@@ -64,7 +68,12 @@ public class GuildCommand implements CommandExecutor {
 		}
 		
 		switch (args[0].toLowerCase()) {
-			case "create": {				
+			case "create": {
+				if(!player.hasPermission("guild.create")) {
+					player.sendMessage(ChatColor.RED + "No permission.");
+					return true;
+				}
+				
 				if(args.length < 3) {
 					player.sendMessage(ChatColor.RED + "/" + label + " " + args[0] + " <name> <TAG>");
 					return true;
@@ -582,6 +591,12 @@ public class GuildCommand implements CommandExecutor {
 			}
 			
 			default: {
+				for(String line : ConfigUtils.getFormattedValueList("messages.guild.help")) {
+					sender.sendMessage(ChatColor.translateAlternateColorCodes('&', line));
+				}
+				
+				/*sender.sendMessage(ChatColor.GRAY + "You don't have a guild, heres some help about them!");
+				sender.sendMessage("");
 				sender.sendMessage(ChatColor.GRAY + "/" + label + " create <name> <TAG>");
 				sender.sendMessage(ChatColor.GRAY + "/" + label + " invite <playerName>");
 				sender.sendMessage(ChatColor.GRAY + "/" + label + " uninvite <playerName>");
@@ -593,7 +608,7 @@ public class GuildCommand implements CommandExecutor {
 				sender.sendMessage(ChatColor.GRAY + "/" + label + " info <playerName>");
 				sender.sendMessage(ChatColor.GRAY + "/" + label + " invites");
 
-				sender.sendMessage(ChatColor.GRAY + "/" + label + " disband");
+				sender.sendMessage(ChatColor.GRAY + "/" + label + " disband");*/
 
 				break;
 			}

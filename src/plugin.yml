@@ -9,6 +9,8 @@ commands:
   btc:
   conquest:
   koth:
+  war:
+    aliases: [oorlog]
   freeze:
     aliases: [ss, screenshare]
   staffmode:

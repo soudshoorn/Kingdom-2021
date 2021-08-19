@@ -199,6 +199,10 @@ messages:
       others_chat: "&7[&3Others&7] &7[%kingdom_name%&7] %prefix%%player%%suffix%&7: &f%message%"
       kingdom_chat: "&7[%kingdom_name%&7] &f%kingdom_rank% %prefix%%player%%suffix%&7: &f%message%"
   kingdom:
+    help_op:
+      - "Kingdom Help for ops"
+    help_no_op:
+      - "Kingdom help for no ops"
     unally:
       remove_request: "&cYour request to %kingdom% for being an alliance has been removed."
       not_ally: "&cYou are not ally with %kingdom%"
@@ -227,6 +231,8 @@ messages:
     promote_target: "&aYou have been promoted from %oldrank% &ato %newrank%"
     demote_target: "&cYou have been demoted from %oldrank% &ato %newrank%"
   guild:
+    help:
+      - "Guild Help"
     already_in_guild: "&cYou are already in a guild."
     three_char: "&cYour tag needs to be exactly 3 characters."
     tag_taken: "&cThis tag is already taken."
