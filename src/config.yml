@@ -133,20 +133,6 @@ messages:
       breaking: "&cThis action costed you %influence%. New balance %new_influence%"
       interacting: "&cThis action costed you %influence%. New balance %new_influence%"
       placing: "&cThis action costed you %influence%. New balance %new_influence%"
-  tordisti:
-    player_leave: "&cLeave the Tordisti before you die from the Wither."
-    time_to_leave: "&cYou have %time% minutes left to leave Tordisti."
-    teleported_to_overworld: "&cYou have been teleported to the normal world since Tordisti is disabled now."
-    enabled:
-      - ""
-      - "&aTordisti has been enabled till 00:00 and will be disabled in 08:00"
-      - ""
-    disabled:
-      - ""
-      - "&cTordisti has been disabled till 08:00!"
-      - "&cAll the players in there have received Wither II"
-      - "&cand won't be removed till they leave."
-      - ""
   staff: 
     mode_enabled: "&6Staff Mode: &fEnabled"
     mode_disabled: "&6Staff Mode: &fDisabled"

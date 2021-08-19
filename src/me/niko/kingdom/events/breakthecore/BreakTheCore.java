@@ -24,8 +24,6 @@ public class BreakTheCore {
 	@Getter @Setter private HashMap<KingdomConstructor, Integer> breaks;
 	@Getter @Setter private int health;
 	@Getter @Setter private boolean active;
-	@Getter @Setter private KingdomConstructor winnerKingdom;
-	@Getter @Setter private String winnerPlayer;
 
 	@Getter private File file = new File(Kingdom.getInstance().getDataFolder(), "btc_locations.yml");
 	
@@ -51,8 +49,6 @@ public class BreakTheCore {
 			
 			this.blockLocation = LocationUtils.fromStrToLocation(yamlConfiguration.getString("block_location"));
 			this.active = yamlConfiguration.getBoolean("active");
-			this.winnerKingdom = yamlConfiguration.getString("last_winner_kingdom").equals("null") ? null : new KingdomConstructor(yamlConfiguration.getString("last_winner_kingdom"));
-			this.winnerPlayer = yamlConfiguration.getString("last_block_breaken_player");
 		}
 	}
 	
@@ -73,7 +69,7 @@ public class BreakTheCore {
 			breaks.put(kingdom, this.health);
 		}
 		
-		ConfigUtils.getFormattedValueList("messages.events.break_the_core.ended_broadcast")
+		ConfigUtils.getFormattedValueList("messages.events.break_the_core.started_broadcast")
 				.forEach(m -> Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', m)));
 		
 		Kingdom.getInstance().getEventConstants().getActiveBTCs().add(this);
@@ -90,8 +86,6 @@ public class BreakTheCore {
 
 		yamlConfiguration.set("block_location", LocationUtils.fromLocToString(this.blockLocation));
 		yamlConfiguration.set("active", this.active);
-		yamlConfiguration.set("last_winner_kingdom", this.winnerKingdom == null ? null : this.winnerKingdom.getName());
-		yamlConfiguration.set("last_block_breaken_player", this.winnerPlayer);
 		
 		try {
 			yamlConfiguration.save(this.file);
@@ -105,10 +99,7 @@ public class BreakTheCore {
 				.forEach(m -> Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', m
 						.replaceAll("%kingdom%", kingdom.getDisplayName())
 						.replaceAll("%player%", player.getName()))));
-		
-		this.winnerKingdom = kingdom;
-		this.winnerPlayer = player.getName();
-		
+				
 		this.stop();
 		this.save();
 	}
