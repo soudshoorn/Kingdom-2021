@@ -4,14 +4,12 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
-import org.bukkit.event.player.PlayerMoveEvent;
 
 import me.niko.kingdom.Kingdom;
 import me.niko.kingdom.data.KingdomConstructor;
 import me.niko.kingdom.data.KingdomHandler;
 import me.niko.kingdom.data.players.KingdomPlayer;
 import me.niko.kingdom.events.breakthecore.BreakTheCore;
-import me.niko.kingdom.events.koth.Koth;
 
 public class EventsListener implements Listener {
 	
@@ -37,15 +35,18 @@ public class EventsListener implements Listener {
 			KingdomPlayer kingdomPlayer = KingdomHandler.getKingdomPlayer(player);
 			KingdomConstructor kingdom = kingdomPlayer.getKingdom();
 			
-			if(breakTheCore.getBreaks().containsKey(kingdom)) {
-				int breaks = breakTheCore.getBreaks().getOrDefault(kingdom, breakTheCore.getHealth()-1);
+			KingdomConstructor foundKingdom = breakTheCore.getBreaks().keySet().stream()
+					.filter(m -> m.getName().equals(kingdom.getName())).findFirst().orElse(null);
+			
+			if(foundKingdom != null) {
+				int breaks = breakTheCore.getBreaks().get(foundKingdom);
 				
 				if((breaks-1) <= 0) {
-					breakTheCore.handleWinner(player, kingdom);					
+					breakTheCore.handleWinner(player, foundKingdom);
 					return;
 				}
 				
-				breakTheCore.getBreaks().put(kingdom, breaks-1);
+				breakTheCore.getBreaks().put(foundKingdom, breaks-1);
 			}
 		}
 	}

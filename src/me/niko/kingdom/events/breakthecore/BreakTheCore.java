@@ -95,7 +95,7 @@ public class BreakTheCore {
 	}
 
 	public void handleWinner(Player player, KingdomConstructor kingdom) {
-		ConfigUtils.getFormattedValueList("messages.events.break_the_core.started_broadcast")
+		ConfigUtils.getFormattedValueList("messages.events.break_the_core.ended_broadcast")
 				.forEach(m -> Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', m
 						.replaceAll("%kingdom%", kingdom.getDisplayName())
 						.replaceAll("%player%", player.getName()))));

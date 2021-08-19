@@ -95,7 +95,7 @@ public class Conquest {
 		
 		times = new int[] {defaultCapTime, defaultCapTime, defaultCapTime, defaultCapTime};
 		
-		Bukkit.broadcastMessage(ChatColor.YELLOW + "Starting a conquest");
+		//Bukkit.broadcastMessage(ChatColor.YELLOW + "Starting a conquest");
 		
 		/*for(String zone : zones) {
 			cappedZoneByKingdom.put(zone, "-");
