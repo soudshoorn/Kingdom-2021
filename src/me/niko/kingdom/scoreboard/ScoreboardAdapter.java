@@ -59,6 +59,10 @@ public class ScoreboardAdapter implements AssembleAdapter {
 				lines.add(format(line, kingdomPlayer, locationKingdom)
 						.replaceAll("%vanish%", (StaffModeHandler.isVanished(player) ? "Enabled" : "Disabled")));
 			}
+			
+			addFooter(lines);
+			
+			return lines;
 		} else if(Kingdom.getInstance().getEventConstants().getActiveBountyHunters().size() != 0) {
 			for(String line : Kingdom.getInstance().getConfig().getStringList("scoreboard_settings.bountyhunters_lines")) {
 				BountyHunters bountyHunters = Kingdom.getInstance().getEventConstants().getActiveBountyHunters().get(0);
@@ -85,6 +89,10 @@ public class ScoreboardAdapter implements AssembleAdapter {
 				
 				lines.add(format(line, kingdomPlayer, locationKingdom));
 			}
+			
+			addFooter(lines);
+			
+			return lines;
 		} else if(Kingdom.getInstance().getEventConstants().getActiveConquests().size() != 0) {
 			for(String line : Kingdom.getInstance().getConfig().getStringList("scoreboard_settings.conquest_lines")) {
 				Conquest conquest = Kingdom.getInstance().getEventConstants().getActiveConquests().get(0);
@@ -125,6 +133,10 @@ public class ScoreboardAdapter implements AssembleAdapter {
 						.replaceAll("%time_red%", secondsToMinutes(conquest.getTime("red")))
 						.replaceAll("%time_yellow%", secondsToMinutes(conquest.getTime("yellow"))));
 			}
+			
+			addFooter(lines);
+			
+			return lines;
 		} else if(Kingdom.getInstance().getEventConstants().getActiveBTCs().size() != 0) {
 			for(String line : Kingdom.getInstance().getConfig().getStringList("scoreboard_settings.btc_lines")) {
 				BreakTheCore breakTheCore = Kingdom.getInstance().getEventConstants().getActiveBTCs().get(0);
@@ -156,6 +168,10 @@ public class ScoreboardAdapter implements AssembleAdapter {
 				
 				lines.add(format(line, kingdomPlayer, locationKingdom));
 			}
+			
+			addFooter(lines);
+			
+			return lines;
 		} else if(Kingdom.getInstance().getEventConstants().getActiveKoths().size() != 0) {
 			for(String line : Kingdom.getInstance().getConfig().getStringList("scoreboard_settings.koth_lines")) {
 				Koth koth = Kingdom.getInstance().getEventConstants().getActiveKoths().get(0);
@@ -166,6 +182,10 @@ public class ScoreboardAdapter implements AssembleAdapter {
 						.replaceAll("%koth_coords%", (koth.getRegion().getMaximumPoint().getBlockX() + " | " + koth.getRegion().getMaximumPoint().getBlockZ()))
 						.replaceAll("%koth_capping%", (koth.getCapper() == null ? "Niemand" : kingdomPlayer.getKingdom().getDisplayName())));
 			}
+			
+			addFooter(lines);
+			
+			return lines;
 		} else if(WarHandler.isEnabled()) {
 			for(String line : Kingdom.getInstance().getConfig().getStringList("scoreboard_settings.war_lines")) {
 				int totalDeaths = 0;
@@ -201,19 +221,35 @@ public class ScoreboardAdapter implements AssembleAdapter {
 				
 				lines.add(format(line, kingdomPlayer, locationKingdom)
 						.replaceAll("%total_deaths%", totalDeaths + ""));
-				
-				continue;
 			}
+			
+			addFooter(lines);
+			
+			return lines;
 		} else if(kingdomPlayer.getKingdom() == null) {
 			for(String line : Kingdom.getInstance().getConfig().getStringList("scoreboard_settings.no_kingdom_lines")) {
 				lines.add(format(line, kingdomPlayer, locationKingdom));
 			}
+			
+			addFooter(lines);
+			
+			return lines;
 		} else if(kingdomPlayer.getKingdom() != null) {
 			for(String line : Kingdom.getInstance().getConfig().getStringList("scoreboard_settings.has_kingdom_lines")) {
 				lines.add(format(line, kingdomPlayer, locationKingdom));
 			}
+			
+			addFooter(lines);
+			
+			return lines;
 		}
 		
+		addFooter(lines);
+		
+		return lines;
+	}
+	
+	private static void addFooter(List<String> lines) {
 		if(!lines.isEmpty()) {
 			if(Kingdom.getInstance().getConfig().getBoolean("scoreboard_settings.always_lines")) {
 				lines.add(0, "&7&m------------------------------");
@@ -225,8 +261,6 @@ public class ScoreboardAdapter implements AssembleAdapter {
 				lines.add(lines.size(), "&7&m------------------------------");
 			}
 		}
-		
-		return lines;
 	}
 	
 	private String format(String line, KingdomPlayer kingdomPlayer, KingdomConstructor locationKingdom) {

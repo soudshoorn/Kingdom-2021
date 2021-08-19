@@ -57,7 +57,9 @@ public class Koth {
 	public void start(int seconds) {
 		this.defaultCapTime = seconds;
 		this.active = true;
-				
+		
+		this.time = seconds;
+		
 		this.task = new BukkitRunnable() {
 			
 			@Override

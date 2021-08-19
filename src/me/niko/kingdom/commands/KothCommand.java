@@ -79,7 +79,7 @@ public class KothCommand implements CommandExecutor {
 					return true;
 				}
 				
-				if(args.length < 3) {
+				if(args.length < 2) {
 					sender.sendMessage(ChatColor.RED + "Usage: /" + label + " " + args[0] + " <name>");
 					return true;
 				}
