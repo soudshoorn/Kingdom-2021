@@ -157,7 +157,7 @@ public class BountyHunters {
 	}
 	
 	public void handleWinner(Player player) {
-		int position = 1;
+		int position = 0;
 
 		for(String line : ConfigUtils.getFormattedValueList("messages.events.bounty_hunters.ended_broadcast")) {
 			if(line.contains("%format%")) {
