@@ -29,7 +29,7 @@ public class BountyHuntersCommand implements CommandExecutor {
 			sender.sendMessage(ChatColor.GRAY + "/" + label + " create <name>");
 			sender.sendMessage(ChatColor.GRAY + "/" + label + " start <name> <timeInSeconds>");
 			sender.sendMessage(ChatColor.GRAY + "/" + label + " stop <name>");
-			sender.sendMessage(ChatColor.GRAY + "/" + label + " setcapzone <name> <one|two|three|four|five|six|seven>");
+			sender.sendMessage(ChatColor.GRAY + "/" + label + " setcapzone <name> <one|two|three|four|five|six>");
 			
 			return true;
 		}
@@ -80,7 +80,7 @@ public class BountyHuntersCommand implements CommandExecutor {
 				}
 				
 				if(args.length < 3) {
-					sender.sendMessage(ChatColor.RED + "Usage: /" + label + " " + args[0] + " <name> <one|two|three|four|five|six|seven>");
+					sender.sendMessage(ChatColor.RED + "Usage: /" + label + " " + args[0] + " <name> <one|two|three|four|five|six>");
 					return true;
 				}
 				
@@ -93,8 +93,7 @@ public class BountyHuntersCommand implements CommandExecutor {
 				case "three":
 				case "four":
 				case "five":
-				case "six":
-				case "seven": {
+				case "six": {
 					String capzone = args[2].toLowerCase();
 					File file = new File(Kingdom.getInstance().getDataFolder(), "bountyhunters.yml");
 					
@@ -143,7 +142,7 @@ public class BountyHuntersCommand implements CommandExecutor {
 				}
 				
 				default:
-					sender.sendMessage(ChatColor.RED + "Usage: /" + label + " " + args[0] + " <name> <one|two|three|four|five|six|seven>");
+					sender.sendMessage(ChatColor.RED + "Usage: /" + label + " " + args[0] + " <name> <one|two|three|four|five|six>");
 					break;
 				}
 			}
