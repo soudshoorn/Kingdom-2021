@@ -26,7 +26,6 @@ import me.niko.kingdom.commands.KingdomCommand;
 import me.niko.kingdom.commands.KothCommand;
 import me.niko.kingdom.commands.ListCommand;
 import me.niko.kingdom.commands.MountCommand;
-import me.niko.kingdom.commands.PortalCommand;
 import me.niko.kingdom.commands.SetEndExitCommand;
 import me.niko.kingdom.commands.StaffModeCommand;
 import me.niko.kingdom.commands.StatsCommand;
@@ -36,7 +35,6 @@ import me.niko.kingdom.data.KingdomHandler;
 import me.niko.kingdom.data.players.KingdomPlayer;
 import me.niko.kingdom.events.EventConstants;
 import me.niko.kingdom.events.EventsListener;
-import me.niko.kingdom.hell.HellHandler;
 import me.niko.kingdom.listeners.ArrowCleanerListener;
 import me.niko.kingdom.listeners.BuildListeners;
 import me.niko.kingdom.listeners.ChatListeners;
@@ -45,7 +43,6 @@ import me.niko.kingdom.listeners.DamageListeners;
 import me.niko.kingdom.listeners.EndExitListener;
 import me.niko.kingdom.listeners.HorseMountListener;
 import me.niko.kingdom.listeners.PlayerListeners;
-import me.niko.kingdom.listeners.PortalListener;
 import me.niko.kingdom.listeners.WorldListener;
 import me.niko.kingdom.mount.HorseHandler;
 import me.niko.kingdom.nametags.NametagHandler;
@@ -69,7 +66,6 @@ public class Kingdom extends JavaPlugin {
 	@Getter public static NametagHandler nametags;
 
 	@Getter public static EventConstants eventConstants;
-	@Getter public static HellHandler hell;
 	@Getter public static ChatHandler chat;
 
 	@Getter public static HashMap<UUID, KingdomPlayer> playersMap;
@@ -105,7 +101,6 @@ public class Kingdom extends JavaPlugin {
 		
 		setupChat();
 		
-		hell = new HellHandler();
 		chat = new ChatHandler();
 			
 		playersMap = new HashMap<>();
@@ -129,7 +124,6 @@ public class Kingdom extends JavaPlugin {
 		getCommand("freeze").setExecutor(new FreezeCommand());
 		getCommand("staffmode").setExecutor(new StaffModeCommand());
 		getCommand("chat").setExecutor(new ChatCommand());
-		getCommand("portal").setExecutor(new PortalCommand());
 		getCommand("koth").setExecutor(new KothCommand());
 		getCommand("war").setExecutor(new WarCommand());
 		getCommand("mount").setExecutor(new MountCommand());
@@ -140,13 +134,11 @@ public class Kingdom extends JavaPlugin {
 		getCommand("influence").setExecutor(new InfluenceCommand());
 		getCommand("setendexit").setExecutor(new SetEndExitCommand());
 
-		getServer().getPluginManager().registerEvents(new PortalListener(), this);
 		getServer().getPluginManager().registerEvents(new ArrowCleanerListener(), this);
 		getServer().getPluginManager().registerEvents(new BuildListeners(), this);
 		getServer().getPluginManager().registerEvents(new ChatListeners(), this);
 		getServer().getPluginManager().registerEvents(new DamageListeners(), this);
 		getServer().getPluginManager().registerEvents(new PlayerListeners(), this);
-		getServer().getPluginManager().registerEvents(new PortalListener(), this);
 		getServer().getPluginManager().registerEvents(new StaffModeListener(), this);
 		getServer().getPluginManager().registerEvents(new EventsListener(), this);
 		getServer().getPluginManager().registerEvents(new HorseMountListener(), this);
