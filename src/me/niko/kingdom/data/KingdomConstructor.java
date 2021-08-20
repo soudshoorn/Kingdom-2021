@@ -63,7 +63,10 @@ public class KingdomConstructor {
 		this.displayName = ChatColor.translateAlternateColorCodes('&', yamlConfiguration.getString("displayName"));
 		this.spawnLocation = LocationUtils.fromStrToLocation(yamlConfiguration.getString("spawn_location"));
 		this.points = yamlConfiguration.getInt("points");
-		this.boatExitLocation = yamlConfiguration.get("boat_exit") == null ? null : LocationUtils.fromStrToLocation(yamlConfiguration.getString("boat_exit"));
+		
+		if(yamlConfiguration.get("boat_exit") != null) {
+			this.boatExitLocation = LocationUtils.fromStrToLocation(yamlConfiguration.getString("boat_exit"));
+		}
 	}
 	
 	public void save() {

@@ -56,7 +56,7 @@ mines:
   reset_after_seconds: 10
   regions:
     - ""
-
+    
 donkey:
   speed: 0.3
   jump: 0.5
