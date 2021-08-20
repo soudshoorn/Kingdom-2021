@@ -165,6 +165,10 @@ public class ScoreboardAdapter implements AssembleAdapter {
 		        			.replaceAll("%breaks_" + i + "%", entry.getValue() + "")
 		        			.replaceAll("%kingdom_" + i + "%", kingdomConstructor.getDisplayName());
 		        }
+		        
+		        if(line.contains("%kingdom_")) {
+					continue;
+				}
 				
 				lines.add(format(line, kingdomPlayer, locationKingdom));
 			}
@@ -218,6 +222,10 @@ public class ScoreboardAdapter implements AssembleAdapter {
 		        			.replaceAll("%kills_" + i + "%", entry.getValue() + "")
 		        			.replaceAll("%kingdom_" + i + "%", kingdomConstructor.getDisplayName());
 		        }
+		        
+		        if(line.contains("%kingdom_")) {
+					continue;
+				}
 				
 				lines.add(format(line, kingdomPlayer, locationKingdom)
 						.replaceAll("%total_deaths%", totalDeaths + ""));
