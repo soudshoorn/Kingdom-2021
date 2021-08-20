@@ -78,6 +78,8 @@ public class SelectorButton extends Button {
 				.replaceAll("%old_kingdom%", oldKingom == null ? "None" : oldKingom.getDisplayName())
 				.replaceAll("%new_kingdom%", kingdomConstructor == null ? "None" : kingdomConstructor.getDisplayName()));
 		
+		player.closeInventory();
+		
 		try {
 			player.getInventory().removeItem(ItemStackUtils.SELECTOR); 
 		} catch (Exception e) { }
