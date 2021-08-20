@@ -133,19 +133,12 @@ public class PlayerListeners implements Listener {
 			
 			KingdomConstructor kingdomFrom = KingdomHandler.getKingdomByLocation(event.getFrom());
 			KingdomConstructor kingdomTo = KingdomHandler.getKingdomByLocation(event.getTo());
-
-			//String kingdom1 = kingdomFrom == null ? "-" : kingdomFrom.getName();
-			//String kingdom2 = kingdomTo == null ? "-" : kingdomTo.getName();
 						
 			if (!KingdomHandler.isSimiliarKingdom(kingdomFrom, kingdomTo) && !WarHandler.isEnabled()) {
-				if (kingdomTo == null) {
-					//TitleAPI.send(player, ChatColor.GRAY + "Kingdom", "Onbekend", 2, 6, 8);
-					
+				if (kingdomTo == null) {					
 					TitleAPI.send(player, ConfigUtils.getFormattedValue("title.top"), 
 							ConfigUtils.getFormattedValue("title.subtitle").replaceAll("%kingdom%", "Onbekend"), 2, 6, 8);
-				} else {
-					//TitleAPI.send(player, ChatColor.GRAY + "Kingdom", kingdomTo.getDisplayName(), 2, 6, 8);
-					
+				} else {					
 					TitleAPI.send(player, ConfigUtils.getFormattedValue("title.top"), 
 							ConfigUtils.getFormattedValue("title.subtitle").replaceAll("%kingdom%", kingdomTo.getDisplayName()), 2, 6, 8);
 				}
