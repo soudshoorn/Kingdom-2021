@@ -101,7 +101,9 @@ public class WarHandler {
 				continue;
 			}
 			
-			Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', line));
+			KingdomConstructor kingdom = new KingdomConstructor(winner);
+			
+			Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', line.replaceAll("%kingdom%", kingdom.getDisplayName())));
 		}
 
 		warKills.clear();
