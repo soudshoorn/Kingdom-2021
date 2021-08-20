@@ -1,20 +1,26 @@
 package me.niko.kingdom;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Random;
 import java.util.Map.Entry;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
 
 import com.lunarclient.bukkitapi.LunarClientAPI;
 import com.sk89q.worldedit.bukkit.WorldEditPlugin;
 
 import lombok.Getter;
 import me.niko.kingdom.chat.ChatHandler;
+import me.niko.kingdom.commands.AutoSmeltCommand;
 import me.niko.kingdom.commands.BTCCommand;
 import me.niko.kingdom.commands.BountyHuntersCommand;
 import me.niko.kingdom.commands.ChatCommand;
@@ -25,6 +31,7 @@ import me.niko.kingdom.commands.InfluenceCommand;
 import me.niko.kingdom.commands.KingdomCommand;
 import me.niko.kingdom.commands.KothCommand;
 import me.niko.kingdom.commands.ListCommand;
+import me.niko.kingdom.commands.MinesCommand;
 import me.niko.kingdom.commands.MountCommand;
 import me.niko.kingdom.commands.SetEndExitCommand;
 import me.niko.kingdom.commands.StaffModeCommand;
@@ -74,6 +81,12 @@ public class Kingdom extends JavaPlugin {
 	@Getter public static boolean beta;
     @Getter private static Chat vaultChat = null;
     @Getter private static Permission perms = null;
+    
+    @Getter public static HashMap<Block, Entry<Material, Byte>> brokenBlocks;
+    @Getter public static ArrayList<UUID> autoSmelting;
+	@Getter public static ArrayList<BukkitTask> tasks;
+	
+    @Getter private static Random random;
 
 	public void onEnable() {
 		instance = this;
@@ -105,6 +118,11 @@ public class Kingdom extends JavaPlugin {
 			
 		playersMap = new HashMap<>();
 		
+		brokenBlocks = new HashMap<>();
+		autoSmelting = new ArrayList<>();
+		tasks = new ArrayList<>();
+		random = new Random();
+		
 		beta = getConfig().getBoolean("settings.beta_mode");
 		
 		//Let's not fuck the whole plugin if theres a /reload ^_^
@@ -133,6 +151,8 @@ public class Kingdom extends JavaPlugin {
 		getCommand("telllocation").setExecutor(new TellLocationCommand());
 		getCommand("influence").setExecutor(new InfluenceCommand());
 		getCommand("setendexit").setExecutor(new SetEndExitCommand());
+		getCommand("autosmelt").setExecutor(new AutoSmeltCommand());
+		getCommand("mines").setExecutor(new MinesCommand());
 
 		getServer().getPluginManager().registerEvents(new ArrowCleanerListener(), this);
 		getServer().getPluginManager().registerEvents(new BuildListeners(), this);

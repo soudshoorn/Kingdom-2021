@@ -83,6 +83,10 @@ public class PlayerListeners implements Listener {
 		if(Kingdom.getInstance().getChat().getChatSpy().contains(player.getUniqueId())) {
 			Kingdom.getInstance().getChat().getChatSpy().remove(player.getUniqueId());
 		}
+		
+		if(Kingdom.getInstance().getAutoSmelting().contains(player.getUniqueId())) {
+			Kingdom.getInstance().getAutoSmelting().remove(player.getUniqueId());
+		}
 	}
 	
 	@EventHandler

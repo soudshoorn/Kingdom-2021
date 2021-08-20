@@ -52,6 +52,11 @@ settings:
     - "WOOD_BUTTON"
     - "STONE_BUTTON"
 
+mines:
+  reset_after_seconds: 10
+  regions:
+    - ""
+
 donkey:
   speed: 0.3
   jump: 0.5
@@ -65,6 +70,9 @@ title:
 
 messages:
   death_message: "&7[%player_kingdom%&7] &7%player_kingdom_rank%&7&7%player% is verwond door &7[%killer_kingdom%&7]&7%killer_kingdom_rank%&7&7%killer%"
+  auto_smelt:
+    enabled: "&aAutosmelt has been enabled"
+    disabled: "&cAutosmelt has been disabled"
   mount:
     no_kingdom: "&cYou cannot spawn a horse without a kingdom"
     unmounted: "&cYou unmounted."

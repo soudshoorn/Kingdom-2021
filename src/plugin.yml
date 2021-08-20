@@ -27,3 +27,5 @@ commands:
     aliases: [tl]
   influence:
   setendexit:
+  autosmelt:
+  mines:
