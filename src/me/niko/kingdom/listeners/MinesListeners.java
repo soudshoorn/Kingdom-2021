@@ -31,9 +31,13 @@ public class MinesListeners implements Listener {
 	public void onBreak(BlockBreakEvent event) {
 		Player player = event.getPlayer();
 		
+		if(event.getBlock() == null || event.getBlock().getType() == Material.AIR) {
+			return;
+		}
+		
 		RegionManager regionM = WGBukkit.getRegionManager(player.getWorld());
-            
-		for(ProtectedRegion r : regionM.getApplicableRegions(player.getLocation()).getRegions()) {
+        
+		for(ProtectedRegion r : regionM.getApplicableRegions(event.getBlock().getLocation()).getRegions()) {
 			for(String Id : Kingdom.getInstance().getConfig().getStringList("mines.regions")) {
 				if(r.getId().equalsIgnoreCase(Id.toLowerCase())) {
 						

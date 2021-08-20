@@ -188,7 +188,7 @@ public class Kingdom extends JavaPlugin {
 				for(Entry<UUID, KingdomPlayer> players : playersMap.entrySet()) {
 					long started = System.currentTimeMillis();
 					
-					System.out.println("Saving all the kingdoms data...");
+					System.out.println("[1] Saving all the kingdoms data...");
 					
 					int influence = players.getValue().getInfluence();
 					
@@ -202,7 +202,15 @@ public class Kingdom extends JavaPlugin {
 					
 					players.getValue().save();
 					
-					System.out.println("Data saved! Took " + (System.currentTimeMillis() - started) + "ms");
+					System.out.println("[1] Data saved! Took " + (System.currentTimeMillis() - started) + "ms");
+				}
+				
+				for (KingdomConstructor kingdomConstructor : KingdomHandler.getKingdoms()) {
+					long started = System.currentTimeMillis();
+					System.out.println("[2] Saving all the kingdoms...");
+
+					kingdomConstructor.save();
+					System.out.println("[2] Kingdoms saved! Took " + (System.currentTimeMillis() - started) + "ms");
 				}
 			}
 		}.runTaskTimerAsynchronously(this, saveInterval, saveInterval);
