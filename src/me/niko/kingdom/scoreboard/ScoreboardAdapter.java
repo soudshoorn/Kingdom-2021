@@ -228,7 +228,8 @@ public class ScoreboardAdapter implements AssembleAdapter {
 				}
 				
 				lines.add(format(line, kingdomPlayer, locationKingdom)
-						.replaceAll("%total_deaths%", totalDeaths + ""));
+						.replaceAll("%total_deaths%", totalDeaths + "")
+						.replaceAll("%time%", secondsToMinutes(WarHandler.TIME_IN_SECONDS)));
 			}
 			
 			addFooter(lines);
@@ -280,6 +281,18 @@ public class ScoreboardAdapter implements AssembleAdapter {
 	}
 	
 	private static String secondsToMinutes(int s) {
-        return String.format("%02d:%02d", s % 3600 / 60, s % 60);
+		int hours = s / 3600;
+		int minutes = (s % 3600) / 60;
+		int seconds = s % 60;
+
+		String timeString = String.format("%02d:%02d:%02d", hours, minutes, seconds);
+		
+		if(hours <= 0) {
+			timeString = String.format("%02d:%02d", minutes, seconds);
+		}
+		
+		return timeString;
+		
+        //return String.format("%02d:%02d", s % 3600 / 60, s % 60);
 	}
 }
