@@ -81,6 +81,16 @@ public class KingdomHandler {
 
 		return kingdoms.get(kingdoms.indexOf(found));
 	}
+	
+	public static KingdomConstructor getKingdom(String name) {
+		KingdomConstructor found = kingdoms.stream().filter(kgs -> kgs.getName().toLowerCase().equals(name.toLowerCase())).findFirst().orElse(null);
+		
+		if(found == null) {
+			return null;
+		}
+
+		return kingdoms.get(kingdoms.indexOf(found));
+	}
 
 	/* public static ArrayList<KingdomConstructor> getKingdoms() {
 		ArrayList<KingdomConstructor> kingdoms = new ArrayList<>();
