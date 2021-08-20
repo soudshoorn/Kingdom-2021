@@ -21,7 +21,8 @@ public class WarCommand implements CommandExecutor {
 			sender.sendMessage(ChatColor.RED + "/" + label + " stop");
 			sender.sendMessage(ChatColor.RED + "/" + label + " addtime <seconds>");
 			sender.sendMessage(ChatColor.RED + "/" + label + " removetime <seconds>");
-			
+			sender.sendMessage(ChatColor.RED + "/" + label + " settime <seconds>");
+
 			return true;
 		}
 		
@@ -105,7 +106,8 @@ public class WarCommand implements CommandExecutor {
 				sender.sendMessage(ChatColor.RED + "/" + label + " stop");
 				sender.sendMessage(ChatColor.RED + "/" + label + " addtime <seconds>");
 				sender.sendMessage(ChatColor.RED + "/" + label + " removetime <seconds>");
-				
+				sender.sendMessage(ChatColor.RED + "/" + label + " settime <seconds>");
+
 				break;
 			}
 		}
