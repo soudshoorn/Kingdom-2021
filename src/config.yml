@@ -8,6 +8,7 @@ guild_settings:
   storage: 1000
 
 settings:
+  hide_players_spawn: false
   kingdom_ranks:
     ridder1:
       name: "Ridder 1"

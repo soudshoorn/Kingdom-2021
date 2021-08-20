@@ -24,6 +24,7 @@ import me.niko.kingdom.commands.AutoSmeltCommand;
 import me.niko.kingdom.commands.BTCCommand;
 import me.niko.kingdom.commands.BountyHuntersCommand;
 import me.niko.kingdom.commands.ChatCommand;
+import me.niko.kingdom.commands.ConfigReloadCommand;
 import me.niko.kingdom.commands.ConquestCommand;
 import me.niko.kingdom.commands.FreezeCommand;
 import me.niko.kingdom.commands.GuildCommand;
@@ -162,6 +163,7 @@ public class Kingdom extends JavaPlugin {
 		getCommand("setendexit").setExecutor(new SetEndExitCommand());
 		getCommand("autosmelt").setExecutor(new AutoSmeltCommand());
 		getCommand("mines").setExecutor(new MinesCommand());
+		getCommand("creload").setExecutor(new ConfigReloadCommand());
 
 		getServer().getPluginManager().registerEvents(new ArrowCleanerListener(), this);
 		getServer().getPluginManager().registerEvents(new BuildListeners(), this);

@@ -7,6 +7,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import me.niko.kingdom.Kingdom;
 import me.niko.kingdom.data.KingdomConstructor;
 import me.niko.kingdom.data.KingdomHandler;
 import me.niko.kingdom.data.players.KingdomPlayer;
@@ -26,7 +27,7 @@ public class StatsCommand implements CommandExecutor {
 			Player player = (Player) sender;
 			
 			KingdomPlayer kingdomPlayer = KingdomHandler.getKingdomPlayer(player);
-			
+						
 			statsMessage(player, player);
 
 			return true;
