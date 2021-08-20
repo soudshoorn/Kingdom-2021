@@ -25,6 +25,7 @@ public class KingdomConstructor {
 	@Getter @Setter private byte woolData = 0;
 	@Setter private String displayName = "";
 	@Getter @Setter private Location spawnLocation = null;
+	@Getter @Setter private Location boatExitLocation = null;
 	@Getter @Setter private int points = 0;
 	@Getter @Setter private ArrayList<KingdomConstructor> allies = new ArrayList<>();
 	
@@ -62,6 +63,7 @@ public class KingdomConstructor {
 		this.displayName = ChatColor.translateAlternateColorCodes('&', yamlConfiguration.getString("displayName"));
 		this.spawnLocation = LocationUtils.fromStrToLocation(yamlConfiguration.getString("spawn_location"));
 		this.points = yamlConfiguration.getInt("points");
+		this.boatExitLocation = yamlConfiguration.get("boat_exit") == null ? null : LocationUtils.fromStrToLocation(yamlConfiguration.getString("boat_exit"));
 	}
 	
 	public void save() {
@@ -82,6 +84,7 @@ public class KingdomConstructor {
 		yamlConfiguration.set("allies", alliesStrings);
 		yamlConfiguration.set("spawn_location", LocationUtils.fromLocToString(this.spawnLocation));
 		yamlConfiguration.set("points", this.points);
+		yamlConfiguration.set("boat_exit", LocationUtils.fromLocToString(this.boatExitLocation));
 
 		try {
 			yamlConfiguration.save(file);

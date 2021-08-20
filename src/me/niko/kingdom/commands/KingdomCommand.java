@@ -214,6 +214,83 @@ public class KingdomCommand implements CommandExecutor {
 				break;
 			}
 			
+			case "setboatexit": {
+				if(!sender.isOp()) {
+					sender.sendMessage(ChatColor.RED + "No permission.");
+					return true;
+				}
+				
+				if(args.length < 2) {
+					sender.sendMessage(ChatColor.RED + "Usage: /" + label + " " + args[0] + " <kingdom>");
+					return true;
+				}
+				
+				if(!(sender instanceof Player)) {
+					sender.sendMessage(ChatColor.RED + "You need to be a player for this one.");
+					return true;
+				}
+				
+				Player player = (Player) sender;
+				
+				String name = args[1];
+				
+				KingdomConstructor kingdom = new KingdomConstructor(name);
+				
+				if(!kingdom.doesExists()) {
+					sender.sendMessage(ChatColor.RED + "Kingdom named '" + name + "' does not exists.");
+					return true;
+				}
+				
+				kingdom.setBoatExitLocation(player.getLocation());
+				kingdom.save();
+				
+				player.sendMessage(ChatColor.GREEN + "Kingdom Boat Exit has been saved.");
+				
+				break;
+			}
+			
+			case "boatexit": {
+				if(!sender.isOp()) {
+					sender.sendMessage(ChatColor.RED + "No permission.");
+					return true;
+				}
+				
+				if(args.length < 2) {
+					sender.sendMessage(ChatColor.RED + "Usage: /" + label + " " + args[0] + " <target>");
+					return true;
+				}
+				
+				if(!(sender instanceof Player)) {
+					sender.sendMessage(ChatColor.RED + "You need to be a player for this one.");
+					return true;
+				}
+				
+				Player player = (Player) sender;
+				Player target = Bukkit.getPlayer(args[1]);
+				
+				if (target == null) {
+					player.sendMessage(ChatColor.RED + "Player named '" + args[1] + "' not found.");
+					return true;
+				}
+				
+				KingdomPlayer kingdomPlayer = KingdomHandler.getKingdomPlayer(target);
+				
+				KingdomConstructor kingdom = kingdomPlayer.getKingdom();
+				
+				if(kingdom == null) {
+					player.sendMessage(ChatColor.RED + "This player does not have a kingdom.");
+					return true;
+				}
+				
+				if (kingdom.getBoatExitLocation() != null) {
+					player.teleport(kingdom.getBoatExitLocation());
+					player.sendMessage(ChatColor.GREEN + "Teleported " + target.getName() + " to the boat exit spawn " + kingdom.getDisplayName() + ".");
+				} else {
+					player.sendMessage(ChatColor.RED + "This kingdom does not have a boat exit set.");
+				}
+				break;
+			}
+			
 			case "spawn": {
 				if(!sender.isOp()) {
 					sender.sendMessage(ChatColor.RED + "No permission.");
