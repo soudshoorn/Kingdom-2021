@@ -187,16 +187,17 @@ public class HorseMountListener implements Listener {
 		if (damager != null && event.getEntity() instanceof Horse) {
 			
 			KingdomPlayer kingdomPlayer = KingdomHandler.getKingdomPlayer(damager);
-			
+			KingdomConstructor kingdom = KingdomHandler.getKingdom(kingdomPlayer);
+
 			horse = (Horse) event.getEntity();
 			if (HorseHandler.getHorseSpawned().containsValue(horse)) {
 				String horseKingdom = horse.getCustomName().split(" ")[1];
 
-				KingdomConstructor kingdomConstructor = horse.hasMetadata("kingdom")
-						? (KingdomConstructor) horse.getMetadata("kingdom").get(0)
-						: null;
-
-				if (KingdomHandler.isSimiliarKingdom(kingdomPlayer.getKingdom(), kingdomConstructor)) {
+				KingdomConstructor kingdomConstructor = KingdomHandler.getKingdom(horse.hasMetadata("kingdom")
+						? horse.getMetadata("kingdom").get(0).asString()
+						: null);
+				
+				if (KingdomHandler.isSimiliarKingdom(kingdom, kingdomConstructor)) {
 					damager.sendMessage(ConfigUtils.getFormattedValue("messages.mount.cant_damage_your_kingdom"));
 					event.setCancelled(true);
 					damager.playSound(damager.getLocation(), Sound.VILLAGER_NO, 5.0F, 1.3F);
@@ -223,8 +224,11 @@ public class HorseMountListener implements Listener {
 
 			KingdomPlayer kingdomTarget = KingdomHandler.getKingdomPlayer(target);
 			KingdomPlayer kingdomPlayer = KingdomHandler.getKingdomPlayer(damager);
+			
+			KingdomConstructor playerKingdom = KingdomHandler.getKingdom(kingdomPlayer);
+			KingdomConstructor targetKingdom = KingdomHandler.getKingdom(kingdomTarget);
 
-			if (!KingdomHandler.isSimiliarKingdom(kingdomPlayer.getKingdom(), kingdomTarget.getKingdom())) {
+			if (!KingdomHandler.isSimiliarKingdom(playerKingdom, targetKingdom)) {
 				if (HorseHandler.getHorseSpawned().containsKey(damager.getUniqueId())
 						&& !((Horse) HorseHandler.getHorseSpawned().get(damager.getUniqueId())).isDead()) {
 					horse = (Horse) HorseHandler.getHorseSpawned().get(damager.getUniqueId());

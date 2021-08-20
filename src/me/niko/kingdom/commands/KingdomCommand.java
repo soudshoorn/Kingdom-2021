@@ -119,10 +119,11 @@ public class KingdomCommand implements CommandExecutor {
 				String kingdomName = args[2];
 
 				KingdomPlayer kingdomPlayer = KingdomHandler.getKingdomPlayer(target);
+				KingdomConstructor oldKingom = KingdomHandler.getKingdom(kingdomPlayer);
+
+				KingdomHandler.removeOnlinePlayer(target, oldKingom);
 				
-				KingdomHandler.removeOnlinePlayer(target, kingdomPlayer.getKingdom());
-				
-				KingdomConstructor kingdom = new KingdomConstructor(kingdomName);
+				KingdomConstructor kingdom = KingdomHandler.getKingdom(kingdomName);
 				
 				if(kingdomName.equals("null")) {
 					kingdom = null;
@@ -132,9 +133,7 @@ public class KingdomCommand implements CommandExecutor {
 						return true;
 					}
 				}
-				
-				KingdomConstructor oldKingom = kingdomPlayer.getKingdom();
-				
+								
 				if (kingdom == null) {
 					kingdomPlayer.setKingdom(null);
 					target.getInventory().setItem(4, ItemStackUtils.SELECTOR);
@@ -152,7 +151,7 @@ public class KingdomCommand implements CommandExecutor {
 							.replaceAll("%old_kingdom%", oldKingom == null ? "None" : oldKingom.getDisplayName())
 							.replaceAll("%new_kingdom%", kingdom == null ? "None" : kingdom.getDisplayName()));
 					
-					KingdomHandler.addOnlinePlayer(target, kingdomPlayer.getKingdom());
+					KingdomHandler.addOnlinePlayer(target, KingdomHandler.getKingdom(kingdomPlayer));
 
 					return true;
 				}
@@ -174,7 +173,7 @@ public class KingdomCommand implements CommandExecutor {
 						.replaceAll("%old_kingdom%", oldKingom == null ? "None" : oldKingom.getDisplayName())
 						.replaceAll("%new_kingdom%", kingdom == null ? "None" : kingdom.getDisplayName()));
 				
-				KingdomHandler.addOnlinePlayer(target, kingdomPlayer.getKingdom());
+				KingdomHandler.addOnlinePlayer(target, KingdomHandler.getKingdom(kingdomPlayer));
 
 				break;
 			}
@@ -199,7 +198,7 @@ public class KingdomCommand implements CommandExecutor {
 				
 				String name = args[1];
 				
-				KingdomConstructor kingdom = new KingdomConstructor(name);
+				KingdomConstructor kingdom = KingdomHandler.getKingdom(name);
 				
 				if(!kingdom.doesExists()) {
 					sender.sendMessage(ChatColor.RED + "Kingdom named '" + name + "' does not exists.");
@@ -275,7 +274,7 @@ public class KingdomCommand implements CommandExecutor {
 				
 				KingdomPlayer kingdomPlayer = KingdomHandler.getKingdomPlayer(target);
 				
-				KingdomConstructor kingdom = kingdomPlayer.getKingdom();
+				KingdomConstructor kingdom = KingdomHandler.getKingdom(kingdomPlayer);
 				
 				if(kingdom == null) {
 					player.sendMessage(ChatColor.RED + "This player does not have a kingdom.");
@@ -351,8 +350,9 @@ public class KingdomCommand implements CommandExecutor {
 				
 				for(Player target : Bukkit.getOnlinePlayers()) {
 					KingdomPlayer kingdomTarget = KingdomHandler.getKingdomPlayer(target);
-					
-					if(!kingdomTarget.getKingdom().getName().toLowerCase().equals(name.toLowerCase())) {
+					KingdomConstructor kingdom = KingdomHandler.getKingdom(kingdomTarget);
+
+					if(!kingdom.getName().toLowerCase().equals(name.toLowerCase())) {
 						continue;	
 					}
 					
@@ -446,8 +446,9 @@ public class KingdomCommand implements CommandExecutor {
 				}
 				
 				KingdomPlayer kingdomPlayer = KingdomHandler.getKingdomPlayer(target.getUniqueId());
-				
-				if (kingdomPlayer.getKingdom() == null) {
+				KingdomConstructor kingdom = KingdomHandler.getKingdom(kingdomPlayer);
+
+				if (kingdom == null) {
 					sender.sendMessage(ChatColor.RED + "This player does not have an kingdom.");
 					return true;
 				}
@@ -512,8 +513,9 @@ public class KingdomCommand implements CommandExecutor {
 				}
 				
 				KingdomPlayer kingdomPlayer = KingdomHandler.getKingdomPlayer(target.getUniqueId());
-				
-				if (kingdomPlayer.getKingdom() == null) {
+				KingdomConstructor kingdom = KingdomHandler.getKingdom(kingdomPlayer);
+
+				if (kingdom == null) {
 					sender.sendMessage(ChatColor.RED + "This player does not have an kingdom.");
 					return true;
 				}
@@ -587,7 +589,7 @@ public class KingdomCommand implements CommandExecutor {
 				}
 				
 				KingdomPlayer kingdomPlayer = KingdomHandler.getKingdomPlayer(player);
-				KingdomConstructor playerKingdom = kingdomPlayer.getKingdom();
+				KingdomConstructor playerKingdom = KingdomHandler.getKingdom(kingdomPlayer);
 				
 				boolean isAlly = KingdomHandler.isAllyWithKingdom(playerKingdom, kingdomTarget);
 				boolean isAllyRequested = (playerKingdom.getAllies().stream().filter(k -> KingdomHandler.isSimiliarKingdom(k, playerKingdom)).findFirst().orElse(null)) != null;
@@ -650,7 +652,7 @@ public class KingdomCommand implements CommandExecutor {
 				}
 				
 				KingdomPlayer kingdomPlayer = KingdomHandler.getKingdomPlayer(player);
-				KingdomConstructor playerKingdom = kingdomPlayer.getKingdom();
+				KingdomConstructor playerKingdom = KingdomHandler.getKingdom(kingdomPlayer);
 				
 				boolean isAlly = KingdomHandler.isAllyWithKingdom(playerKingdom, kingdomTarget);
 				boolean isAllyRequested = (playerKingdom.getAllies().stream().filter(k -> KingdomHandler.isSimiliarKingdom(k, kingdomTarget)).findFirst().orElse(null)) != null;

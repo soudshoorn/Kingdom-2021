@@ -113,8 +113,9 @@ public class ChatListeners implements Listener {
 		event.setCancelled(true);
 		
 		KingdomPlayer kingdomPlayer = KingdomHandler.getKingdomPlayer(player);
-		
-		if(kingdomPlayer.getKingdom() == null && !player.isOp()) {
+		KingdomConstructor kingdom = KingdomHandler.getKingdom(kingdomPlayer);
+
+		if(kingdom == null && !player.isOp()) {
 			player.sendMessage(ConfigUtils.getFormattedValue("messages.chat.no_kingdom"));
 			
 			return;
@@ -194,10 +195,10 @@ public class ChatListeners implements Listener {
 				
 				continue;
 			}
-			
-			KingdomConstructor kingdomConstructor = kingdomPlayer.getKingdom();
-			
-			if(KingdomHandler.isSimiliarKingdom(kingdomPlayer.getKingdom(), kingdomTarget.getKingdom())
+
+			KingdomConstructor targetKingdom = KingdomHandler.getKingdom(kingdomTarget);
+
+			if(KingdomHandler.isSimiliarKingdom(kingdom, targetKingdom)
 					|| Kingdom.getInstance().getChat().getChatSpy().contains(target)) { //By default they will chat in their Kingdom chat
 				if (Kingdom.getInstance().getChat().isMuted()) {
 					player.sendMessage(ConfigUtils.getFormattedValue("messages.chat.muted"));
@@ -207,7 +208,7 @@ public class ChatListeners implements Listener {
 				
 				//message(player, target, event.getMessage(), "kingdom", kingdomPlayer);
 				target.sendMessage(message(player, target, event.getMessage(), "kingdom", kingdomPlayer));
-				consoleOutput = "[Kingdom Chat] [" + kingdomConstructor.getName() + "] " + player.getName() + ": " + event.getMessage().substring(1).trim();
+				consoleOutput = "[Kingdom Chat] [" + kingdom.getName() + "] " + player.getName() + ": " + event.getMessage().substring(1).trim();
 
 				continue;
 			}
@@ -240,14 +241,15 @@ public class ChatListeners implements Listener {
 		//String format = prefix + sender.getName() + suffix + ChatColor.GRAY + ": " + (sender.isOp() ? ChatColor.translateAlternateColorCodes('&', message) : ChatColor.WHITE + message);
 
 		Guild playerGuild = kingdomPlayer.getGuild();
-		
+		KingdomConstructor kingdom = KingdomHandler.getKingdom(kingdomPlayer);
+
 		String format = ChatColor.translateAlternateColorCodes('&', ConfigUtils.getFormattedValue("messages.chat.formats." + type.toLowerCase() + "_chat")
 				.replaceAll("%player%", sender.getName())
 				.replaceAll("refix%", prefix)
 				.replaceAll("%suffix%", suffix)
 				.replaceAll("%guild_name%", playerGuild == null ? "" : " &7[&9" + playerGuild.getName() + "&7] ")
 				.replaceAll("%guild_tag%", playerGuild == null ? "" : " &7[&9" + playerGuild.getTag() + "&7] ")
-				.replaceAll("%kingdom_name%", kingdomPlayer.getKingdom().getDisplayName())
+				.replaceAll("%kingdom_name%", kingdom.getDisplayName())
 				.replaceAll("%kingdom_rank%", kingdomPlayer.getKingdomRank() == 0 ? "" : KingdomHandler.getRanks().get(kingdomPlayer.getKingdomRank()).getPrefix())
 				.replaceAll("%message%", (sender.isOp() ? ChatColor.translateAlternateColorCodes('&', message) : ChatColor.WHITE + message)));
 		

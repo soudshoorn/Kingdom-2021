@@ -33,15 +33,14 @@ public class TellLocationCommand implements CommandExecutor {
 		Player player = (Player) sender;
 		
 		KingdomPlayer kingdomPlayer = KingdomHandler.getKingdomPlayer(player);
-		
-		if(kingdomPlayer.getKingdom() == null) {
+		KingdomConstructor kingdomConstructor = KingdomHandler.getKingdom(kingdomPlayer);
+
+		if(kingdomConstructor == null) {
 			player.sendMessage(ChatColor.RED + "You are not in a kingdom.");
 			
 			return true;
 		}
-		
-		KingdomConstructor kingdomConstructor = kingdomPlayer.getKingdom();
-		
+				
 		ArrayList<Player> onlinePlayers = new ArrayList<>(KingdomHandler.getOnlinePlayersMap().getOrDefault(kingdomConstructor == null ? "null" : kingdomConstructor.getName(), new ArrayList<Player>()));
 		
 		Location playerLocation = player.getLocation();

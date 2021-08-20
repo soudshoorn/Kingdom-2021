@@ -29,6 +29,7 @@ import org.yaml.snakeyaml.external.biz.base64Coder.Base64Coder;
 
 import lombok.Getter;
 import me.niko.kingdom.Kingdom;
+import me.niko.kingdom.data.KingdomConstructor;
 import me.niko.kingdom.data.KingdomHandler;
 import me.niko.kingdom.data.players.KingdomPlayer;
 import me.niko.kingdom.utils.ConfigUtils;
@@ -116,11 +117,15 @@ public class HorseHandler {
 			KingdomPlayer kingdomPlayer = KingdomHandler.getKingdomPlayer(player);
 			KingdomPlayer kingdomTarget = KingdomHandler.getKingdomPlayer(target);
 
-			if (kingdomPlayer.getKingdom() == null || kingdomTarget.getKingdom() == null) {
+			KingdomConstructor playerKingdom = KingdomHandler.getKingdom(kingdomPlayer);
+			KingdomConstructor targetKingdom = KingdomHandler.getKingdom(kingdomTarget);
+
+			
+			if (playerKingdom == null || targetKingdom == null) {
 				continue;
 			}
 
-			if (!KingdomHandler.isSimiliarKingdom(kingdomPlayer.getKingdom(), kingdomTarget.getKingdom())) {
+			if (!KingdomHandler.isSimiliarKingdom(playerKingdom, targetKingdom)) {
 				isNearby = true;
 				break;
 			}
@@ -190,9 +195,10 @@ public class HorseHandler {
 
 		Horse horse = (Horse) player.getWorld().spawn(player.getLocation(), Horse.class);
 		KingdomPlayer kingdomPlayer = KingdomHandler.getKingdomPlayer(player);
+		KingdomConstructor kingdom = KingdomHandler.getKingdom(kingdomPlayer);
 
 		horse.setCustomName(player.getName() + " "
-				+ (kingdomPlayer.getKingdom() != null ? kingdomPlayer.getKingdom().getDisplayName() : "Default"));
+				+ (kingdom != null ? kingdom.getDisplayName() : "Default"));
 		horse.setCustomNameVisible(false);
 		horse.setMaxHealth(health);
 		horse.setTamed(true);
@@ -211,7 +217,7 @@ public class HorseHandler {
 		horse.setBreed(false);
 		horse.getInventory().setSaddle(new ItemStack(Material.SADDLE));
 		horse.setMetadata("unNatural", new FixedMetadataValue(Kingdom.getInstance(), true));
-		horse.setMetadata("kingdom", new FixedMetadataValue(Kingdom.getInstance(), kingdomPlayer.getKingdom()));
+		horse.setMetadata("kingdom", new FixedMetadataValue(Kingdom.getInstance(), kingdom.getName()));
 
 		if (donkeyIv.containsKey(player.getUniqueId())) {
 			ItemStack[] items = null;

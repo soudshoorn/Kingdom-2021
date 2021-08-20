@@ -2,8 +2,8 @@ package me.niko.kingdom;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Random;
 import java.util.Map.Entry;
+import java.util.Random;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
@@ -38,6 +38,7 @@ import me.niko.kingdom.commands.StaffModeCommand;
 import me.niko.kingdom.commands.StatsCommand;
 import me.niko.kingdom.commands.TellLocationCommand;
 import me.niko.kingdom.commands.WarCommand;
+import me.niko.kingdom.data.KingdomConstructor;
 import me.niko.kingdom.data.KingdomHandler;
 import me.niko.kingdom.data.players.KingdomPlayer;
 import me.niko.kingdom.events.EventConstants;
@@ -106,7 +107,7 @@ public class Kingdom extends JavaPlugin {
 		assemble = new Assemble(this, new ScoreboardAdapter());
 		nametags = new NametagHandler(this, new Nametags());
 		
-		nametags.setTicks(20 * 30);
+		nametags.setTicks(20);
 		
 		eventConstants = new EventConstants();
 		
@@ -132,8 +133,9 @@ public class Kingdom extends JavaPlugin {
 		for(Player player : Bukkit.getOnlinePlayers()) {
 			
 			KingdomPlayer kingdomPlayer = new KingdomPlayer(player);
-			
-			KingdomHandler.addOnlinePlayer(player, kingdomPlayer.getKingdom());
+			KingdomConstructor kingdom = KingdomHandler.getKingdom(kingdomPlayer);
+
+			KingdomHandler.addOnlinePlayer(player, kingdom);
 			playersMap.put(player.getUniqueId(), kingdomPlayer);
 		}
 				

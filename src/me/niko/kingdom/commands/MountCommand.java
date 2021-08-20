@@ -9,6 +9,7 @@ import org.bukkit.entity.Horse;
 import org.bukkit.entity.Player;
 
 import me.niko.kingdom.Kingdom;
+import me.niko.kingdom.data.KingdomConstructor;
 import me.niko.kingdom.data.KingdomHandler;
 import me.niko.kingdom.data.players.KingdomPlayer;
 import me.niko.kingdom.mount.HorseHandler;
@@ -32,8 +33,9 @@ public class MountCommand implements CommandExecutor {
 		}
 
 		KingdomPlayer kingdomPlayer = KingdomHandler.getKingdomPlayer(player);
+		KingdomConstructor kingdom = KingdomHandler.getKingdom(kingdomPlayer);
 
-		if (kingdomPlayer.getKingdom() == null) {
+		if (kingdom == null) {
 			player.sendMessage(ConfigUtils.getFormattedValue("messages.mount.no_kingdom"));
 			return true;
 		}

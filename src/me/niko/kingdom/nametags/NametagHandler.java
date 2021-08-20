@@ -88,13 +88,4 @@ public class NametagHandler {
             }
         }
     }
-    
-    public void updateNametagsManually(Player player) {
-    	NametagBoard nametagBoard = getBoards().get(player.getUniqueId());
-    	
-    	if(nametagBoard != null) {
-    		nametagBoard.update();
-    	}
-    }
-
 }

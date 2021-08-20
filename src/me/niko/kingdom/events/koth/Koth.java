@@ -67,6 +67,7 @@ public class Koth {
 				if(getCapper() != null) {
 					Player player = Bukkit.getPlayer(getCapper());
 					KingdomPlayer kingdomPlayer = KingdomHandler.getKingdomPlayer(player);
+					KingdomConstructor kingdom = KingdomHandler.getKingdom(kingdomPlayer);
 
 					if(player == null
 							|| !isCapping(player)
@@ -77,7 +78,7 @@ public class Koth {
 						if(getTime() <= 0) {
 							setTime(defaultCapTime);
 							
-							handleWinner(player, kingdomPlayer.getKingdom());
+							handleWinner(player, kingdom);
 																							
 							setCapper(null);
 							
@@ -91,10 +92,11 @@ public class Koth {
 						
 					for(Player player : Bukkit.getOnlinePlayers()) {
 						KingdomPlayer kingdomPlayer = KingdomHandler.getKingdomPlayer(player);
-							
+						KingdomConstructor kingdom = KingdomHandler.getKingdom(kingdomPlayer);
+
 						if(isCapping(player)
 								&& !player.isDead()
-								&& kingdomPlayer.getKingdom() != null) {
+								&& kingdom != null) {
 							onCapPlayers.add(player);
 						}
 					}

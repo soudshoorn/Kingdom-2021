@@ -190,7 +190,7 @@ public class Conquest {
 						
 						for(Player player : Bukkit.getOnlinePlayers()) {
 							KingdomPlayer kingdomPlayer = KingdomHandler.getKingdomPlayer(player);
-							KingdomConstructor kingdom = kingdomPlayer.getKingdom();
+							KingdomConstructor kingdom = KingdomHandler.getKingdom(kingdomPlayer);
 							
 							if(isCapping(player, zone)
 									&& !player.isDead()
@@ -292,7 +292,7 @@ public class Conquest {
 	
 	public void addPoints(Player player, String zone, int points2) {		
 		KingdomPlayer kingdomPlayer = KingdomHandler.getKingdomPlayer(player);
-		KingdomConstructor kingdom = kingdomPlayer.getKingdom();
+		KingdomConstructor kingdom = KingdomHandler.getKingdom(kingdomPlayer);
 		
 		int kingdomPoints = points.getOrDefault(kingdom, 0);
 		

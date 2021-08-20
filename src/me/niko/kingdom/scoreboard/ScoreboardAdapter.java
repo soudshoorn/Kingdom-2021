@@ -52,6 +52,8 @@ public class ScoreboardAdapter implements AssembleAdapter {
 		}
 		
 		KingdomPlayer kingdomPlayer = players.getOrDefault(player.getUniqueId(), KingdomHandler.getKingdomPlayer(player));
+		KingdomConstructor kingdom = KingdomHandler.getKingdom(kingdomPlayer);
+
 		KingdomConstructor locationKingdom = KingdomHandler.getKingdomByLocation(player.getLocation());
 		
 		if(StaffModeHandler.isInStaffMode(player)) {
@@ -184,7 +186,7 @@ public class ScoreboardAdapter implements AssembleAdapter {
 						.replaceAll("%koth_name%", koth.getName())
 						.replaceAll("%koth_time%", secondsToMinutes(koth.getTime()))
 						.replaceAll("%koth_coords%", (koth.getRegion().getMaximumPoint().getBlockX() + " | " + koth.getRegion().getMaximumPoint().getBlockZ()))
-						.replaceAll("%koth_capping%", (koth.getCapper() == null ? "Niemand" : kingdomPlayer.getKingdom().getDisplayName())));
+						.replaceAll("%koth_capping%", (koth.getCapper() == null ? "Niemand" : kingdom.getDisplayName())));
 			}
 			
 			addFooter(lines);
@@ -235,7 +237,7 @@ public class ScoreboardAdapter implements AssembleAdapter {
 			addFooter(lines);
 			
 			return lines;
-		} else if(kingdomPlayer.getKingdom() == null) {
+		} else if(kingdom == null) {
 			for(String line : Kingdom.getInstance().getConfig().getStringList("scoreboard_settings.no_kingdom_lines")) {
 				lines.add(format(line, kingdomPlayer, locationKingdom));
 			}
@@ -243,7 +245,7 @@ public class ScoreboardAdapter implements AssembleAdapter {
 			addFooter(lines);
 			
 			return lines;
-		} else if(kingdomPlayer.getKingdom() != null) {
+		} else if(kingdom != null) {
 			for(String line : Kingdom.getInstance().getConfig().getStringList("scoreboard_settings.has_kingdom_lines")) {
 				lines.add(format(line, kingdomPlayer, locationKingdom));
 			}
@@ -273,10 +275,12 @@ public class ScoreboardAdapter implements AssembleAdapter {
 	}
 	
 	private String format(String line, KingdomPlayer kingdomPlayer, KingdomConstructor locationKingdom) {
+		KingdomConstructor kingdom = KingdomHandler.getKingdom(kingdomPlayer);
+		
 		return line
 				.replaceAll("%influence%", kingdomPlayer.getInfluence() + "")
 				.replaceAll("%online_players%", ONLINE_PLAYERS_COUNT + "")
-				.replaceAll("%kingdom%", kingdomPlayer.getKingdom() == null ? "None" : kingdomPlayer.getKingdom().getDisplayName())
+				.replaceAll("%kingdom%", kingdom == null ? "None" : kingdom.getDisplayName())
 				.replaceAll("%location_kingdom%", locationKingdom == null ? "Onbekend" : locationKingdom.getDisplayName());
 	}
 	

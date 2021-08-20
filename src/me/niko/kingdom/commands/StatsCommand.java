@@ -7,9 +7,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import com.sk89q.worldedit.internal.expression.runtime.For;
-
-import me.niko.kingdom.Kingdom;
+import me.niko.kingdom.data.KingdomConstructor;
 import me.niko.kingdom.data.KingdomHandler;
 import me.niko.kingdom.data.players.KingdomPlayer;
 import me.niko.kingdom.utils.ConfigUtils;
@@ -50,7 +48,8 @@ public class StatsCommand implements CommandExecutor {
 	
 	public void statsMessage(CommandSender sender, Player target) {
 		KingdomPlayer kingdomPlayer = KingdomHandler.getKingdomPlayer(target);
-		
+		KingdomConstructor kingdom = KingdomHandler.getKingdom(kingdomPlayer);
+
 		for (String line : ConfigUtils.getFormattedValueList("messages.stats")) {
 			sender.sendMessage(ChatColor.translateAlternateColorCodes('&', line
 					.replaceAll("%player%", target.getName())
@@ -58,7 +57,7 @@ public class StatsCommand implements CommandExecutor {
 					.replaceAll("%deaths%", kingdomPlayer.getDeaths() + "")
 					.replaceAll("%kdr%", kingdomPlayer.getKdrFormat())
 					.replaceAll("%influence%", kingdomPlayer.getInfluence() + "")
-					.replaceAll("%kingdom%", kingdomPlayer.getKingdom() == null ? "None" : kingdomPlayer.getKingdom().getDisplayName())));
+					.replaceAll("%kingdom%", kingdom == null ? "None" : kingdom.getDisplayName())));
 		}
 	}
 

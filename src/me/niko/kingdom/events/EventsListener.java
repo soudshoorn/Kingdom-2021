@@ -33,7 +33,7 @@ public class EventsListener implements Listener {
 			event.setCancelled(true);
 			
 			KingdomPlayer kingdomPlayer = KingdomHandler.getKingdomPlayer(player);
-			KingdomConstructor kingdom = kingdomPlayer.getKingdom();
+			KingdomConstructor kingdom = KingdomHandler.getKingdom(kingdomPlayer);
 			
 			KingdomConstructor foundKingdom = breakTheCore.getBreaks().keySet().stream()
 					.filter(m -> m.getName().equals(kingdom.getName())).findFirst().orElse(null);

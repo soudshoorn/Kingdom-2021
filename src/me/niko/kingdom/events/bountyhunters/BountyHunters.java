@@ -75,7 +75,7 @@ public class BountyHunters {
 					if(getCapper(zone) != null) {
 						Player player = Bukkit.getPlayer(getCapper(zone));
 						KingdomPlayer kingdomPlayer = KingdomHandler.getKingdomPlayer(player);
-						KingdomConstructor kingdom = kingdomPlayer.getKingdom();
+						KingdomConstructor kingdom = KingdomHandler.getKingdom(kingdomPlayer);
 
 						if(player == null
 								|| !isCapping(player, zone)
@@ -107,7 +107,7 @@ public class BountyHunters {
 						
 						for(Player player : Bukkit.getOnlinePlayers()) {
 							KingdomPlayer kingdomPlayer = KingdomHandler.getKingdomPlayer(player);
-							KingdomConstructor kingdom = kingdomPlayer.getKingdom();
+							KingdomConstructor kingdom = KingdomHandler.getKingdom(kingdomPlayer);
 							
 							if(isCapping(player, zone)
 									&& !player.isDead()

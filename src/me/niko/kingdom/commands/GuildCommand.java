@@ -20,6 +20,7 @@ import com.avaje.ebeaninternal.server.el.ElSetValue;
 import com.sk89q.worldguard.blacklist.target.Target;
 
 import me.niko.kingdom.Kingdom;
+import me.niko.kingdom.data.KingdomConstructor;
 import me.niko.kingdom.data.KingdomHandler;
 import me.niko.kingdom.data.players.KingdomPlayer;
 import me.niko.kingdom.guilds.Guild;
@@ -110,7 +111,9 @@ public class GuildCommand implements CommandExecutor {
 				guild.setLeader(player.getUniqueId());
 				guild.getMembers().add(player.getUniqueId());
 				
-				guild.setKingdom(kingdomPlayer.getKingdom());
+				KingdomConstructor kingdom = KingdomHandler.getKingdom(kingdomPlayer);
+				
+				guild.setKingdom(kingdom);
 				
 				guild.save();
 				
@@ -157,8 +160,9 @@ public class GuildCommand implements CommandExecutor {
 				}
 				
 				KingdomPlayer kingdomTarget = KingdomHandler.getKingdomPlayer(target);
-				
-				if(kingdomTarget.getKingdom() == null || !KingdomHandler.isSimiliarKingdom(kingdomTarget.getKingdom(), guild.getKingdom())) {
+				KingdomConstructor kingdom = KingdomHandler.getKingdom(kingdomTarget);
+
+				if(kingdom == null || !KingdomHandler.isSimiliarKingdom(kingdom, guild.getKingdom())) {
 					player.sendMessage(ConfigUtils.getFormattedValue("messages.guild.no_same_kingdom"));
 					return true;
 				}
@@ -268,7 +272,9 @@ public class GuildCommand implements CommandExecutor {
 					return true;
 				}
 				
-				if(kingdomPlayer.getKingdom() == null || !KingdomHandler.isSimiliarKingdom(kingdomPlayer.getKingdom(), guild.getKingdom())) {
+				KingdomConstructor kingdom = KingdomHandler.getKingdom(kingdomPlayer);
+				
+				if(kingdom == null || !KingdomHandler.isSimiliarKingdom(kingdom, guild.getKingdom())) {
 					player.sendMessage(ConfigUtils.getFormattedValue("messages.guild.no_same_kingdom"));
 					return true;
 				}

@@ -58,10 +58,10 @@ public class SelectorButton extends Button {
 	public void clicked(Player player, int slot, ClickType clickType) {
 		KingdomPlayer kingdomPlayer = KingdomHandler.getKingdomPlayer(player);
 		
-		KingdomConstructor oldKingom = kingdomPlayer.getKingdom();
+		KingdomConstructor oldKingdom = KingdomHandler.getKingdom(kingdomPlayer);
 		
 		String kingdomName = Kingdom.getInstance().getConfig().getString(prefix + "kingdom");
-		KingdomConstructor kingdomConstructor = kingdomName.equals("null") ? null : new KingdomConstructor(kingdomName);
+		KingdomConstructor kingdomConstructor = KingdomHandler.getKingdom(kingdomName.equals("null") ? null : kingdomName);
 		
 		kingdomPlayer.setKingdom(kingdomConstructor);
 		
@@ -71,11 +71,11 @@ public class SelectorButton extends Button {
 		
 		kingdomPlayer.save();
 		
-		KingdomHandler.addOnlinePlayer(player, kingdomPlayer.getKingdom());
+		KingdomHandler.addOnlinePlayer(player, kingdomConstructor);
 		
 		Bukkit.broadcastMessage(ConfigUtils.getFormattedValue("messages.kingdom.set.broadcast")
 				.replaceAll("%player%", player.getName())
-				.replaceAll("%old_kingdom%", oldKingom == null ? "None" : oldKingom.getDisplayName())
+				.replaceAll("%old_kingdom%", oldKingdom == null ? "None" : oldKingdom.getDisplayName())
 				.replaceAll("%new_kingdom%", kingdomConstructor == null ? "None" : kingdomConstructor.getDisplayName()));
 		
 		player.closeInventory();

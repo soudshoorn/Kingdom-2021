@@ -47,17 +47,16 @@ public class PlayerListeners implements Listener {
 		Player player = event.getPlayer();
 		
 		KingdomPlayer kingdomPlayer = new KingdomPlayer(player);
-		
-		KingdomHandler.addOnlinePlayer(player, kingdomPlayer.getKingdom());
+		KingdomConstructor kingdom = KingdomHandler.getKingdom(kingdomPlayer);
+
+		KingdomHandler.addOnlinePlayer(player, kingdom);
 		Kingdom.getInstance().getPlayersMap().put(player.getUniqueId(), kingdomPlayer);
 
-		if(!player.hasPlayedBefore() || kingdomPlayer.getKingdom() == null) {
+		if(!player.hasPlayedBefore() || kingdom == null) {
 			player.sendMessage(ConfigUtils.getFormattedValue("messages.kingdom.select_kingdom_before_continue"));
 			
 			player.getInventory().setItem(4, ItemStackUtils.SELECTOR);
 		}
-		
-		Kingdom.getInstance().getNametags().updateNametagsManually(player);
 	}
 	
 	@EventHandler
@@ -69,7 +68,9 @@ public class PlayerListeners implements Listener {
 		KingdomPlayer kingdomPlayer = KingdomHandler.getKingdomPlayer(player);
 		kingdomPlayer.save();
 		
-		KingdomHandler.removeOnlinePlayer(player, kingdomPlayer.getKingdom());
+		KingdomConstructor kingdom = KingdomHandler.getKingdom(kingdomPlayer);
+		
+		KingdomHandler.removeOnlinePlayer(player, kingdom);
 		
 		Kingdom.getInstance().getPlayersMap().remove(player.getUniqueId());
 		
@@ -96,8 +97,9 @@ public class PlayerListeners implements Listener {
 		if((event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) && ItemStackUtils.isSimiliar(player.getItemInHand(), ItemStackUtils.SELECTOR)) {
 			
 			KingdomPlayer kingdomPlayer = KingdomHandler.getKingdomPlayer(player);
-			
-			if(kingdomPlayer.getKingdom() == null) {
+			KingdomConstructor kingdom = KingdomHandler.getKingdom(kingdomPlayer);
+
+			if(kingdom == null) {
 				new SelectorMenu().openMenu(player);
 				
 				return;
@@ -158,8 +160,9 @@ public class PlayerListeners implements Listener {
 	public void onRespawn(PlayerRespawnEvent event) {
 		Player player = event.getPlayer();
 		KingdomPlayer kingdomPlayer = KingdomHandler.getKingdomPlayer(player);
-		
-		if(kingdomPlayer.getKingdom() != null) {
+		KingdomConstructor kingdom = KingdomHandler.getKingdom(kingdomPlayer);
+
+		if(kingdom != null) {
 			
 			if(Kingdom.getInstance().isBeta()) {
 				new BukkitRunnable() {
@@ -170,11 +173,9 @@ public class PlayerListeners implements Listener {
 					}
 	        	}.runTaskLater(Kingdom.getInstance(), 20);
 			}
-			
-			KingdomConstructor kingdoms = kingdomPlayer.getKingdom();
-			
-			if(kingdoms.doesExists()) {
-				event.setRespawnLocation(kingdoms.getSpawnLocation());
+						
+			if(kingdom.doesExists()) {
+				event.setRespawnLocation(kingdom.getSpawnLocation());
 			}
 		} else {
 			event.setRespawnLocation(null);

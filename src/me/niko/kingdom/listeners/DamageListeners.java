@@ -29,9 +29,9 @@ public class DamageListeners implements Listener {
 		
 		Player player = (Player) event.getEntity();
 		KingdomPlayer kingdomPlayer = KingdomHandler.getKingdomPlayer(player);
+		KingdomConstructor kingdom = KingdomHandler.getKingdom(kingdomPlayer);
 		
-		
-		if(kingdomPlayer.getKingdom() == null) {
+		if(kingdom == null) {
 			event.setCancelled(true);
 		}
 	}
@@ -41,19 +41,11 @@ public class DamageListeners implements Listener {
 		Player player = event.getEntity();
 		
 		KingdomPlayer kingdomPlayer = KingdomHandler.getKingdomPlayer(player);
-		
+		KingdomConstructor kingdom = KingdomHandler.getKingdom(kingdomPlayer);
+
 		kingdomPlayer.setDeaths(kingdomPlayer.getDeaths() - 1);
-		KingdomConstructor kingdomConstructor2 = new KingdomConstructor(kingdomPlayer.getKingdom().getName());//= kingdomPlayer.getKingdom();
-		
-		/*
-		 * Only losing a point when died to player. moved in the if statement
-		 * 
-		if(kingdomConstructor2 != null) {
-			kingdomConstructor2.setPoints(kingdomConstructor2.getPoints() - 1);
-		}*/
 		
 		kingdomPlayer.save();
-		kingdomConstructor2.save();
 		
 		if(Kingdom.getInstance().isBeta()) {
 			player.getInventory().clear();
@@ -69,37 +61,33 @@ public class DamageListeners implements Listener {
 			
 			Player killer = player.getKiller();
 			KingdomPlayer kingdomKiller = KingdomHandler.getKingdomPlayer(killer);
-			
+			KingdomConstructor killerKingdom = KingdomHandler.getKingdom(kingdomKiller);
+
 			kingdomKiller.setKills(kingdomKiller.getKills() + 1);
 			
 			if(WarHandler.isEnabled()) {
-				WarHandler.getWarKills().put(kingdomKiller.getKingdom().getName(), WarHandler.getWarKills().getOrDefault(kingdomKiller.getKingdom().getName(), 1));
+				WarHandler.getWarKills().put(killerKingdom.getName(), WarHandler.getWarKills().getOrDefault(killerKingdom.getName(), 1));
 			}
 			
 			event.setDeathMessage(ConfigUtils.getFormattedValue("messages.death_message")
-					.replaceAll("%player_kingdom%", kingdomPlayer.getKingdom().getDisplayName())
+					.replaceAll("%player_kingdom%", kingdom.getDisplayName())
 					.replaceAll("%player_kills%", kingdomPlayer.getKills() + "")
 					.replaceAll("%player_kingdom_rank%", KingdomHandler.getRanks().get(kingdomPlayer.getKingdomRank()).getPrefix())
-					.replaceAll("%killer_kingdom%", kingdomKiller.getKingdom().getDisplayName())
+					.replaceAll("%killer_kingdom%", killerKingdom.getDisplayName())
 					.replaceAll("%killer_kills%", kingdomKiller.getKills() + "")
 					.replaceAll("%killer_kingdom_rank%", KingdomHandler.getRanks().get(kingdomKiller.getKingdomRank()).getPrefix()));					
-						
-			KingdomConstructor kingdomConstructor = new KingdomConstructor(kingdomKiller.getKingdom().getName());
-			
-			if(kingdomConstructor != null) {
-				kingdomConstructor.setPoints(kingdomConstructor.getPoints() + 1);
-				
-				kingdomKiller.setKingdom(kingdomConstructor);
+
+			if(killerKingdom != null) {
+				killerKingdom.setPoints(killerKingdom.getPoints() + 1);
 			}
 			
-			if(kingdomConstructor2 != null) {
-				kingdomConstructor2.setPoints(kingdomConstructor2.getPoints() - 1);
-				
-				kingdomPlayer.setKingdom(kingdomConstructor);
+			if(kingdom != null) {
+				kingdom.setPoints(kingdom.getPoints() - 1);
 			}
 			
+			killerKingdom.save();
 			kingdomKiller.save();
-			kingdomConstructor.save();
+			kingdom.save();
 		}
 	}
 	
@@ -131,7 +119,11 @@ public class DamageListeners implements Listener {
 		KingdomPlayer kingdomVictim = KingdomHandler.getKingdomPlayer(victim);
 		KingdomPlayer kingdomDamager = KingdomHandler.getKingdomPlayer(damager);
 		
-		if(KingdomHandler.isSimiliarKingdom(kingdomVictim.getKingdom(), kingdomDamager.getKingdom())) {
+		KingdomConstructor victimKingdom = KingdomHandler.getKingdom(kingdomVictim);
+		KingdomConstructor damagerKingdom = KingdomHandler.getKingdom(kingdomDamager);
+
+		
+		if(KingdomHandler.isSimiliarKingdom(victimKingdom, damagerKingdom)) {
 			event.setCancelled(true);
 			
 			damager.sendMessage(ConfigUtils.getFormattedValue("messages.kingdom.victim_teammate").replaceAll("%player%", victim.getName()));
@@ -140,18 +132,18 @@ public class DamageListeners implements Listener {
 		}
 		
 		if(!WarHandler.isEnabled()) {
-			if(kingdomVictim.getKingdom() == null || kingdomDamager.getKingdom() == null) {
+			if(victimKingdom == null || damagerKingdom == null) {
 				event.setCancelled(true);
 				
 				return;
 			}	
 			
-			if(KingdomHandler.isAllyWithKingdom(kingdomVictim.getKingdom(), kingdomDamager.getKingdom())) {
+			if(KingdomHandler.isAllyWithKingdom(victimKingdom, damagerKingdom)) {
 				//damager.sendMessage(ChatColor.AQUA + victim.getName() + " is an ally from " + kingdomVictim.getKingdom().getDisplayName());
 				
 				damager.sendMessage(ConfigUtils.getFormattedValue("messages.kingdom.victim_ally")
 						.replaceAll("%player%", victim.getName())
-						.replaceAll("%kingdom%", kingdomVictim.getKingdom() == null ? "" : kingdomVictim.getKingdom().getDisplayName()));
+						.replaceAll("%kingdom%", victimKingdom == null ? "" : victimKingdom.getDisplayName()));
 
 				event.setCancelled(true);
 			}
