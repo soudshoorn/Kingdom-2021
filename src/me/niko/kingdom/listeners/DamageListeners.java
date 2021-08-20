@@ -1,5 +1,7 @@
 package me.niko.kingdom.listeners;
 
+import javax.swing.plaf.basic.BasicInternalFrameTitlePane.IconifyAction;
+
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
@@ -69,6 +71,10 @@ public class DamageListeners implements Listener {
 			KingdomPlayer kingdomKiller = KingdomHandler.getKingdomPlayer(killer);
 			
 			kingdomKiller.setKills(kingdomKiller.getKills() + 1);
+			
+			if(WarHandler.isEnabled()) {
+				WarHandler.getWarKills().put(kingdomKiller.getKingdom().getName(), WarHandler.getWarKills().getOrDefault(kingdomKiller.getKingdom().getName(), 1));
+			}
 			
 			event.setDeathMessage(ConfigUtils.getFormattedValue("messages.death_message")
 					.replaceAll("%player_kingdom%", kingdomPlayer.getKingdom().getDisplayName())
