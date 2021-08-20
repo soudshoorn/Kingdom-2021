@@ -43,7 +43,7 @@ public class DamageListeners implements Listener {
 		KingdomPlayer kingdomPlayer = KingdomHandler.getKingdomPlayer(player);
 		
 		kingdomPlayer.setDeaths(kingdomPlayer.getDeaths() - 1);
-		KingdomConstructor kingdomConstructor2 = kingdomPlayer.getKingdom();
+		KingdomConstructor kingdomConstructor2 = new KingdomConstructor(kingdomPlayer.getKingdom().getName());//= kingdomPlayer.getKingdom();
 		
 		/*
 		 * Only losing a point when died to player. moved in the if statement
@@ -84,7 +84,7 @@ public class DamageListeners implements Listener {
 					.replaceAll("%killer_kills%", kingdomKiller.getKills() + "")
 					.replaceAll("%killer_kingdom_rank%", KingdomHandler.getRanks().get(kingdomKiller.getKingdomRank()).getPrefix()));					
 						
-			KingdomConstructor kingdomConstructor = kingdomKiller.getKingdom();
+			KingdomConstructor kingdomConstructor = new KingdomConstructor(kingdomKiller.getKingdom().getName());
 			
 			if(kingdomConstructor != null) {
 				kingdomConstructor.setPoints(kingdomConstructor.getPoints() + 1);
