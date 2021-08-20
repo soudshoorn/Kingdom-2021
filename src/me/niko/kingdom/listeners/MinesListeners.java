@@ -23,6 +23,7 @@ import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 
 import me.niko.kingdom.Kingdom;
 import me.niko.kingdom.utils.ConfigUtils;
+import me.niko.kingdom.utils.TimeUtils;
 
 public class MinesListeners implements Listener {
 	
