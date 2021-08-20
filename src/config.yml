@@ -73,6 +73,8 @@ messages:
   auto_smelt:
     enabled: "&aAutosmelt has been enabled"
     disabled: "&cAutosmelt has been disabled"
+  mines:
+    right_clicked: "&dThis block will regenerate in %time%s"
   mount:
     no_kingdom: "&cYou cannot spawn a horse without a kingdom"
     unmounted: "&cYou unmounted."

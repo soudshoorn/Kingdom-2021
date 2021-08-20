@@ -52,6 +52,7 @@ import me.niko.kingdom.listeners.EndExitListener;
 import me.niko.kingdom.listeners.HorseMountListener;
 import me.niko.kingdom.listeners.MinesListeners;
 import me.niko.kingdom.listeners.PlayerListeners;
+import me.niko.kingdom.listeners.VisibilityListener;
 import me.niko.kingdom.listeners.WorldListener;
 import me.niko.kingdom.mount.HorseHandler;
 import me.niko.kingdom.nametags.NametagHandler;
@@ -61,6 +62,7 @@ import me.niko.kingdom.scoreboard.ScoreboardAdapter;
 import me.niko.kingdom.staffmode.StaffModeHandler;
 import me.niko.kingdom.staffmode.StaffModeListener;
 import me.niko.kingdom.utils.menu.menu.ButtonListener;
+import me.niko.kingdom.visibility.VisibilityManager;
 import net.milkbowl.vault.chat.Chat;
 import net.milkbowl.vault.permission.Permission;
 import net.minelink.ctplus.CombatTagPlus;
@@ -85,6 +87,7 @@ public class Kingdom extends JavaPlugin {
     @Getter private static Permission perms = null;
     
     @Getter public static HashMap<Block, Entry<Material, Byte>> brokenBlocks;
+    @Getter public static HashMap<Block, Long> brokenBlocksCD;
     @Getter public static ArrayList<UUID> autoSmelting;
 	@Getter public static ArrayList<BukkitTask> tasks;
 	
@@ -121,6 +124,7 @@ public class Kingdom extends JavaPlugin {
 		playersMap = new HashMap<>();
 		
 		brokenBlocks = new HashMap<>();
+		brokenBlocksCD = new HashMap<>();
 		autoSmelting = new ArrayList<>();
 		tasks = new ArrayList<>();
 		random = new Random();
@@ -171,6 +175,7 @@ public class Kingdom extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(new WorldListener(), this);
 		getServer().getPluginManager().registerEvents(new EndExitListener(), this);
 		getServer().getPluginManager().registerEvents(new MinesListeners(), this);
+		getServer().getPluginManager().registerEvents(new VisibilityListener(), this);
 
         getServer().getPluginManager().registerEvents(new ButtonListener(), this);
 		        

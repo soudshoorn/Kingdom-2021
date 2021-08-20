@@ -50,6 +50,7 @@ public class MinesCommand implements CommandExecutor {
 		}
 		
 		Kingdom.getInstance().getBrokenBlocks().clear();
+		Kingdom.getInstance().getBrokenBlocksCD().clear();
 		Kingdom.getInstance().getTasks().clear();
 
 		player.sendMessage(ChatColor.GREEN + "All blocks got regenerated.");

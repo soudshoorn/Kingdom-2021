@@ -11,7 +11,9 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -20,6 +22,7 @@ import com.sk89q.worldguard.protection.managers.RegionManager;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 
 import me.niko.kingdom.Kingdom;
+import me.niko.kingdom.utils.ConfigUtils;
 
 public class MinesListeners implements Listener {
 	
@@ -69,7 +72,8 @@ public class MinesListeners implements Listener {
 						byte data = block.getData();
 								
 						Kingdom.getInstance().getBrokenBlocks().put(block, new SimpleEntry(oldType, data));
-								
+						Kingdom.getInstance().getBrokenBlocksCD().put(block, System.currentTimeMillis());
+
 						block.setType(Material.BEDROCK);
 								
 						int seconds = Kingdom.getInstance().getConfig().getInt("mines.reset_after_seconds");
@@ -89,6 +93,37 @@ public class MinesListeners implements Listener {
 					}
 				}
             }
+		}
+	}
+	
+	@EventHandler
+	public void onInteract(PlayerInteractEvent event) {
+		Player player = event.getPlayer();
+		
+		if(event.getClickedBlock() == null) {
+			return;
+		}
+		
+		Block block = event.getClickedBlock();
+		
+		if(block.getType() != Material.BEDROCK) {
+			return;
+		}
+		
+		Block foundBlock = Kingdom.getInstance().getBrokenBlocksCD().keySet().stream().filter(b -> b.getLocation().equals(block.getLocation())).findFirst().orElse(null);
+		
+		if(foundBlock == null) {
+			return;
+		}
+		
+		if(event.getAction() == Action.RIGHT_CLICK_BLOCK) {
+			long millis = Kingdom.getInstance().getBrokenBlocksCD().get(foundBlock);
+			int finall = (int)(System.currentTimeMillis() - millis);
+			
+			int duration = Kingdom.getInstance().getConfig().getInt("mines.reset_after_seconds") * 1000;
+			
+			player.sendMessage(ConfigUtils.getFormattedValue("messages.mines.right_clicked")
+					.replaceAll("%time%", Math.abs((finall-duration)/1000) + ""));
 		}
 	}
 }
