@@ -44,8 +44,8 @@ public class MountCommand implements CommandExecutor {
 				entity.remove();
 				player.sendMessage(ConfigUtils.getFormattedValue("messages.mount.unmounted"));
 
-				if (HorseHandler.getHorseSpawned().containsKey(player)) {
-					HorseHandler.getHorseSpawned().remove(player);
+				if (HorseHandler.getHorseSpawned().containsKey(player.getUniqueId())) {
+					HorseHandler.getHorseSpawned().remove(player.getUniqueId());
 				}
 
 				player.playSound(player.getLocation(), Sound.DIG_GRASS, 5.0F, 1.0F);

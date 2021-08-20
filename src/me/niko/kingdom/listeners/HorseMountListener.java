@@ -42,14 +42,14 @@ public class HorseMountListener implements Listener {
 		Horse horse = (Horse) event.getRightClicked();
 
 		if (HorseHandler.getHorseSpawned().containsValue(horse)) {
-			if (!HorseHandler.getHorseSpawned().containsKey(player)) {
+			if (!HorseHandler.getHorseSpawned().containsKey(player.getUniqueId())) {
 				event.setCancelled(true);
 				player.sendMessage(ConfigUtils.getFormattedValue("messages.mount.not_your_horse"));
 
 				return;
 			}
 
-			Horse horse2 = (Horse) HorseHandler.getHorseSpawned().get(player);
+			Horse horse2 = (Horse) HorseHandler.getHorseSpawned().get(player.getUniqueId());
 
 			if (!horse2.equals(horse)) {
 				event.setCancelled(true);
@@ -74,8 +74,8 @@ public class HorseMountListener implements Listener {
 
 		Horse horse = (Horse) event.getClickedInventory().getHolder();
 
-		if (HorseHandler.getHorseSpawned().containsValue(horse) && HorseHandler.getHorseSpawned().containsKey(player)
-				&& ((Horse) HorseHandler.getHorseSpawned().get(player)).equals(horse)) {
+		if (HorseHandler.getHorseSpawned().containsValue(horse) && HorseHandler.getHorseSpawned().containsKey(player.getUniqueId())
+				&& ((Horse) HorseHandler.getHorseSpawned().get(player.getUniqueId())).equals(horse)) {
 			if (event.getSlot() == 0) {
 				event.setCancelled(true);
 				return;
@@ -120,8 +120,8 @@ public class HorseMountListener implements Listener {
 		}
 
 		Horse horse = (Horse) event.getInventory().getHolder();
-		if (HorseHandler.getHorseSpawned().containsValue(horse) && HorseHandler.getHorseSpawned().containsKey(player)
-				&& ((Horse) HorseHandler.getHorseSpawned().get(player)).equals(horse)) {
+		if (HorseHandler.getHorseSpawned().containsValue(horse) && HorseHandler.getHorseSpawned().containsKey(player.getUniqueId())
+				&& ((Horse) HorseHandler.getHorseSpawned().get(player.getUniqueId())).equals(horse)) {
 			Inventory hIv = horse.getInventory();
 			ItemStack[] items = hIv.getContents();
 			String items64 = HorseHandler.itemStackArrayToBase64(items);
@@ -150,19 +150,19 @@ public class HorseMountListener implements Listener {
 
 		if (event.getEntity() instanceof Player) {
 			Player target = (Player) event.getEntity();
-			if (HorseHandler.getMountingTimer().containsKey(target)) {
-				HorseHandler.getMountingTimer().remove(target);
+			if (HorseHandler.getMountingTimer().containsKey(target.getUniqueId())) {
+				HorseHandler.getMountingTimer().remove(target.getUniqueId());
 			}
-		} else if (damager != null && HorseHandler.getMountingTimer().containsKey(damager)) {
-			HorseHandler.getMountingTimer().remove(damager);
+		} else if (damager != null && HorseHandler.getMountingTimer().containsKey(damager.getUniqueId())) {
+			HorseHandler.getMountingTimer().remove(damager.getUniqueId());
 		}
 		
 		Horse horse;
 		if (damager != null && damager.isInsideVehicle() && damager.getVehicle() instanceof Horse) {
 			horse = (Horse) damager.getVehicle();
-			if (HorseHandler.getHorseSpawned().containsKey(damager)
+			if (HorseHandler.getHorseSpawned().containsKey(damager.getUniqueId())
 					&& HorseHandler.getHorseSpawned().containsValue(horse)
-					&& ((Horse) HorseHandler.getHorseSpawned().get(damager)).equals(horse)) {
+					&& ((Horse) HorseHandler.getHorseSpawned().get(damager.getUniqueId())).equals(horse)) {
 				event.setCancelled(true);
 				damager.sendMessage(ConfigUtils.getFormattedValue("messages.mount.cant_damage_mounted"));
 				damager.playSound(damager.getLocation(), Sound.VILLAGER_NO, 5.0F, 1.3F);
@@ -173,9 +173,9 @@ public class HorseMountListener implements Listener {
 
 		if (damager != null && event.getEntity() instanceof Horse) {
 			horse = (Horse) event.getEntity();
-			if (HorseHandler.getHorseSpawned().containsKey(damager)
+			if (HorseHandler.getHorseSpawned().containsKey(damager.getUniqueId())
 					&& HorseHandler.getHorseSpawned().containsValue(horse)
-					&& ((Horse) HorseHandler.getHorseSpawned().get(damager)).equals(horse)) {
+					&& ((Horse) HorseHandler.getHorseSpawned().get(damager.getUniqueId())).equals(horse)) {
 				event.setCancelled(true);
 				damager.sendMessage(ConfigUtils.getFormattedValue("messages.mount.cant_damage_your_horse"));
 				damager.playSound(damager.getLocation(), Sound.VILLAGER_NO, 5.0F, 1.3F);
@@ -225,20 +225,20 @@ public class HorseMountListener implements Listener {
 			KingdomPlayer kingdomPlayer = KingdomHandler.getKingdomPlayer(damager);
 
 			if (!KingdomHandler.isSimiliarKingdom(kingdomPlayer.getKingdom(), kingdomTarget.getKingdom())) {
-				if (HorseHandler.getHorseSpawned().containsKey(damager)
-						&& !((Horse) HorseHandler.getHorseSpawned().get(damager)).isDead()) {
-					horse = (Horse) HorseHandler.getHorseSpawned().get(damager);
+				if (HorseHandler.getHorseSpawned().containsKey(damager.getUniqueId())
+						&& !((Horse) HorseHandler.getHorseSpawned().get(damager.getUniqueId())).isDead()) {
+					horse = (Horse) HorseHandler.getHorseSpawned().get(damager.getUniqueId());
 					horse.remove();
 
-					HorseHandler.getHorseSpawned().remove(damager);
+					HorseHandler.getHorseSpawned().remove(damager.getUniqueId());
 				}
 
-				if (HorseHandler.getHorseSpawned().containsKey(target)
-						&& !((Horse) HorseHandler.getHorseSpawned().get(target)).isDead()) {
-					horse = (Horse) HorseHandler.getHorseSpawned().get(target);
+				if (HorseHandler.getHorseSpawned().containsKey(target.getUniqueId())
+						&& !((Horse) HorseHandler.getHorseSpawned().get(target.getUniqueId())).isDead()) {
+					horse = (Horse) HorseHandler.getHorseSpawned().get(target.getUniqueId());
 					horse.remove();
 
-					HorseHandler.getHorseSpawned().remove(target);
+					HorseHandler.getHorseSpawned().remove(target.getUniqueId());
 				}
 			}
 		}
@@ -258,14 +258,14 @@ public class HorseMountListener implements Listener {
 	public void onQuit(PlayerQuitEvent event) {
 		Player player = event.getPlayer();
 
-		if (HorseHandler.getHorseSpawned().containsKey(player)) {
-			Horse horse = (Horse) HorseHandler.getHorseSpawned().get(player);
+		if (HorseHandler.getHorseSpawned().containsKey(player.getUniqueId())) {
+			Horse horse = (Horse) HorseHandler.getHorseSpawned().get(player.getUniqueId());
 			
 			if (!horse.isDead()) {
 				horse.remove();
 			}
 
-			HorseHandler.getHorseSpawned().remove(player);
+			HorseHandler.getHorseSpawned().remove(player.getUniqueId());
 		}
 	}
 

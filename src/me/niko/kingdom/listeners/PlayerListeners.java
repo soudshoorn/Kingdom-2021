@@ -121,8 +121,8 @@ public class PlayerListeners implements Listener {
 		Player player = event.getPlayer();
 		
 		if (event.getTo().getBlockX() != event.getFrom().getBlockX() || event.getTo().getBlockZ() != event.getFrom().getBlockZ()) {			
-			if (HorseHandler.getMountingTimer().containsKey(player)) {
-				HorseHandler.getMountingTimer().remove(player);
+			if (HorseHandler.getMountingTimer().containsKey(player.getUniqueId())) {
+				HorseHandler.getMountingTimer().remove(player.getUniqueId());
 			}
 			
 			KingdomConstructor kingdomFrom = KingdomHandler.getKingdomByLocation(event.getFrom());

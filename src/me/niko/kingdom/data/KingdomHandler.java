@@ -72,6 +72,11 @@ public class KingdomHandler {
 						
 			byte data = kingdomConstructor.getWoolData();
 			
+			if(location.getBlock() == null
+					|| location.getBlock().getType() == Material.AIR) {
+				return null;
+			}
+			
 			if(location.getBlock().getType() == Material.WOOL
 					&& location.getBlock().getData() == data) {
 				kingdom = kingdomConstructor;

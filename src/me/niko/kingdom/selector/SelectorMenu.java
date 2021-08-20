@@ -32,14 +32,6 @@ public class SelectorMenu extends Menu {
 	}
 	
 	@Override
-	public void onClose(Player player) {
-		KingdomPlayer kingdomPlayer = KingdomHandler.getKingdomPlayer(player);
-		
-		//if(ItemStackUtils.isSimiliar(player.getItemInHand(), SELECTOR)) {
-		//}
-	}
-	
-	@Override
 	public Map<Integer, Button> getButtons(Player p0) {
 		HashMap<Integer, Button> buttons = new HashMap<>();
 		

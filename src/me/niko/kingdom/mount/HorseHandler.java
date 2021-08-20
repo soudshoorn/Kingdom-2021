@@ -40,8 +40,8 @@ import net.minecraft.server.v1_8_R3.GenericAttributes;
 public class HorseHandler {
 
 	public static HashMap<UUID, String> donkeyIv = new HashMap();
-	@Getter public static HashMap<Player, Horse> horseSpawned = new HashMap<>();
-	@Getter public static HashMap<Player, Integer> mountingTimer = new HashMap();
+	@Getter public static HashMap<UUID, Horse> horseSpawned = new HashMap<>();
+	@Getter public static HashMap<UUID, Integer> mountingTimer = new HashMap();
 
 	public void WriteDonkeyIvFile() {
 		File file = new File(Kingdom.getInstance().getDataFolder(), "horses.yml");
@@ -130,43 +130,43 @@ public class HorseHandler {
 	}
 
 	public void mountCountdown(Player player) {
-		if (mountingTimer.containsKey(player)) {
-			if (mountingTimer.get(player) > 0) {
+		if (mountingTimer.containsKey(player.getUniqueId())) {
+			if (mountingTimer.get(player.getUniqueId()) > 0) {
 				return;
 			}
 
-			mountingTimer.replace(player, 0);
+			mountingTimer.replace(player.getUniqueId(), 0);
 		} else {
-			mountingTimer.put(player, 0);
+			mountingTimer.put(player.getUniqueId(), 0);
 		}
 
 		int seconds = Kingdom.getInstance().getConfig().getInt("donkey.countdown");
 
 		new BukkitRunnable() {
 			public void run() {
-				if (mountingTimer.containsKey(player) && player.isOnline()) {
-					mountingTimer.replace(player, (Integer) mountingTimer.get(player) + 1);
+				if (mountingTimer.containsKey(player.getUniqueId()) && player.isOnline()) {
+					mountingTimer.replace(player.getUniqueId(), (Integer) mountingTimer.get(player.getUniqueId()) + 1);
 
-					if (mountingTimer.get(player) < seconds) {
-						TitleAPI.send(player, ChatColor.YELLOW + ((Integer) mountingTimer.get(player)).toString(), "",
+					if (mountingTimer.get(player.getUniqueId()) < seconds) {
+						TitleAPI.send(player, ChatColor.YELLOW + ((Integer) mountingTimer.get(player.getUniqueId())).toString(), "",
 								1, 1, 1);
 						// ef.mountTimerCount(p, 0.9F);
 						player.playSound(player.getLocation(), Sound.NOTE_PLING, 5.0F, 0.9F);
 					} else {
-						TitleAPI.send(player, ChatColor.GREEN + ((Integer) mountingTimer.get(player)).toString(), "", 1,
+						TitleAPI.send(player, ChatColor.GREEN + ((Integer) mountingTimer.get(player.getUniqueId())).toString(), "", 1,
 								1, 1);
 						// ef.mountTimerCount(p, 1.2F);
 						player.playSound(player.getLocation(), Sound.NOTE_PLING, 5.0F, 1.2F);
 					}
 
-					if (mountingTimer.get(player) >= seconds) {
-						mountingTimer.remove(player);
+					if (mountingTimer.get(player.getUniqueId()) >= seconds) {
+						mountingTimer.remove(player.getUniqueId());
 						mountUp(player);
 						cancel();
 					}
 				} else {
-					if (mountingTimer.containsKey(player)) {
-						mountingTimer.remove(player);
+					if (mountingTimer.containsKey(player.getUniqueId())) {
+						mountingTimer.remove(player.getUniqueId());
 					}
 
 					if (player.isOnline()) {
@@ -229,15 +229,15 @@ public class HorseHandler {
 			}
 		}
 
-		if (horseSpawned.containsKey(player)) {
-			Horse h2 = (Horse) horseSpawned.get(player);
+		if (horseSpawned.containsKey(player.getUniqueId())) {
+			Horse h2 = (Horse) horseSpawned.get(player.getUniqueId());
 			if (!h2.isDead()) {
 				h2.remove();
 			}
 
-			horseSpawned.replace(player, horse);
+			horseSpawned.replace(player.getUniqueId(), horse);
 		} else {
-			horseSpawned.put(player, horse);
+			horseSpawned.put(player.getUniqueId(), horse);
 		}
 
 		// ef.mountUp(player);
@@ -282,7 +282,7 @@ public class HorseHandler {
 	public static void saveAndRemove() {
 		(new HorseHandler()).saveInventory();
 		
-		for(Entry<Player, Horse> entry : HorseHandler.getHorseSpawned().entrySet()) {
+		for(Entry<UUID, Horse> entry : HorseHandler.getHorseSpawned().entrySet()) {
         	Horse horse = entry.getValue();
         	
         	if(horse.isDead()) {
