@@ -82,6 +82,20 @@ public class KingdomHandler {
 		return kingdoms.get(kingdoms.indexOf(found));
 	}
 	
+	public static KingdomConstructor getKingdom(KingdomPlayer kingdomPlayer) {
+		if(kingdomPlayer.getKingdom() == null) {
+			return null;
+		}
+		
+		KingdomConstructor found = kingdoms.stream().filter(kgs -> kgs.getName().equals(kingdomPlayer.getKingdom().getName())).findFirst().orElse(null);
+		
+		if(found == null) {
+			return null;
+		}
+
+		return kingdoms.get(kingdoms.indexOf(found));
+	}
+	
 	public static KingdomConstructor getKingdom(String name) {
 		KingdomConstructor found = kingdoms.stream().filter(kgs -> kgs.getName().toLowerCase().equals(name.toLowerCase())).findFirst().orElse(null);
 		
