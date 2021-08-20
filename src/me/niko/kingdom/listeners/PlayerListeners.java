@@ -50,7 +50,7 @@ public class PlayerListeners implements Listener {
 		
 		KingdomHandler.addOnlinePlayer(player, kingdomPlayer.getKingdom());
 		Kingdom.getInstance().getPlayersMap().put(player.getUniqueId(), kingdomPlayer);
-		
+
 		if(!player.hasPlayedBefore() || kingdomPlayer.getKingdom() == null) {
 			player.sendMessage(ConfigUtils.getFormattedValue("messages.kingdom.select_kingdom_before_continue"));
 			

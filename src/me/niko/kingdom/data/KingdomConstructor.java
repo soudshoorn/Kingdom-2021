@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import javax.swing.plaf.basic.BasicInternalFrameTitlePane.IconifyAction;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -88,7 +89,7 @@ public class KingdomConstructor {
 		yamlConfiguration.set("spawn_location", LocationUtils.fromLocToString(this.spawnLocation));
 		yamlConfiguration.set("points", this.points);
 		yamlConfiguration.set("boat_exit", LocationUtils.fromLocToString(this.boatExitLocation));
-
+		
 		try {
 			yamlConfiguration.save(file);
 		} catch (IOException e) {

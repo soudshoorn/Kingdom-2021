@@ -5,7 +5,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
+import java.util.Map.Entry;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -25,13 +27,62 @@ import me.niko.kingdom.data.players.rank.KingdomRank;
 import me.niko.kingdom.utils.ConfigUtils;
 
 public class KingdomHandler {
-	
-	@Getter private static HashMap<String, Long> homeTimer = new HashMap<>();
-	
+		
 	@Getter public static HashMap<String, ArrayList<Player>> onlinePlayersMap = new HashMap<>();
 	@Getter public static HashMap<UUID, LCWaypoint> waypointsMap = new HashMap<>();
+	@Getter public static List<KingdomConstructor> kingdoms = new ArrayList<>();
 
-	public static ArrayList<KingdomConstructor> getKingdoms() {
+	public static void saveKingdoms() {
+		for (KingdomConstructor kingdom : kingdoms) {
+			kingdom.save();
+		}
+	}
+	
+	public static void updateKingdoms() {
+		saveKingdoms();
+		kingdoms.clear();
+		
+		File dir = new File(Kingdom.getInstance().getDataFolder() + "/kingdoms/");
+				
+		if(!dir.exists()) {
+			return;
+		}
+		
+		File[] directoryListing = dir.listFiles();
+				
+		if (directoryListing != null) {
+			for (File child : directoryListing) {
+				String file = child.getName().replaceAll(".yml", "");
+				KingdomConstructor kingdom = new KingdomConstructor(file);
+				
+				
+				if(kingdom.doesExists()) {
+					kingdoms.add(kingdom);
+				}
+			}
+		}
+		
+		return;
+	}
+	
+	public static KingdomConstructor getKingdom(Player player) {
+		
+		KingdomPlayer kingdomPlayer = getKingdomPlayer(player);
+		
+		if(kingdomPlayer.getKingdom() == null) {
+			return null;
+		}
+		
+		KingdomConstructor found = kingdoms.stream().filter(kgs -> kgs.getName().equals(kingdomPlayer.getKingdom().getName())).findFirst().orElse(null);
+		
+		if(found == null) {
+			return null;
+		}
+
+		return kingdoms.get(kingdoms.indexOf(found));
+	}
+
+	/* public static ArrayList<KingdomConstructor> getKingdoms() {
 		ArrayList<KingdomConstructor> kingdoms = new ArrayList<>();
 		
 		File dir = new File(Kingdom.getInstance().getDataFolder() + "/kingdoms/");
@@ -55,7 +106,7 @@ public class KingdomHandler {
 		}
 		
 		return kingdoms;
-	}
+	}*/
 	
 	public static KingdomConstructor getKingdomByLocation(Location location) {
 		if(!location.getWorld().isChunkLoaded(location.getBlockX() >> 4, location.getBlockZ() >> 4)) {

@@ -124,6 +124,8 @@ public class Kingdom extends JavaPlugin {
 		tasks = new ArrayList<>();
 		random = new Random();
 		
+		KingdomHandler.updateKingdoms();
+		
 		beta = getConfig().getBoolean("settings.beta_mode");
 		
 		//Let's not fuck the whole plugin if theres a /reload ^_^
@@ -134,7 +136,7 @@ public class Kingdom extends JavaPlugin {
 			KingdomHandler.addOnlinePlayer(player, kingdomPlayer.getKingdom());
 			playersMap.put(player.getUniqueId(), kingdomPlayer);
 		}
-		
+				
 		getCommand("kingdom").setExecutor(new KingdomCommand());
 		getCommand("bountyhunters").setExecutor(new BountyHuntersCommand());
 		getCommand("btc").setExecutor(new BTCCommand());

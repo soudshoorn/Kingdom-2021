@@ -88,10 +88,14 @@ public class DamageListeners implements Listener {
 			
 			if(kingdomConstructor != null) {
 				kingdomConstructor.setPoints(kingdomConstructor.getPoints() + 1);
+				
+				kingdomKiller.setKingdom(kingdomConstructor);
 			}
 			
 			if(kingdomConstructor2 != null) {
 				kingdomConstructor2.setPoints(kingdomConstructor2.getPoints() - 1);
+				
+				kingdomPlayer.setKingdom(kingdomConstructor);
 			}
 			
 			kingdomKiller.save();
