@@ -4,6 +4,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import com.sk89q.worldguard.bukkit.WGBukkit;
+import com.sk89q.worldguard.protection.managers.RegionManager;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 
 import me.niko.kingdom.Kingdom;
@@ -31,8 +32,10 @@ public class VisibilityManager {
 		
 		boolean playerIn = false;
 		
-		for(ProtectedRegion region : WGBukkit.getRegionManager(player.getWorld()).getApplicableRegions(player.getLocation()).getRegions()) {
-			if(region.getId().contains("visiblity_")) {
+		RegionManager regionManager = WGBukkit.getRegionManager(player.getWorld());
+		
+		for(ProtectedRegion region : WGBukkit.getRegionManager(target.getWorld()).getApplicableRegions(target.getLocation()).getRegions()) {
+			if(region.getId().contains("visibility_")) {
 				
 				playerIn = true;
 				break;
@@ -42,12 +45,14 @@ public class VisibilityManager {
 		boolean targetIn = false;
 
 		for(ProtectedRegion region : WGBukkit.getRegionManager(target.getWorld()).getApplicableRegions(target.getLocation()).getRegions()) {
-			if(region.getId().contains("visiblity_")) {
+			if(region.getId().contains("visibility_")) {
 				
 				targetIn = true;
 				break;
 			}
 		}
+		
+		Bukkit.broadcastMessage("playerIn = " + playerIn + " | targetIn = " + targetIn);
 		
 		return !(playerIn && targetIn);
 	}
