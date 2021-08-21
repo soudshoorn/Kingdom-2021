@@ -20,6 +20,7 @@ import com.lunarclient.bukkitapi.object.LCWaypoint;
 import lombok.Getter;
 import me.niko.kingdom.Kingdom;
 import me.niko.kingdom.data.KingdomConstructor;
+import me.niko.kingdom.data.KingdomHandler;
 import me.niko.kingdom.utils.ConfigUtils;
 import me.niko.kingdom.utils.TitleAPI;
 
@@ -36,6 +37,11 @@ public class WarHandler {
 
 		// 3 Hours
 		TIME_IN_SECONDS = (60 * 60) * 3;
+		warKills.clear();
+		
+		for (KingdomConstructor kingdomConstructor : KingdomHandler.getKingdoms()) {
+			warKills.put(kingdomConstructor.getName(), 0);
+		}
 
 		ConfigUtils.getFormattedValueList("messages.events.war.started_broadcast")
 				.forEach(m -> Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', m)));

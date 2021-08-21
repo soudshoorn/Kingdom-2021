@@ -31,10 +31,8 @@ public class VisibilityManager {
 		boolean value = true;
 		
 		boolean playerIn = false;
-		
-		RegionManager regionManager = WGBukkit.getRegionManager(player.getWorld());
-		
-		for(ProtectedRegion region : WGBukkit.getRegionManager(target.getWorld()).getApplicableRegions(target.getLocation()).getRegions()) {
+				
+		for(ProtectedRegion region : WGBukkit.getRegionManager(player.getWorld()).getApplicableRegions(player.getLocation()).getRegions()) {
 			if(region.getId().contains("visibility_")) {
 				
 				playerIn = true;
@@ -51,9 +49,7 @@ public class VisibilityManager {
 				break;
 			}
 		}
-		
-		Bukkit.broadcastMessage("playerIn = " + playerIn + " | targetIn = " + targetIn);
-		
+				
 		return !(playerIn && targetIn);
 	}
 }
