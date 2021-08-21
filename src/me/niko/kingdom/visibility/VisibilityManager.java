@@ -8,6 +8,7 @@ import com.sk89q.worldguard.protection.managers.RegionManager;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 
 import me.niko.kingdom.Kingdom;
+import me.niko.kingdom.data.KingdomHandler;
 
 public class VisibilityManager {
 	
@@ -28,6 +29,10 @@ public class VisibilityManager {
 	}
 	
 	public static boolean shouldSee(Player player, Player target) {
+		return KingdomHandler.getKingdom(target) != null;
+	}
+	
+	/*public static boolean shouldSee(Player player, Player target) {
 		boolean value = true;
 		
 		boolean playerIn = false;
@@ -51,5 +56,5 @@ public class VisibilityManager {
 		}
 				
 		return !(playerIn && targetIn);
-	}
+	}*/
 }

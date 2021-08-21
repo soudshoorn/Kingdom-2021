@@ -37,6 +37,7 @@ import me.niko.kingdom.utils.ConfigUtils;
 import me.niko.kingdom.utils.ItemMaker;
 import me.niko.kingdom.utils.ItemStackUtils;
 import me.niko.kingdom.utils.TitleAPI;
+import me.niko.kingdom.visibility.VisibilityManager;
 
 public class PlayerListeners implements Listener {
 		
@@ -56,6 +57,10 @@ public class PlayerListeners implements Listener {
 			player.sendMessage(ConfigUtils.getFormattedValue("messages.kingdom.select_kingdom_before_continue"));
 			
 			player.getInventory().setItem(4, ItemStackUtils.SELECTOR);
+		}
+		
+		if(Kingdom.getInstance().getConfig().getBoolean("settings.hide_players_spawn")) {
+			VisibilityManager.update(player);
 		}
 	}
 	
@@ -87,6 +92,10 @@ public class PlayerListeners implements Listener {
 		
 		if(Kingdom.getInstance().getAutoSmelting().contains(player.getUniqueId())) {
 			Kingdom.getInstance().getAutoSmelting().remove(player.getUniqueId());
+		}
+		
+		if(Kingdom.getInstance().getConfig().getBoolean("settings.hide_players_spawn")) {
+			VisibilityManager.update(player);
 		}
 	}
 	

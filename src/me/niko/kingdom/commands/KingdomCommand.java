@@ -28,6 +28,7 @@ import me.niko.kingdom.data.players.rank.KingdomRank;
 import me.niko.kingdom.data.sort.KingdomPointsSort;
 import me.niko.kingdom.utils.ConfigUtils;
 import me.niko.kingdom.utils.ItemStackUtils;
+import me.niko.kingdom.visibility.VisibilityManager;
 
 public class KingdomCommand implements CommandExecutor {
 
@@ -153,6 +154,10 @@ public class KingdomCommand implements CommandExecutor {
 					
 					KingdomHandler.addOnlinePlayer(target, KingdomHandler.getKingdom(kingdomPlayer));
 
+					if(Kingdom.getInstance().getConfig().getBoolean("settings.hide_players_spawn")) {
+						VisibilityManager.update(target);
+					}
+					
 					return true;
 				}
 				
@@ -175,6 +180,10 @@ public class KingdomCommand implements CommandExecutor {
 				
 				KingdomHandler.addOnlinePlayer(target, KingdomHandler.getKingdom(kingdomPlayer));
 
+				if(Kingdom.getInstance().getConfig().getBoolean("settings.hide_players_spawn")) {
+					VisibilityManager.update(target);
+				}
+				
 				break;
 			}
 			

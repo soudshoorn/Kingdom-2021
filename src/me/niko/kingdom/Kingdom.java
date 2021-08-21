@@ -53,7 +53,6 @@ import me.niko.kingdom.listeners.EndExitListener;
 import me.niko.kingdom.listeners.HorseMountListener;
 import me.niko.kingdom.listeners.MinesListeners;
 import me.niko.kingdom.listeners.PlayerListeners;
-import me.niko.kingdom.listeners.VisibilityListener;
 import me.niko.kingdom.listeners.WorldListener;
 import me.niko.kingdom.mount.HorseHandler;
 import me.niko.kingdom.nametags.NametagHandler;
@@ -177,7 +176,6 @@ public class Kingdom extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(new WorldListener(), this);
 		getServer().getPluginManager().registerEvents(new EndExitListener(), this);
 		getServer().getPluginManager().registerEvents(new MinesListeners(), this);
-		getServer().getPluginManager().registerEvents(new VisibilityListener(), this);
 
         getServer().getPluginManager().registerEvents(new ButtonListener(), this);
 		        
