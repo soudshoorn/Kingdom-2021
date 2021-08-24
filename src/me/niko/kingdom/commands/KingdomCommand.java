@@ -319,7 +319,7 @@ public class KingdomCommand implements CommandExecutor {
 				
 				String name = args[1];
 				
-				KingdomConstructor kingdom = new KingdomConstructor(name);
+				KingdomConstructor kingdom = KingdomHandler.getKingdom(name);
 				
 				if(!kingdom.doesExists()) {
 					sender.sendMessage(ChatColor.RED + "Kingdom named '" + name + "' does not exists.");
@@ -388,7 +388,7 @@ public class KingdomCommand implements CommandExecutor {
 				String name = args[1];
 				String displayName = String.join(" ", Arrays.copyOfRange(args, 2, args.length));
 
-				KingdomConstructor kingdom = new KingdomConstructor(name);
+				KingdomConstructor kingdom = KingdomHandler.getKingdom(name);
 				
 				if(!kingdom.doesExists()) {
 					sender.sendMessage(ChatColor.RED + "Kingdom named '" + name + "' does not exists.");
@@ -418,7 +418,7 @@ public class KingdomCommand implements CommandExecutor {
 				String name = args[1];
 				String prefix = String.join(" ", Arrays.copyOfRange(args, 2, args.length));
 
-				KingdomConstructor kingdom = new KingdomConstructor(name);
+				KingdomConstructor kingdom = KingdomHandler.getKingdom(name);
 				
 				if(!kingdom.doesExists()) {
 					sender.sendMessage(ChatColor.RED + "Kingdom named '" + name + "' does not exists.");
