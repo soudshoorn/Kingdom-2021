@@ -29,7 +29,7 @@ public class Nametags implements NametagAdapter {
 			boolean friendly = KingdomHandler.isSimiliarKingdom(playerKingdom, targetKingdom);
 			
 			if(targetKingdom != null) {
-				color = KingdomColor.fromWoolToChatColor(targetKingdom.getWoolData());
+				color = targetKingdom.getPrefix();
 			}
 			
 			nametags.add(new BufferedNametag(target.getName(), color, "", friendly, target));
