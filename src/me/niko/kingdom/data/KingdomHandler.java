@@ -140,7 +140,7 @@ public class KingdomHandler {
 		KingdomConstructor kingdom = null;
 		
 		Location downLocation = location.clone();
-		downLocation.setY(1.0D);
+		downLocation.setY(2.0D);
 		location = downLocation;
 				
 		for (KingdomConstructor kingdomConstructor : getKingdoms()) {
