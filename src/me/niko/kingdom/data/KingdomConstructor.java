@@ -25,6 +25,7 @@ public class KingdomConstructor {
 	@Getter private String name;
 	@Getter @Setter private byte woolData = 0;
 	@Setter private String displayName = "";
+	@Setter private String prefix = "";
 	@Getter @Setter private Location spawnLocation = null;
 	@Getter @Setter private Location boatExitLocation = null;
 	@Getter @Setter private int points = 0;
@@ -62,6 +63,11 @@ public class KingdomConstructor {
 		
 		this.woolData = (byte) yamlConfiguration.getInt("woolData");
 		this.displayName = ChatColor.translateAlternateColorCodes('&', yamlConfiguration.getString("displayName"));
+		
+		if(yamlConfiguration.get("prefix") != null) {
+			this.prefix = ChatColor.translateAlternateColorCodes('&', yamlConfiguration.getString("prefix"));
+		}
+		
 		this.spawnLocation = LocationUtils.fromStrToLocation(yamlConfiguration.getString("spawn_location"));
 		this.points = yamlConfiguration.getInt("points");
 		
@@ -78,7 +84,8 @@ public class KingdomConstructor {
 		yamlConfiguration.set("name", this.name);
 		yamlConfiguration.set("woolData", this.woolData);
 		yamlConfiguration.set("displayName", this.displayName);
-		
+		yamlConfiguration.set("prefix", this.prefix);
+
 		ArrayList<String> alliesStrings = new ArrayList<>();
 
 		for(KingdomConstructor kingdomConstructor : this.allies) {
@@ -99,6 +106,10 @@ public class KingdomConstructor {
 	
 	public String getDisplayName() {
 		return ChatColor.translateAlternateColorCodes('&', displayName);
+	}
+	
+	public String getPrefix() {
+		return ChatColor.translateAlternateColorCodes('&', prefix);
 	}
 	
 	public boolean doesExists() {

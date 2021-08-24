@@ -404,6 +404,36 @@ public class KingdomCommand implements CommandExecutor {
 				break;
 			}
 			
+			case "setprefix": {
+				if(!sender.isOp()) {
+					sender.sendMessage(ChatColor.RED + "No permission.");
+					return true;
+				}
+				
+				if(args.length < 3) {
+					sender.sendMessage(ChatColor.RED + "Usage: /" + label + " " + args[0] + " <kingdom> <prefix>");
+					return true;
+				}
+				
+				String name = args[1];
+				String prefix = String.join(" ", Arrays.copyOfRange(args, 2, args.length));
+
+				KingdomConstructor kingdom = new KingdomConstructor(name);
+				
+				if(!kingdom.doesExists()) {
+					sender.sendMessage(ChatColor.RED + "Kingdom named '" + name + "' does not exists.");
+					return true;
+				}
+				
+				sender.sendMessage(ChatColor.GREEN + "Kingdom prefix has been changed to (" + prefix + ChatColor.GREEN + ") from (" + kingdom.getPrefix() + ChatColor.GREEN + ")");
+				
+				kingdom.setPrefix(prefix);
+				
+				kingdom.save();
+				
+				break;
+			}
+			
 			case "top": {
 				ArrayList<KingdomConstructor> sortedKingdoms = new ArrayList<>(KingdomHandler.getKingdoms());
 				
