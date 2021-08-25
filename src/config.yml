@@ -293,14 +293,6 @@ selector_menu:
     lore:
       - ""
   items:
-    0:
-      material: PAPER
-      data: 0
-      amount: 1
-      display_name: "&eKingdom &6Eredon"
-      lore:
-        - ""
-      kingdom: "eredon"
 
 scoreboard_settings:
   enabled: true
