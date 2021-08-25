@@ -40,7 +40,7 @@ public class ListCommand implements CommandExecutor {
 			
 			List<String> players = KingdomHandler.onlinePlayersMap.getOrDefault(kingdomConstructor == null ? "null" : kingdomConstructor.getName(), new ArrayList<Player>()).stream().map(player -> player.getName()).collect(Collectors.toList());
 
-			sender.sendMessage((kingdomConstructor == null ? "No Kingdom" : kingdomConstructor.getDisplayName()) + ChatColor.WHITE + " [" + players.size() + "]: " + (players.size() == 0 ? "None" : StringUtils.join(players, ChatColor.GRAY + ", " + ChatColor.WHITE)) + ChatColor.GRAY + ".");
+			sender.sendMessage((kingdomConstructor == null ? "No Kingdom" : kingdomConstructor.getDisplayName()) + ChatColor.WHITE + " [" + players.size() + "]: " + (players.size() == 0 ? "" : StringUtils.join(players, ChatColor.GRAY + ", " + ChatColor.GRAY)) + ChatColor.GRAY + ".");
 		}
 		
 		/*KingdomHandler.onlinePlayersMap.forEach((kingdomConstructor, players2) -> {
