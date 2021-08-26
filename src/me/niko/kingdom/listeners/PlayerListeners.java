@@ -112,6 +112,9 @@ public class PlayerListeners implements Listener {
 			player.playSound(player.getLocation(), Sound.CHEST_OPEN, 1f, 1f);
 			
 			new EnderchestMenu(kingdomPlayer, kingdomPlayer).openMenu(player);
+			
+			//Adding return here cuz if they use any other item that opens an inventory that might fuck our plugin XD
+			return;
 		}
 		
 		if((event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) && ItemStackUtils.isSimiliar(player.getItemInHand(), ItemStackUtils.SELECTOR)) {
