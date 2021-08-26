@@ -2,17 +2,25 @@ package me.niko.kingdom.listeners;
 
 import java.util.ArrayList;
 
+import javax.swing.plaf.basic.BasicInternalFrameTitlePane.IconifyAction;
+
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.player.PlayerBucketEmptyEvent;
+import org.bukkit.event.player.PlayerBucketFillEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
 
 import com.sk89q.worldguard.bukkit.WGBukkit;
 import com.sk89q.worldguard.protection.managers.RegionManager;
@@ -42,6 +50,19 @@ public class BuildListeners implements Listener {
 				switch(event.getItemInHand().getType()) {
 					case WATER_BUCKET:
 					case WEB: {
+												
+						BukkitTask task = new BukkitRunnable() {
+							
+							@Override
+							public void run() {
+								event.getBlockPlaced().removeMetadata("task", Kingdom.getInstance());
+								
+								event.getBlockPlaced().setType(Material.AIR);
+							}
+						}.runTaskLater(Kingdom.getInstance(), 35 * 20);
+						
+						event.getBlockPlaced().setMetadata("task", new FixedMetadataValue(Kingdom.getInstance(), task.getTaskId()));
+						
 						break;
 					}
 						
@@ -75,6 +96,22 @@ public class BuildListeners implements Listener {
         		if(event.getBlock().getType() != Material.WEB && player.getGameMode() != GameMode.CREATIVE) {
             		//p.sendMessage(ChatColor.RED + "You can only pickup water buckets and break cobweb here.");
                   	event.setCancelled(true);
+            	} else {
+            		
+            		if (!event.getBlock().hasMetadata("task")) {
+            			return;
+            		}
+            		
+            		int index = Kingdom.getInstance().getTasks().indexOf(event.getBlock().getMetadata("task").get(0).asInt());
+            		
+            		if (index != -1) {
+            			BukkitTask task = Kingdom.getInstance().getTasks().get(index);
+            		
+            			if (task != null)
+            				task.cancel();
+            		}
+            		
+            		event.getBlock().removeMetadata("task", Kingdom.getInstance());
             	}
         	} else if(region.getId().contains("spawn_")) {
         		if(!(!kingdomPlayer.isKing() || !kingdomPlayer.isHertog())) {
@@ -133,5 +170,62 @@ public class BuildListeners implements Listener {
 			//player.sendMessage(ChatColor.RED + "Je hebt te weinig influence hiervoor.");
 			event.setCancelled(true);
 		}
+	}
+	
+	@EventHandler
+	public void onBucketEmpty(PlayerBucketEmptyEvent event) {
+		Player player = event.getPlayer();
+		RegionManager regionM = WGBukkit.getRegionManager(player.getLocation().getWorld());
+		
+		Block waterSource = event.getBlockClicked().getRelative(event.getBlockFace());
+		
+		if(event.getBucket() != Material.WATER_BUCKET) {
+			return;
+		}
+		
+		if(player.getGameMode() != GameMode.SURVIVAL) {
+			return;
+		}
+		
+		for(ProtectedRegion region : regionM.getApplicableRegions(waterSource.getLocation()).getRegions()) {
+			if(region.getId().contains("eventrg_")) {				
+				BukkitTask task = new BukkitRunnable() {
+					
+					@Override
+					public void run() {
+						waterSource.removeMetadata("task", Kingdom.getInstance());
+						
+						waterSource.setType(Material.AIR);
+					}
+				}.runTaskLater(Kingdom.getInstance(), 35 * 20);
+				
+				waterSource.setMetadata("task", new FixedMetadataValue(Kingdom.getInstance(), task.getTaskId()));
+				
+				return;
+			}
+		}
+	}
+	
+	@EventHandler
+	public void onBucketFill(PlayerBucketFillEvent event) {
+		Player player = event.getPlayer();
+		RegionManager regionM = WGBukkit.getRegionManager(player.getLocation().getWorld());
+		
+		Block waterSource = event.getBlockClicked().getRelative(event.getBlockFace());
+		
+		if (!waterSource.hasMetadata("task")) {
+			return;
+		}
+				
+		int index = Kingdom.getInstance().getTasks().indexOf(waterSource.getMetadata("task").get(0).asInt());
+		
+		if(index != -1) {
+			BukkitTask task = Kingdom.getInstance().getTasks().get(index);
+			
+			if (task != null)
+				task.cancel();
+		}
+		
+		waterSource.removeMetadata("task", Kingdom.getInstance());
 	}
 }
