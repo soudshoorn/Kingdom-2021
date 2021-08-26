@@ -1,11 +1,14 @@
 package me.niko.kingdom.listeners;
 
+import javax.swing.plaf.basic.BasicInternalFrameTitlePane.IconifyAction;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -23,6 +26,7 @@ import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import com.avaje.ebeaninternal.server.el.ElSetValue;
 import com.lunarclient.bukkitapi.object.LCWaypoint;
 
 import me.niko.kingdom.Kingdom;
@@ -59,6 +63,12 @@ public class PlayerListeners implements Listener {
 			player.sendMessage(ConfigUtils.getFormattedValue("messages.kingdom.select_kingdom_before_continue"));
 			
 			player.getInventory().setItem(4, ItemStackUtils.SELECTOR);
+			
+			World world = Bukkit.getWorld("spawn");
+			
+			if (world != null) {
+				player.teleport(world.getSpawnLocation());
+			}
 		}
 		
 		if(Kingdom.getInstance().getConfig().getBoolean("settings.hide_players_spawn")) {
@@ -190,7 +200,13 @@ public class PlayerListeners implements Listener {
 				event.setRespawnLocation(kingdom.getSpawnLocation());
 			}
 		} else {
-			event.setRespawnLocation(null);
+			World world = Bukkit.getWorld("spawn");
+			
+			if (world != null) {
+				event.setRespawnLocation(world.getSpawnLocation());
+			} else {
+				event.setRespawnLocation(null);
+			}
 		}
 	}
 	
