@@ -34,12 +34,24 @@ public class EnderchestCommand implements CommandExecutor {
 			return true;
 		}
 		
+		if(!player.hasPermission("kingdom.enderchest.others")) {
+			player.sendMessage(ChatColor.RED + "No permission.");
+			
+			return true;
+		}
+		
 		OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(args[0]);
 		
 		if(offlinePlayer == null) {
 			player.sendMessage(ChatColor.RED + "This player have never joined the server");
 			return true;
 		}
+		
+		KingdomPlayer kingdomTarget = KingdomHandler.getKingdomPlayer(offlinePlayer.getUniqueId());
+		
+		new EnderchestMenu(kingdomTarget, kingdomPlayer).openMenu(player);
+		
+		player.sendMessage(ChatColor.GREEN + "Openning the enderchest of " + offlinePlayer.getName() + " with how he sees it.");
 		
 		return false;
 	}
