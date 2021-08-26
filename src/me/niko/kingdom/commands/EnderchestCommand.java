@@ -1,5 +1,8 @@
 package me.niko.kingdom.commands;
 
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -19,9 +22,25 @@ public class EnderchestCommand implements CommandExecutor {
 		
 		Player player = (Player) sender;
 		
+		if(!player.hasPermission("kingdom.enderchest")) {
+			player.sendMessage(ChatColor.RED + "No permission.");
+			return true;
+		}
 		KingdomPlayer kingdomPlayer = KingdomHandler.getKingdomPlayer(player);
+
+		if(args.length == 0) {
+			new EnderchestMenu(kingdomPlayer, kingdomPlayer).openMenu(player);
+			
+			return true;
+		}
 		
-		new EnderchestMenu(kingdomPlayer, kingdomPlayer).openMenu(player);
+		OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(args[0]);
+		
+		if(offlinePlayer == null) {
+			player.sendMessage(ChatColor.RED + "This player have never joined the server");
+			return true;
+		}
+		
 		return false;
 	}
 
