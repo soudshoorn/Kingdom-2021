@@ -36,7 +36,6 @@ public class EnderchestMenu extends Menu {
 	
 	@Override
 	public void onClose(Player player) {
-		System.out.println("onClose called");
 		ArrayList<Integer> blockedSlots = EnderchestHandler.getSlotsNotToSave(player);
 				
 		int index = -1;
@@ -63,9 +62,7 @@ public class EnderchestMenu extends Menu {
 		}
 		
 		ArrayList<Integer> blockedSlots = EnderchestHandler.getSlotsNotToSave(player);
-		
-		System.out.println(blockedSlots.toString());
-		
+				
 		for (String rank : Kingdom.getInstance().getConfig().getConfigurationSection("ender_chest").getKeys(false)) {
 			
 			Kingdom.getInstance().getConfig().getIntegerList("ender_chest." + rank + ".slots").forEach(slot -> {
