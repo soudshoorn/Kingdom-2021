@@ -5,6 +5,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -30,6 +31,7 @@ import me.niko.kingdom.api.KingdomLeaveEvent;
 import me.niko.kingdom.data.KingdomConstructor;
 import me.niko.kingdom.data.KingdomHandler;
 import me.niko.kingdom.data.players.KingdomPlayer;
+import me.niko.kingdom.enderchest.EnderchestMenu;
 import me.niko.kingdom.events.war.WarHandler;
 import me.niko.kingdom.mount.HorseHandler;
 import me.niko.kingdom.selector.SelectorMenu;
@@ -102,10 +104,18 @@ public class PlayerListeners implements Listener {
 	@EventHandler
 	public void onInteract(PlayerInteractEvent event) {
 		Player player = event.getPlayer();
+		KingdomPlayer kingdomPlayer = KingdomHandler.getKingdomPlayer(player);
+
+		if(event.getAction() == Action.RIGHT_CLICK_BLOCK && event.getClickedBlock() != null && event.getClickedBlock().getType() == Material.ENDER_CHEST) {
+			event.setCancelled(true);
+			
+			player.playSound(player.getLocation(), Sound.CHEST_OPEN, 1f, 1f);
+			
+			new EnderchestMenu(kingdomPlayer, kingdomPlayer).openMenu(player);
+		}
 		
 		if((event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) && ItemStackUtils.isSimiliar(player.getItemInHand(), ItemStackUtils.SELECTOR)) {
 			
-			KingdomPlayer kingdomPlayer = KingdomHandler.getKingdomPlayer(player);
 			KingdomConstructor kingdom = KingdomHandler.getKingdom(kingdomPlayer);
 
 			if(kingdom == null) {
