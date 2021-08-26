@@ -31,3 +31,5 @@ commands:
   mines:
   creload:
     aliases: [reloadconfig, configreload]
+  enderchest:
+    aliases: [ec, echest]

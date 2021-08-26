@@ -3,10 +3,13 @@ package me.niko.kingdom.data.players;
 import java.io.File;
 import java.io.IOException;
 import java.text.DecimalFormat;
+import java.util.HashMap;
 import java.util.UUID;
+import java.util.Map.Entry;
 
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -14,6 +17,7 @@ import me.niko.kingdom.Kingdom;
 import me.niko.kingdom.data.KingdomConstructor;
 import me.niko.kingdom.data.KingdomHandler;
 import me.niko.kingdom.guilds.Guild;
+import me.niko.kingdom.utils.InventoryUtils;
 
 public class KingdomPlayer {
 	
@@ -25,7 +29,8 @@ public class KingdomPlayer {
 	@Getter @Setter private int influence = 0;
 	@Getter @Setter private int kills = 0;
 	@Getter @Setter private int deaths = 0;
-
+	@Getter @Setter private HashMap<Integer, ItemStack> enderchestItems = new HashMap<>();
+	
 	public KingdomPlayer(Player player) {
 		this.player = player;
 		
@@ -59,12 +64,20 @@ public class KingdomPlayer {
 		
 		String kingdomName = yamlConfiguration.getString("kingdom");
 		
-		this.kingdom = kingdomName.equals("null") ? null : new KingdomConstructor(kingdomName);
+		this.kingdom = kingdomName.equals("null") ? null : KingdomHandler.getKingdom(kingdomName);
 		this.guild = yamlConfiguration.getString("guild").equals("null") ? null : new Guild(yamlConfiguration.getString("guild"));
 		this.kingdomRank = yamlConfiguration.getInt("rank");
 		this.influence = yamlConfiguration.getInt("influence");
 		this.kills = yamlConfiguration.getInt("kills");
 		this.deaths = yamlConfiguration.getInt("deaths");
+		
+		try {
+			if(yamlConfiguration.get("enderchest") != null) {
+				for (String integer : yamlConfiguration.getConfigurationSection("enderchest").getKeys(false)) {
+					this.enderchestItems.put(Integer.parseInt(integer), InventoryUtils.fromBase64(yamlConfiguration.getString("enderchest." + integer)));
+				}
+			}
+		} catch (Exception ex) {}
 	}
 	
 	public void save() {
@@ -84,6 +97,14 @@ public class KingdomPlayer {
 		yamlConfiguration.set("kills", this.kills);
 		yamlConfiguration.set("deaths", this.deaths);
 
+		//yamlConfiguration.set("enderchest", InventoryUtils.itemStackArrayToBase64(this.enderChestItems));
+		
+		for(Entry<Integer, ItemStack> entry : this.enderchestItems.entrySet()) {
+			try {
+				yamlConfiguration.set("enderchest." + entry.getKey(), InventoryUtils.toBase64(entry.getValue()));
+			} catch (IOException e) { }
+		}
+		
 		try {
 			yamlConfiguration.save(file);
 		} catch (IOException e) {

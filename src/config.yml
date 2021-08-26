@@ -57,7 +57,63 @@ mines:
   reset_after_seconds: 10
   regions:
     - ""
-    
+
+ender_chest:
+  rank0:
+    material: BARRIER
+    data: 0
+    display_name: "&c&lBLOCKED"
+    permission: ""
+    lore:
+       - ""
+       - "Rank0 is required for this slot"
+    slots: [0, 1, 2, 3, 4, 5, 6, 7, 8]
+  rank1:
+    material: BARRIER
+    data: 0
+    display_name: "&c&lBLOCKED"
+    permission: "rank1.enderchest"
+    lore:
+       - ""
+       - "Rank1 is required for this slot"
+    slots: [9, 10, 11, 12, 13, 14, 15, 16, 17]
+  rank2:
+    material: BARRIER
+    data: 0
+    display_name: "&c&lBLOCKED"
+    permission: "rank2.enderchest"
+    lore:
+       - ""
+       - "Rank2 is required for this slot"
+    slots: [18, 19, 20, 21, 22, 23, 24, 25, 26]
+  rank3:
+    material: BARRIER
+    data: 0
+    display_name: "&c&lBLOCKED"
+    permission: "rank3.enderchest"
+    lore:
+       - ""
+       - "Rank3 is required for this slot"
+    slots: [27, 28, 29, 30, 31, 32, 33, 34, 35]
+  rank4:
+    material: BARRIER
+    data: 0
+    display_name: "&c&lBLOCKED"
+    permission: "rank2.enderchest"
+    lore:
+      - ""
+      - "Rank4 is required for this slot"
+    slots: [36, 37, 38, 39, 40, 41, 42, 43, 44]
+  rank5:
+    material: BARRIER
+    data: 0
+    display_name: "&c&lBLOCKED"
+    permission: "rank5.enderchest"
+    lore:
+      - ""
+      - "Rank5 is required for this slot"
+    slots: [45, 46, 47, 48, 49, 50, 51, 52, 53]
+
 donkey:
   speed: 0.3
   jump: 0.5

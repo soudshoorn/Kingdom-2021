@@ -1,6 +1,7 @@
 package me.niko.kingdom.utils.menu.menu;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -34,10 +35,13 @@ public class ButtonListener implements Listener {
 				boolean cancel = button.shouldCancel(player, event.getSlot(), event.getClick());
 				if (!cancel
 						&& (event.getClick() == ClickType.SHIFT_LEFT || event.getClick() == ClickType.SHIFT_RIGHT)) {
-					event.setCancelled(true);
+					/*event.setCancelled(true);
 					if (event.getCurrentItem() != null) {
-						player.getInventory().addItem(new ItemStack[] { event.getCurrentItem() });
-					}
+						ItemStack stack = event.getCurrentItem();
+						
+						player.getOpenInventory().getTopInventory().setItem(event.getSlot(), new ItemStack(Material.AIR));
+						player.getInventory().addItem(stack);
+					}*/
 				} else {
 					event.setCancelled(cancel);
 				}
