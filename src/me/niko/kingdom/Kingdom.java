@@ -54,6 +54,7 @@ import me.niko.kingdom.listeners.EndExitListener;
 import me.niko.kingdom.listeners.HorseMountListener;
 import me.niko.kingdom.listeners.MinesListeners;
 import me.niko.kingdom.listeners.PlayerListeners;
+import me.niko.kingdom.listeners.RegionListener;
 import me.niko.kingdom.listeners.WorldListener;
 import me.niko.kingdom.mount.HorseHandler;
 import me.niko.kingdom.nametags.NametagHandler;
@@ -104,6 +105,12 @@ public class Kingdom extends JavaPlugin {
 		
 		if (getServer().getPluginManager().getPlugin("Vault") == null) {
 			Bukkit.getLogger().warning("NO VAULT IS INSTALLED. KINGDOM PLUGIN NEEDS IT!");
+			getServer().getPluginManager().disablePlugin(this);
+            return;
+        }
+		
+		if (getServer().getPluginManager().getPlugin("PlaceholderAPI") == null) {
+			Bukkit.getLogger().warning("PLACEHOLDER API IS NOT INSTALLED!");
 			getServer().getPluginManager().disablePlugin(this);
             return;
         }
@@ -178,6 +185,7 @@ public class Kingdom extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(new WorldListener(), this);
 		getServer().getPluginManager().registerEvents(new EndExitListener(), this);
 		getServer().getPluginManager().registerEvents(new MinesListeners(), this);
+		getServer().getPluginManager().registerEvents(new RegionListener(), this);
 
         getServer().getPluginManager().registerEvents(new ButtonListener(), this);
 		        

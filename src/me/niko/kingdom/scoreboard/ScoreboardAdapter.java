@@ -15,6 +15,7 @@ import org.bukkit.entity.Player;
 
 import com.avaje.ebean.annotation.UpdatedTimestamp;
 
+import me.clip.placeholderapi.PlaceholderAPI;
 import me.niko.kingdom.Kingdom;
 import me.niko.kingdom.data.KingdomConstructor;
 import me.niko.kingdom.data.KingdomHandler;
@@ -277,11 +278,11 @@ public class ScoreboardAdapter implements AssembleAdapter {
 	private String format(String line, KingdomPlayer kingdomPlayer, KingdomConstructor locationKingdom) {
 		KingdomConstructor kingdom = KingdomHandler.getKingdom(kingdomPlayer);
 		
-		return line
+		return PlaceholderAPI.setPlaceholders(kingdomPlayer.getPlayer(), line
 				.replaceAll("%influence%", kingdomPlayer.getInfluence() + "")
 				.replaceAll("%online_players%", ONLINE_PLAYERS_COUNT + "")
 				.replaceAll("%kingdom%", kingdom == null ? "None" : kingdom.getDisplayName())
-				.replaceAll("%location_kingdom%", locationKingdom == null ? "Onbekend" : locationKingdom.getDisplayName());
+				.replaceAll("%location_kingdom%", locationKingdom == null ? "Onbekend" : locationKingdom.getDisplayName()));
 	}
 	
 	private static String secondsToMinutes(int s) {
