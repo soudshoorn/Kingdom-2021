@@ -25,7 +25,7 @@ public class Nametags implements NametagAdapter {
 			KingdomPlayer kingdomTarget = KingdomHandler.getKingdomPlayer(target);
 			KingdomConstructor targetKingdom = KingdomHandler.getKingdom(kingdomTarget);
 
-			String color = ChatColor.WHITE.toString();
+			String color = ChatColor.GRAY.toString();
 			boolean friendly = KingdomHandler.isSimiliarKingdom(playerKingdom, targetKingdom);
 			
 			if(targetKingdom != null) {
