@@ -108,9 +108,6 @@ public class PlayerListeners implements Listener {
 
 		if(event.getAction() == Action.RIGHT_CLICK_BLOCK && event.getClickedBlock() != null && event.getClickedBlock().getType() == Material.ENDER_CHEST) {
 			event.setCancelled(true);
-			
-			player.playSound(player.getLocation(), Sound.CHEST_OPEN, 1f, 1f);
-			
 			new EnderchestMenu(kingdomPlayer, kingdomPlayer).openMenu(player);
 			
 			//Adding return here cuz if they use any other item that opens an inventory that might fuck our plugin XD

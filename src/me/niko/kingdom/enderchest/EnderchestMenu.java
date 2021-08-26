@@ -8,6 +8,7 @@ import java.util.Map.Entry;
 import javax.swing.plaf.basic.BasicInternalFrameTitlePane.IconifyAction;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -27,6 +28,8 @@ public class EnderchestMenu extends Menu {
 		
 		setUpdateAfterClick(false);
 		setNoncancellingInventory(true);
+		
+		viewerPlayer.getPlayer().playSound(viewerPlayer.getPlayer().getLocation(), Sound.CHEST_OPEN, 1f, 1f);
 	}
 	
 	@Override
@@ -51,6 +54,8 @@ public class EnderchestMenu extends Menu {
 		}
 		
 		targetPlayer.save();
+		viewerPlayer.getPlayer().playSound(viewerPlayer.getPlayer().getLocation(), Sound.CHEST_CLOSE, 1f, 1f);
+
 	}
 	
 	@Override
