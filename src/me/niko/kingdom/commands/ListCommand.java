@@ -43,12 +43,6 @@ public class ListCommand implements CommandExecutor {
 			sender.sendMessage((kingdomConstructor == null ? "No Kingdom" : kingdomConstructor.getDisplayName()) + ChatColor.WHITE + " [" + players.size() + "]: " + (players.size() == 0 ? "" : StringUtils.join(players, ChatColor.GRAY + ", " + ChatColor.GRAY)) + ChatColor.GRAY + ".");
 		}
 		
-		/*KingdomHandler.onlinePlayersMap.forEach((kingdomConstructor, players2) -> {
-			List<String> players = players2.stream().map(player -> player.getName()).collect(Collectors.toList());
-
-			sender.sendMessage(kingdomConstructor.equals("null") ? "No Kingdom" : new KingdomConstructor(kingdomConstructor).getDisplayName() + ChatColor.WHITE + " [" + players.size() + "]: " + StringUtils.join(players, ChatColor.GRAY + ", " + ChatColor.WHITE) + ChatColor.GRAY + ".");
-		});*/
-		
 		return false;
 	}
 	
