@@ -304,6 +304,9 @@ public class KingdomHandler {
         		return false;
         	}
         	
+        	player.sendMessage(ConfigUtils.getFormattedValue("messages.influence.not_enough")
+    				.replaceAll("%price%", (price - balance) + ""));
+        	
         	return true;
         } else {
         	return false;
