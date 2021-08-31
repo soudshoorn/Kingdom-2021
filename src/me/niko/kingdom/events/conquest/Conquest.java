@@ -196,6 +196,12 @@ public class Conquest {
 									&& !player.isDead()
 									&& kingdom != null
 									&& !(cappedZoneByKingdom.containsKey(zone) && kingdom.getName().equalsIgnoreCase(cappedZoneByKingdom.get(zone)))) {
+								
+								if(kingdom.isStaffOnly()) {
+									player.sendMessage(ConfigUtils.getFormattedValue("messages.kingdom.staff_only"));
+									continue;
+								}
+								
 								onCapPlayers.add(player);
 							}
 						}

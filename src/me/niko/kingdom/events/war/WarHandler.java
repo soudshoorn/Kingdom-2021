@@ -9,6 +9,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.Map.Entry;
 
+import javax.swing.plaf.basic.BasicInternalFrameTitlePane.IconifyAction;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -93,9 +95,14 @@ public class WarHandler {
 		for(String line : ConfigUtils.getFormattedValueList("messages.events.war.ended_broadcast")) {
 			if(line.contains("%format%")) {
 				for(Entry<String, Integer> entry : list) {
+					KingdomConstructor kingdom = new KingdomConstructor(entry.getKey());
+					
+					if(kingdom.isStaffOnly()) {
+						continue;
+					}
+					
 					position++;
 					
-					KingdomConstructor kingdom = new KingdomConstructor(entry.getKey());
 					int kills = entry.getValue();
 										
 					Bukkit.broadcastMessage(ConfigUtils.getFormattedValue("messages.events.war.winners_format")

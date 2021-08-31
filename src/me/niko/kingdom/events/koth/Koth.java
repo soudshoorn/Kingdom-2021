@@ -97,6 +97,12 @@ public class Koth {
 						if(isCapping(player)
 								&& !player.isDead()
 								&& kingdom != null) {
+							
+							if(kingdom.isStaffOnly()) {
+								player.sendMessage(ConfigUtils.getFormattedValue("messages.kingdom.staff_only"));
+								continue;
+							}
+							
 							onCapPlayers.add(player);
 						}
 					}

@@ -7,6 +7,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import javax.swing.plaf.basic.BasicInternalFrameTitlePane.IconifyAction;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -113,6 +115,12 @@ public class BountyHunters {
 									&& !player.isDead()
 									&& kingdom != null
 									&& !(cappedZone.containsKey(zone))) {
+								
+								if(kingdom.isStaffOnly()) {
+									player.sendMessage(ConfigUtils.getFormattedValue("messages.kingdom.staff_only"));
+									continue;
+								}
+								
 								onCapPlayers.add(player);
 							}
 						}
@@ -162,9 +170,15 @@ public class BountyHunters {
 		for(String line : ConfigUtils.getFormattedValueList("messages.events.bounty_hunters.ended_broadcast")) {
 			if(line.contains("%format%")) {
 				for(Entry<String, KingdomConstructor> entry : cappedZone.entrySet()) {
-					position++;
+					//position++;
 					String zone = entry.getKey();
 					KingdomConstructor kingdom = entry.getValue();
+					
+					if(kingdom.isStaffOnly()) {
+						continue;
+					}
+					
+					position++;
 					
 					//Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', "&c&l" + (position++) + ". " + kingdom.getDisplayName()));//KingdomPlugin.r.getPlayerKingdomWithColor(kingdom)));
 					

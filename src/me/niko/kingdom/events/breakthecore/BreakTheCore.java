@@ -66,6 +66,10 @@ public class BreakTheCore {
 		breaks = new HashMap<>();
 		
 		for(KingdomConstructor kingdom : KingdomHandler.getKingdoms()) {
+			if(kingdom.isStaffOnly()) {
+				continue;
+			}
+			
 			breaks.put(kingdom, this.health);
 		}
 		

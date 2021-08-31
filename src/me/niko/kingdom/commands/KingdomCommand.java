@@ -444,6 +444,10 @@ public class KingdomCommand implements CommandExecutor {
 				for(String line : Kingdom.getInstance().getConfig().getStringList("messages.kingdom.top.message")) {
 					if(line.contains("%format%")) {
 						for(KingdomConstructor kingdomConstructor : sortedKingdoms) {
+							if(kingdomConstructor.isStaffOnly()) {
+								continue;
+							}
+							
 							if(index == 10) {
 								break;
 							}

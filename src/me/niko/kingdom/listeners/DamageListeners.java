@@ -65,7 +65,7 @@ public class DamageListeners implements Listener {
 
 			kingdomKiller.setKills(kingdomKiller.getKills() + 1);
 			
-			if(WarHandler.isEnabled()) {
+			if(WarHandler.isEnabled() && !killerKingdom.isStaffOnly()) {
 				WarHandler.getWarKills().put(killerKingdom.getName(), WarHandler.getWarKills().getOrDefault(killerKingdom.getName(), 1));
 			}
 			

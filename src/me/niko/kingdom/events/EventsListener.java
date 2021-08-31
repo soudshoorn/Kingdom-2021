@@ -10,6 +10,7 @@ import me.niko.kingdom.data.KingdomConstructor;
 import me.niko.kingdom.data.KingdomHandler;
 import me.niko.kingdom.data.players.KingdomPlayer;
 import me.niko.kingdom.events.breakthecore.BreakTheCore;
+import me.niko.kingdom.utils.ConfigUtils;
 
 public class EventsListener implements Listener {
 	
@@ -37,6 +38,12 @@ public class EventsListener implements Listener {
 			
 			KingdomConstructor foundKingdom = breakTheCore.getBreaks().keySet().stream()
 					.filter(m -> m.getName().equals(kingdom.getName())).findFirst().orElse(null);
+			
+			if(foundKingdom.isStaffOnly()) {
+				player.sendMessage(ConfigUtils.getFormattedValue("messages.kingdom.staff_only"));
+				
+				return;
+			}
 			
 			if(foundKingdom != null) {
 				int breaks = breakTheCore.getBreaks().get(foundKingdom);
