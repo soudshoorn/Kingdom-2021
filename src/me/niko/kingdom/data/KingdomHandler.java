@@ -9,6 +9,7 @@ import java.util.Map.Entry;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -276,7 +277,7 @@ public class KingdomHandler {
         KingdomPlayer kingdomPlayer = KingdomHandler.getKingdomPlayer(player);
         KingdomConstructor inKingdom = getKingdomByLocation(location);
         
-        if(inKingdom != null && inKingdom.getName().equals(kingdomPlayer.getKingdom().getName())) {
+        if(inKingdom != null && !inKingdom.getName().equals(kingdomPlayer.getKingdom().getName()) && player.getGameMode() != GameMode.CREATIVE) {
         	int price = build == 0 ? Kingdom.getInstance().getConfig().getInt("influence_settings.place_cost") : (build == 1 ? Kingdom.getInstance().getConfig().getInt("influence_settings.break_cost") : Kingdom.getInstance().getConfig().getInt("influence_settings.use_cost"));
         	int balance = kingdomPlayer.getInfluence();
         	
