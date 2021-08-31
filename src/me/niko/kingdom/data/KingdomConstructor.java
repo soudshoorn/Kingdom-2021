@@ -30,6 +30,7 @@ public class KingdomConstructor {
 	@Getter @Setter private Location boatExitLocation = null;
 	@Getter @Setter private int points = 0;
 	@Getter @Setter private ArrayList<KingdomConstructor> allies = new ArrayList<>();
+	@Getter @Setter private boolean staffOnly = false;
 	
 	@Getter @Setter private boolean exists = false;
 	@Getter @Setter private boolean creating = false;
@@ -74,6 +75,10 @@ public class KingdomConstructor {
 		if(yamlConfiguration.get("boat_exit") != null) {
 			this.boatExitLocation = LocationUtils.fromStrToLocation(yamlConfiguration.getString("boat_exit"));
 		}
+		
+		if(yamlConfiguration.get("staff_only") != null) {
+			this.staffOnly = yamlConfiguration.getBoolean("staff_only");
+		}
 	}
 	
 	public void save() {
@@ -96,7 +101,8 @@ public class KingdomConstructor {
 		yamlConfiguration.set("spawn_location", LocationUtils.fromLocToString(this.spawnLocation));
 		yamlConfiguration.set("points", this.points);
 		yamlConfiguration.set("boat_exit", LocationUtils.fromLocToString(this.boatExitLocation));
-		
+		yamlConfiguration.set("staff_only", this.staffOnly);
+
 		try {
 			yamlConfiguration.save(file);
 		} catch (IOException e) {
