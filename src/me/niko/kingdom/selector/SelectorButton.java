@@ -16,6 +16,7 @@ import me.niko.kingdom.utils.ConfigUtils;
 import me.niko.kingdom.utils.ItemMaker;
 import me.niko.kingdom.utils.ItemStackUtils;
 import me.niko.kingdom.utils.menu.menu.Button;
+import me.niko.kingdom.visibility.VisibilityManager;
 
 public class SelectorButton extends Button {
 
@@ -72,6 +73,10 @@ public class SelectorButton extends Button {
 		kingdomPlayer.save();
 		
 		KingdomHandler.addOnlinePlayer(player, kingdomConstructor);
+		
+		if(Kingdom.getInstance().getConfig().getBoolean("settings.hide_players_spawn")) {
+			VisibilityManager.update(player);
+		}
 		
 		Bukkit.broadcastMessage(ConfigUtils.getFormattedValue("messages.kingdom.set.broadcast")
 				.replaceAll("%player%", player.getName())
