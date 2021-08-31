@@ -197,7 +197,7 @@ messages:
         - ""
         - "%format%"
   influence:
-    not_enough: "You don't have enough influence you need %need% more."
+    not_enough: "You don't have enough influence you need %price% more."
     type:
       breaking: "&cThis action costed you %influence%. New balance %new_influence%"
       interacting: "&cThis action costed you %influence%. New balance %new_influence%"
