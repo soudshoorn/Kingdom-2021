@@ -57,14 +57,17 @@ import me.niko.kingdom.listeners.PlayerListeners;
 import me.niko.kingdom.listeners.RegionListener;
 import me.niko.kingdom.listeners.WorldListener;
 import me.niko.kingdom.mount.HorseHandler;
+import me.niko.kingdom.mysql.MySQLManager;
 import me.niko.kingdom.nametags.NametagHandler;
 import me.niko.kingdom.nametags.Nametags;
 import me.niko.kingdom.scoreboard.Assemble;
 import me.niko.kingdom.scoreboard.ScoreboardAdapter;
 import me.niko.kingdom.staffmode.StaffModeHandler;
 import me.niko.kingdom.staffmode.StaffModeListener;
+import me.niko.kingdom.tablist.TablistAdapter;
+import me.niko.kingdom.tablist.ziggurat.Ziggurat;
+import me.niko.kingdom.utils.LuckPermsUtils;
 import me.niko.kingdom.utils.menu.menu.ButtonListener;
-import me.niko.kingdom.visibility.VisibilityManager;
 import net.milkbowl.vault.chat.Chat;
 import net.milkbowl.vault.permission.Permission;
 import net.minelink.ctplus.CombatTagPlus;
@@ -72,6 +75,8 @@ import net.minelink.ctplus.CombatTagPlus;
 public class Kingdom extends JavaPlugin {
 	
 	@Getter public static Kingdom instance;
+	
+	@Getter private LuckPermsUtils luckPermsAPI;
 	
 	@Getter public static WorldEditPlugin worldEdit;
 	@Getter public static CombatTagPlus combatTagPlus;
@@ -93,7 +98,12 @@ public class Kingdom extends JavaPlugin {
     @Getter public static ArrayList<UUID> autoSmelting;
 	@Getter public static ArrayList<BukkitTask> tasks;
 	
+    @Getter private static MySQLManager mySQLManager;
+	
     @Getter private static Random random;
+    
+    public Ziggurat ziggurat;
+
 
 	public void onEnable() {
 		instance = this;
@@ -102,6 +112,8 @@ public class Kingdom extends JavaPlugin {
 		
 		getConfig().options().copyDefaults(true);
 		saveDefaultConfig();
+		
+		ziggurat = new Ziggurat(this, new TablistAdapter());
 		
 		if (getServer().getPluginManager().getPlugin("Vault") == null) {
 			Bukkit.getLogger().warning("NO VAULT IS INSTALLED. KINGDOM PLUGIN NEEDS IT!");
@@ -115,6 +127,13 @@ public class Kingdom extends JavaPlugin {
             return;
         }
 		
+		mySQLManager = new MySQLManager(getConfig().getString("mysql.login.host"),
+				getConfig().getString("mysql.login.password"), getConfig().getString("mysql.login.username"),
+				getConfig().getInt("mysql.login.port"), getConfig().getString("mysql.login.database"));
+
+		mySQLManager.mysqlSetup();
+		
+		
 		assemble = new Assemble(this, new ScoreboardAdapter());
 		nametags = new NametagHandler(this, new Nametags());
 		
@@ -124,6 +143,8 @@ public class Kingdom extends JavaPlugin {
 		
 		combatTagPlus = (CombatTagPlus) Bukkit.getPluginManager().getPlugin("CombatTagPlus");
 		worldEdit = (WorldEditPlugin) Bukkit.getPluginManager().getPlugin("WorldEdit");
+		
+		this.luckPermsAPI = new LuckPermsUtils();
 		
 		setupChat();
 		
@@ -190,7 +211,7 @@ public class Kingdom extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new ButtonListener(), this);
 		        
 		long saveInterval = ((10 * 60) * 20); // 20 Minutes?
-		
+				
 		new BukkitRunnable() {
 			
 			@Override
@@ -230,6 +251,8 @@ public class Kingdom extends JavaPlugin {
 	@Override
 	public void onDisable() {
 		eventConstants.stopAll();
+		
+		ziggurat.disable();
 		
 		assemble.cleanup();
 		nametags.cleanup();

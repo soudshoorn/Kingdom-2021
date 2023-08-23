@@ -1,3 +1,11 @@
+mysql:
+  login:
+    host: "node1.recorehosting.com"
+    database: "recore_1245"
+    port: 3306
+    username: "recore_1245"
+    password: "0c53bb3996"
+
 influence_settings:
   place_cost: 50
   break_cost: 30

@@ -265,6 +265,12 @@ public class KingdomHandler {
 		}
 	}
 	
+	public static int getOnlinePlayers(KingdomConstructor kingdomConstructor) {
+		ArrayList<Player> players = onlinePlayersMap.getOrDefault(kingdomConstructor == null ? "null" : kingdomConstructor.getName(), new ArrayList<Player>());
+		
+		return players.size();
+	}
+	
 	public static boolean influenceCheck(Player player, int build, Location location, Block block) {
         List<String> rgs = WorldGuardPlugin.inst().getRegionManager(player.getWorld()).getApplicableRegionsIDs(new Vector(location.getX(), location.getY(), location.getZ()));
 

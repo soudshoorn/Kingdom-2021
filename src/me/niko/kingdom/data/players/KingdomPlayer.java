@@ -96,7 +96,7 @@ public class KingdomPlayer {
 		yamlConfiguration.set("influence", this.influence);
 		yamlConfiguration.set("kills", this.kills);
 		yamlConfiguration.set("deaths", this.deaths);
-
+		
 		//yamlConfiguration.set("enderchest", InventoryUtils.itemStackArrayToBase64(this.enderChestItems));
 		
 		for(Entry<Integer, ItemStack> entry : this.enderchestItems.entrySet()) {
@@ -104,6 +104,9 @@ public class KingdomPlayer {
 				yamlConfiguration.set("enderchest." + entry.getKey(), InventoryUtils.toBase64(entry.getValue()));
 			} catch (IOException e) { }
 		}
+		
+		
+		Kingdom.getInstance().getMySQLManager().updatePlayer(this.uuid, this.kingdom == null ? "null" : this.kingdom.getName(), this.guild == null ? "null" : this.guild.getName(), this.kingdomRank, this.influence, this.kills, this.deaths);
 		
 		try {
 			yamlConfiguration.save(file);
